@@ -23,53 +23,5 @@
     <!-- 强制使用CGLIB代理  -->
     <aop:aspectj-autoproxy proxy-target-class="true"/>
     
-    <!-- DataSource数据源 -->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
-        destroy-method="close">
-        <property name="driverClassName">
-            <value>com.mysql.jdbc.Driver</value>
-        </property>
-        <property name="url">
-            <value>jdbc:mysql://localhost:3306/doudou</value>
-        </property>
-        <property name="username">
-            <value>mayaya</value>
-        </property>
-        <property name="password">
-            <value>mayaya@mayaya.com</value>
-        </property>
-    </bean>
-          <!-- Spring iBatis SqlMapClient -->
-    <bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-        <property name="configLocation" value="classpath:sql-map-config.xml" />
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-    
- 
-     <!--事务管理DataSourceTransactionManager-->
-    <bean id="txManager"
-        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="dataSource" />
-    </bean>
-    
-    <!--启动spring注解功能-->
-    <tx:annotation-driven transaction-manager="txManager" />
-    
-    <aop:config>
-        <aop:pointcut id="baseServiceMethods" expression="execution(* com.archie.dao.*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="baseServiceMethods" />
-    </aop:config>
-
-    <aop:aspectj-autoproxy />
-
-    <tx:advice id="txAdvice" transaction-manager="txManager">
-        <tx:attributes>
-            <tx:method name="select*" read-only="true" propagation="REQUIRED" />
-            <tx:method name="find*" read-only="true" propagation="REQUIRED" />
-            <tx:method name="save*" propagation="REQUIRED" isolation="REPEATABLE_READ" />
-            <tx:method name="update*" propagation="REQUIRED" isolation="REPEATABLE_READ" />
-            <tx:method name="add*" propagation="REQUIRED" isolation="REPEATABLE_READ" />
-            <tx:method name="delete*" propagation="REQUIRED" isolation="REPEATABLE_READ" />
-        </tx:attributes>
-    </tx:advice>
+   
 </beans>

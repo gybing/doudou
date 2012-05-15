@@ -18,7 +18,7 @@
     	insert into User
     	(
     		login,
-    		passwd,
+    		passWd,
     		firstName,
     		lastName,
     		gender,
@@ -28,7 +28,7 @@
     	values
     	(
     		#login#,
-    		#passwd#,
+    		#passWd#,
     		#firstName#,
     		#lastName#,
     		#gender#,

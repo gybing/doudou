@@ -1,0 +1,11 @@
+USE doudou;
+DROP TABLE IF EXISTS CommonPhrase;
+CREATE TABLE CommonPhrase
+(
+	id				 	INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    phrase            	VARCHAR(50) NOT NULL DEFAULT '',
+    classId				INT UNSIGNED NOT NULL,
+    available			BOOL NOT NULL DEFAULT TRUE,
+    
+    PRIMARY KEY (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

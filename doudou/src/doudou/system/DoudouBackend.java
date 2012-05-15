@@ -37,11 +37,11 @@ public class DoudouBackend {
 	
 	private LinkedBlockingQueue<PicPublishTask> picTaskQueue;
 	private LinkedBlockingQueue<EvtPublishTask> evtTaskQueue;
-	private LinkedBlockingQueue<MessagePubTask> announceTaskQueue;
+	private LinkedBlockingQueue<MessagePubTask> messageTaskQueue;
 	
 	private LinkedBlockingQueue<String> imgQueue;
 	private LinkedBlockingQueue<String> headPicQueue;
-	private LinkedBlockingQueue<PushVO> pushQueue;
+	private LinkedBlockingQueue<PushVO> apnsPushQueue;
 	private LinkedBlockingQueue<EmailTask> emailQueue;
 	
 	private Logger logger = Logger.getLogger(getClass());
@@ -55,13 +55,12 @@ public class DoudouBackend {
 	
 	private void start() {
 		if (exec == null) {
-			loadTokens();
 			
 			userAuthMap = new HashMap<String,Integer>();
 			picTaskQueue = new LinkedBlockingQueue<PicPublishTask>();
 			evtTaskQueue = new LinkedBlockingQueue<EvtPublishTask>();
-			announceTaskQueue = new LinkedBlockingQueue<MessagePubTask>();
-			pushQueue = new LinkedBlockingQueue<PushVO>();
+			messageTaskQueue = new LinkedBlockingQueue<MessagePubTask>();
+			apnsPushQueue = new LinkedBlockingQueue<PushVO>();
 			imgQueue = new LinkedBlockingQueue<String>();
 			headPicQueue = new LinkedBlockingQueue<String>();
 			emailQueue = new LinkedBlockingQueue<EmailTask>();
@@ -69,26 +68,15 @@ public class DoudouBackend {
 			exec = Executors.newFixedThreadPool(7);
 			exec.execute(new PicTaskWriter(picTaskQueue));
 			exec.execute(new EvtTaskWriter(evtTaskQueue));
-			exec.execute(new MessageTaskWriter(announceTaskQueue));
+			exec.execute(new MessageTaskWriter(messageTaskQueue));
 			exec.execute(new ImageProcessor(imgQueue));
 			exec.execute(new HeadPicProcessor(headPicQueue));
-			exec.execute(new APNSManager(pushQueue));
+			exec.execute(new APNSManager(apnsPushQueue));
 			if (doudouConfig.getEmailFuncSwitch()) {
 				exec.execute(new EmailManager(emailQueue));
 			}
 		}
 			
-	}
-	
-	public void loadTokens() {
-		tokenMap = new HashMap<String, Integer>();
-		List<User> userList = userDao.getAllUsers();
-		for (User user : userList) {
-			String tokenString = user.getId() + "/" + user.getLogin();
-			String token = Base64.encode(tokenString.getBytes());
-			System.out.println("Token for User : " + user.getLogin() + " ------> " + token);
-			tokenMap.put(token, user.getId());
-		}
 	}
 	
 	public int verify(String token) {
@@ -113,7 +101,7 @@ public class DoudouBackend {
 	
 	public void publishTask(MessagePubTask task) {
 		try {
-			announceTaskQueue.put(task);
+			messageTaskQueue.put(task);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -169,7 +157,7 @@ public class DoudouBackend {
 	
 	public void addPushVO(PushVO pushVO) {
 		try {
-			pushQueue.put(pushVO);
+			apnsPushQueue.put(pushVO);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

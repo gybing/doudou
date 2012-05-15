@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Message">
+
+    <typeAlias alias="Message" type="mayaya.vo.Message" />
+
+    <select id="read" parameterClass="int" resultClass="Message">
+        select * from Message
+        where
+        id = #id#
+        limit 1
+    </select>
+
+   
+    <insert id="create" parameterClass="Message">
+        insert into Message 
+        (
+        	title,
+            content,
+            userId,
+            messageType,
+            atChildList,
+            publishTime,
+            publishLevel,
+            mustFeedBack
+        )
+        values 
+        (
+        	#title#,
+            #content#,
+            #userId#,
+            #messageType#,
+            #atChildList#,
+            now(),
+            #publishLevel#,
+            #mustFeedBack#
+        )
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Message limit 1
+        </selectKey>
+    </insert>
+    
+    <select id="getNotificationVOById" parameterClass="int" resultClass="Announcement">
+    	select u.firstName as userName,a.* 
+    	from Message as a, User as u
+    	where 
+     	a.id = #contentId#
+     	and a.userId = u.userId
+    </select>
+</sqlMap>

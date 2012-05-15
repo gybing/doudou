@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Todo">
+
+    <typeAlias alias="Todo" type="mayaya.vo.Todo" />
+
+    <select id="read" parameterClass="Integer" resultClass="Todo">
+        select * from Todo
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+<!--    <update id="update" parameterClass="Child">-->
+<!--	update Child-->
+<!--	set-->
+<!--	firstName = #firstName#,-->
+<!--	lastName = #lastName#,-->
+<!--	birthDate = #birthDate#,-->
+<!--	classes = #classes#-->
+<!--	where-->
+<!--	childID = #childID#-->
+<!--    </update>-->
+    
+	<insert id="create" parameterClass="Todo" >
+		insert into Todo
+		(
+			userId,
+			todoType,
+			contentId
+		)
+		values
+		(
+			#userId#,
+			#todoType#,
+			#contentId#
+		)
+		<selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Todo limit 1
+        </selectKey>
+	</insert>    
+	
+	<select id="getTodoListByUserId" parameterClass="Map" resultClass="Todo">
+		select * from Todo 
+		where
+		userID = #userId#
+		order by id desc
+		limit #offset#,#limit#
+	</select>    
+</sqlMap>

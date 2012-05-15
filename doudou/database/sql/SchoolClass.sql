@@ -8,5 +8,5 @@ CREATE TABLE SchoolClass
     schoolId			INT UNSIGNED NOT NULL DEFAULT 0,
     available			BOOL NOT NULL DEFAULT TRUE,
     
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

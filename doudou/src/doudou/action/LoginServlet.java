@@ -18,6 +18,7 @@ import doudou.service.*;
 import doudou.util.BaseServlet;
 import doudou.util.tool.Base64;
 import doudou.vo.User;
+import doudou.vo.model.SessionData;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -100,26 +101,57 @@ public class LoginServlet extends BaseServlet{
 		return new Color(r, g, b);
 	}
 	
-	@RequestMapping("")
+	/**
+	 * 检验验证码填写是否正确，并冲session中移除验证码
+	 */
+	public static boolean validateIdentifyCode(HttpSession session, String code) {
+
+		System.out.println("code in session:"+session.getAttribute(CODE_SESSION_NAME)+" input code:"+code);
+		if (session.getAttribute(CODE_SESSION_NAME) == null)
+			return false;
+		String identifyCode = session.getAttribute(CODE_SESSION_NAME)
+				.toString();
+		if (identifyCode.equals(""))
+			return false;
+		if (!identifyCode.equals(code.toLowerCase()))
+			return false;
+		session.removeAttribute(CODE_SESSION_NAME);
+		return true;
+	}
+	
+	@RequestMapping("login")
     protected void processRequest(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-    	String userName = getStringParameter(request, "userName");
-    	String passWd = getStringParameter(request, "passWd");
+    	String userName = getStringParameter(request, "username");
+    	String passWd = getStringParameter(request, "password");
+    	String code = getStringParameter(request, "code");
     	int veriResult = 0;
-    	User user = userService.verifyUserNamePwd(userName, passWd);
-    	if (null != user) {
-    		String tokenString = user.getId() + "/" + user.getLogin();
-			String token = Base64.encode(tokenString.getBytes());
-			System.out.println("token = " + token);
-			Cookie cookie = new Cookie("DouDou_Ticket",token);
-			cookie.setMaxAge(3600);
-			cookie.setPath("/");
-			response.addCookie(cookie);
-			
-			veriResult = 1;
-		} else {
-			veriResult = -1;
+    	HttpSession session = request.getSession();
+		if (!validateIdentifyCode(session, code)) {
+			veriResult = -2;
 		}
-    	//request.setAttribute("veriResult", veriResult);
+		else{
+			User user = userService.verifyUserNamePwd(userName, passWd);
+	    	if (null != user) {
+	    		String tokenString = user.getId() + "/" + user.getLogin();
+				String token = Base64.encode(tokenString.getBytes());
+				System.out.println("token = " + token);
+				Cookie cookie = new Cookie("DouDou_Ticket",token);
+				cookie.setMaxAge(3600);
+				cookie.setPath("/");
+				response.addCookie(cookie);
+				
+				veriResult = 1;
+				
+				// Set Session Data TODO
+				SessionData sessionData = new SessionData();
+	    		sessionData.setUser(user);
+	    		
+	    		request.getSession(true).setAttribute("sessionData", sessionData);
+			} else {
+				veriResult = -1;
+			}
+		}
+    	
     	response.getOutputStream().print(veriResult);
     }
 	

@@ -1,0 +1,12 @@
+USE doudou;
+DROP TABLE IF EXISTS PasswdLog;
+CREATE TABLE PasswdLog
+(
+	id				 	INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    oldPasswd           VARCHAR(60) NOT NULL DEFAULT '',
+    newPasswd			VARCHAR(60) NOT NULL DEFAULT '',
+    operator			VARCHAR(20) NOT NULL DEFAULT '',
+    modifyTime			DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL ,
+    
+    PRIMARY KEY (id)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

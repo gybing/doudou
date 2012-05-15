@@ -8,5 +8,5 @@ CREATE TABLE School
     suffix				VARCHAR(10) NOT NULL DEFAULT '',
     available			BOOL NOT NULL DEFAULT TRUE,
     
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

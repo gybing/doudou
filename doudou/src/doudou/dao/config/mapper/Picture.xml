@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Picture">
+
+    <typeAlias alias="Picture" type="mayaya.vo.Picture" />
+	<typeAlias alias="NotificationVO" type="mayaya.vo.model.NotificationVO" />
+
+    <select id="read" parameterClass="int" resultClass="Picture">
+        select * from Picture
+        where
+        pictureID = #pictureID#
+        limit 1
+    </select>
+
+	<select id="getPictures" resultClass="Picture">
+		select * from Picture
+	</select>
+	
+    <insert id="create" parameterClass="Picture">
+        insert into Picture 
+        (
+            publishTime,
+            userId,
+            pictureURL,
+            description,
+            atChildList
+        )
+        values 
+        (
+            #publishTime#,
+            #userId#,
+            #pictureURL#,
+            #description#,
+            #atChildList#
+        )
+        <selectKey keyProperty="pictureID" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Picture limit 1
+        </selectKey>
+    </insert>
+    
+    <select id="getNotificationVOById" parameterClass="int" resultClass="Picture">
+    	select u.firstName as userName, p.*
+    	from Picture as p, User as u
+    	where 
+     	pictureID = #contentId#
+     	and p.userId = u.userId
+    </select>
+    
+</sqlMap>

@@ -1,0 +1,159 @@
+body{
+	margin:0 auto;
+	/*text-align:center;*/
+	/*background-color:#f2f2f2;*/
+	background-image: url(../img/login_bk.png);
+	background-repeat: repeat;
+	color:#949494;
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-size:12px;
+}
+.main-container{
+	margin:0 auto;
+	padding-top:0px;
+	clear:both;
+	overflow: hidden;
+}
+.titleimg{
+	margin-top: 60px;
+	margin-bottom: 0px;
+	width:500px;
+	height:150px;
+}
+form{
+	width: 500px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+.username{
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	float: left;
+	width: 225px;
+	height: 50px;
+	background-color: white;
+	border-radius: 7px;
+	border: 1px #cdcdcd solid;
+	color:#c1c1c1;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:25px;
+	padding-left: 5px;
+}
+.code{
+	margin-top: 20px;
+	margin-left: 5px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	float: left;
+	width: 225px;
+	height: 50px;
+	background-color: white;
+	border-radius: 7px;
+	border: 1px #cdcdcd solid;
+	color:#c1c1c1;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:25px;
+	padding-left: 5px;
+}
+.codepic_field{
+	margin-top: 24px;
+}
+a{
+	margin-top: 20px;
+	margin-left: 2px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	color:#564a4a;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:12px;
+	text-decoration: none;
+}
+a:hover{
+	margin-top: 20px;
+	margin-left: 2px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	color:#66a344;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:12px;
+	text-decoration: none;
+}
+.start{
+	width: 500px;
+	height: 80px;
+	margin-top: 10px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+.stayon{
+	margin-top: 20px;
+	margin-left: 10px;
+	/*float: left;*/
+	color:#564a4a;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:20px;
+}
+.notice{
+	width: 484px;
+	height: 30px;
+	margin-top: 5px;
+	margin-left: 0px;
+	margin-bottom: 0px;
+	margin-right: 0px;
+	padding-left: 8px;
+	padding-right: 8px;
+	color:#d64246;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:20px;
+	
+}
+.passwordlabel{
+	margin-top: 12px;
+	margin-left: -225px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	height: 25px;
+	width: 60px;
+	float: left;
+	color:#c1c1c1;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:25px;
+}
+
+.password{
+	margin-top: 0px;
+	margin-left: 18px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	float: left;
+	width: 225px;
+	height: 50px;
+	background-color: white;
+	border-radius: 7px;
+	border: 1px #cdcdcd solid;
+	color:#c1c1c1;
+	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-size:25px;
+	padding-left: 5px;
+}

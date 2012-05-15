@@ -1,24 +1,15 @@
-USE mayaya;
+USE doudou;
 DROP TABLE IF EXISTS Child;
 CREATE TABLE Child
 (
-	childID				 INT UNSIGNED NOT NULL AUTO_INCREMENT, 
-    firstName			 VARCHAR(30) NOT NULL DEFAULT '',
-    lastName			 VARCHAR(30) NOT NULL DEFAULT '',
-    age					 INT NOT NULL DEFAULT 0,
-    userStatus           enum('Invalid', 'Valid') NOT NULL DEFAULT 'Valid',   
+	id				 	 INT UNSIGNED NOT NULL AUTO_INCREMENT, 
+    firstName			 VARCHAR(20) NOT NULL DEFAULT '',
+    lastName			 VARCHAR(20) NOT NULL DEFAULT '',
+    gender				 VARCHAR(10) NOT NULL DEFAULT 'Male',
+    birthDate			 DATE DEFAULT '0000-00-00' NOT NULL ,
+    description			 VARCHAR(255) NOT NULL DEFAULT '',
     photoURL   			 VARCHAR(255) NOT NULL DEFAULT '',
     cover				 VARCHAR(255) NOT NULL DEFAULT '',
-    classes				 VARCHAR(64) NOT NULL DEFAULT '',
-    lastLoginTime        DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL ,
     
-    gender				 VARCHAR(10) NOT NULL DEFAULT 'Male',
-    birthDate			 DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL ,
-    description			 VARCHAR(255) NOT NULL DEFAULT '',
-    nationality			 VARCHAR(20) NOT NULL DEFAULT '',
-    address				 VARCHAR(100) NOT NULL DEFAULT '',
-    enterDate			 DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL ,
-    program				 enum('FULL', 'HALF') NOT NULL DEFAULT 'FULL',
-    
-    PRIMARY KEY (childID)
+    PRIMARY KEY (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
