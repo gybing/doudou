@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMapConfig      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+
+<sqlMapConfig>
+	<settings cacheModelsEnabled="true" enhancementEnabled="true"
+		lazyLoadingEnabled="true" maxRequests="32" maxSessions="10"
+		maxTransactions="5" useStatementNamespaces="true" />
+		
+    <transactionManager type="JDBC" commitRequired="false">
+        <dataSource type="SIMPLE">
+            <property value="${driver}" name="JDBC.Driver" />
+            <property value="${url}" name="JDBC.ConnectionURL" />
+            <property value="${username}" name="JDBC.Username" />
+            <property value="${password}" name="JDBC.Password" />
+            <property name="Pool.MaximumActiveConnections" value="32" />
+            <property name="Pool.MaximumIdleConnections" value="4" />
+            <property name="Pool.PingQuery" value="select 1"/>
+            <property name="Pool.PingEnabled" value="true"/>
+            <property name="Pool.PingConnectionsNotUsedFor" value="3600000"/>
+        </dataSource>
+    </transactionManager>
+    
+<!--	<sqlMap resource="mayaya/dao/config/mapper/Picture.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/Comment.xml" />-->
+	<sqlMap resource="doudou/dao/config/mapper/User.xml" />
+<!--	<sqlMap resource="mayaya/dao/config/mapper/Child.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/Event.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/FriendsFromTo.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/PushPictureUser.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/DeviceToken.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/RelationsChildUser.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/RelationsEventUser.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/Todo.xml" />-->
+<!--	<sqlMap resource="mayaya/dao/config/mapper/Announcement.xml" />-->
+<!--	-->
+    
+</sqlMapConfig>

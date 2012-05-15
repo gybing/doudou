@@ -1,0 +1,10 @@
+USE doudou;
+DROP TABLE IF EXISTS SchoolCity;
+CREATE TABLE SchoolCity
+(
+	id				 	INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    cityName            VARCHAR(30) NOT NULL DEFAULT '',
+    parentId			INT UNSIGNED NOT NULL DEFAULT 0,
+    
+    PRIMARY KEY (id),
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
