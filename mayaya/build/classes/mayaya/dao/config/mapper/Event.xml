@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Event">
+
+    <typeAlias alias="Event" type="mayaya.vo.Event" />
+	
+    <select id="read" parameterClass="int" resultClass="Event">
+        select * from Event
+        where
+        eventID = #eventID#
+        limit 1
+    </select>
+
+	<select id="getEventListByChildId" parameterClass="map" resultClass="Event">
+    	select e.* from Event as e
+    	where isSchool = TRUE 
+    	UNION
+    	select e.* from Relations_Event_User as reu, Event as e
+    	where reu.eventID = e.eventID
+    	<isNotEqual prepend="AND" property="toChildId" compareValue="1">
+    		toChildId = #toChildId#
+    	</isNotEqual>
+    	and e.isSchool = FALSE 
+		<isEqual property="toChildId" compareValue="1">
+    		group by reu.eventID
+    	</isEqual>
+    </select>
+	
+    <insert id="create" parameterClass="Event">
+        insert into Event 
+        (
+            content,
+            beginTime,
+            endTime,
+            userID,
+            title,
+            location,
+            isSchool,
+            atChildList,
+            publishTime,
+            allday
+        )
+        values 
+        (
+            #content#,
+            #beginTime#,
+            #endTime#,
+            #userID#,
+            #title#,
+            #location#,
+            #isSchool#,
+            #atChildList#,
+            now(),
+            #allday#
+        )
+        <selectKey keyProperty="eventID" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Event limit 1
+        </selectKey>
+    </insert>
+    
+    <select id="getNotificationVOById" parameterClass="int" resultClass="Event">
+    	select u.firstName as userName,e.* 
+    	from Event as e, User as u
+    	where 
+     	e.eventID = #contentId#
+     	and e.userID = u.userId
+    </select>
+    
+</sqlMap>

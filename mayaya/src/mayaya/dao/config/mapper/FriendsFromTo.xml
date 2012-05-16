@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Friends_From_To">
+
+    <typeAlias alias="Friends_From_To" type="mayaya.vo.Friends_From_To" />
+	<typeAlias alias="User" type="mayaya.vo.User" />
+	
+    <select id="read" parameterClass="int" resultClass="Friends_From_To">
+        select * from Friends_From_To
+        where
+        friendsID = #friendsID#
+        limit 1
+    </select>
+    
+    <insert id="create" parameterClass="Friends_From_To">
+        insert into Friends_From_To 
+        (
+			fromUserID,
+			toChildID,
+			confirmed
+        )
+        values 
+        (
+			#fromUserID#,
+			#toChildID#,
+			#confirmed#
+        )
+        <selectKey keyProperty="friendsID" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Friends_From_To limit 1
+        </selectKey>
+    </insert>
+    
+    <select id="getFriendsByFromUserId" parameterClass="Integer" resultClass="User">
+    	select u.* from User as u , Friends_From_To as f
+    	where f.toChildID = #toChildID# and f.fromUserID = u.userId and f.confirmed = TRUE
+    </select>
+    
+</sqlMap>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Comment">
+
+    <typeAlias alias="Comment" type="mayaya.vo.Comment" />
+
+    <select id="read" parameterClass="int" resultClass="Comment">
+        select * from Comment
+        where
+        commentID = #commentID#
+        limit 1
+    </select>
+
+   
+    <insert id="create" parameterClass="Comment">
+        insert into Comment 
+        (
+            content,
+            publishTime,
+            userID,
+            pictureID
+        )
+        values 
+        (
+            #content#,
+            #publishTime#,
+            #userID#,
+            #pictureID#
+        )
+        <selectKey keyProperty="commentID" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Comment limit 1
+        </selectKey>
+    </insert>
+    
+    <select id="getCommentListByPictureId" parameterClass="int" resultClass="Comment">
+    	select * from Comment
+    	where 
+    	pictureID = #pictureID#
+    </select>
+    
+    <select id="getCommentUserIdListByPicId" parameterClass="int" resultClass="int">
+    	select userID from Comment
+    	where 
+    	pictureID = #pictureID#
+    </select>
+    
+    <select id="getNotificationVOById" parameterClass="int" resultClass="Comment">
+    	select u.firstName as userName,c.* from Comment as c, User as u
+    	where 
+     	commentID = #contentId#
+     	and c.userID = u.userId
+    </select>
+    
+</sqlMap>

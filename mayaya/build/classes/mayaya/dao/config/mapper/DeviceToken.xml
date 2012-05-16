@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DeviceToken">
+
+    <typeAlias alias="DeviceToken" type="mayaya.vo.DeviceToken" />
+
+    <select id="read" parameterClass="java.lang.String" resultClass="DeviceToken">
+        select * from DeviceToken
+        where
+        deviceTokenId = #deviceTokenId#
+        limit 1
+    </select>
+    
+    <select id="getDeviceTokenList" resultClass="DeviceToken">
+        select * from DeviceToken
+    </select>
+    
+    <select id="getDeviceTokenByUserId" resultClass="java.lang.String">
+    	select deviceTokenId from DeviceToken 
+    	where userId = #userId#
+    </select>
+    
+     <insert id="create" parameterClass="DeviceToken">
+        replace into DeviceToken 
+        (
+            deviceTokenId,
+            userId
+        )
+        values 
+        (
+            #deviceTokenId#,
+            #userId#
+        )
+    </insert>
+    
+</sqlMap>

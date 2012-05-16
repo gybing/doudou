@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="User">
+
+    <typeAlias alias="User" type="mayaya.vo.User" />
+
+    <select id="read" parameterClass="int" resultClass="User">
+        select * from User
+        where
+        userId = #userId#
+        limit 1
+    </select>
+
+    <select id="getAllUsers" resultClass="User">
+    	select * from User
+    </select>
+    
+    <insert id="create" parameterClass="User">
+        insert into User 
+        (
+			login,
+			passwd,
+			userType,
+			firstName,
+			lastName,
+			telephone,
+			email,
+			gender
+        )
+        values 
+        (
+			#login#,
+			#passwd#,
+			#userType#,
+			#firstName#,
+			#lastName#,
+			#telephone#,
+			#email#,
+			#gender#
+        )
+        <selectKey keyProperty="userId" resultClass="int">
+            SELECT last_insert_id() AS ID FROM User limit 1
+        </selectKey>
+    </insert>
+    
+    <select id="getUserByTelephone" parameterClass="java.lang.String" resultClass="User">
+    	select * from User where telephone = #telephone# limit 1
+    </select>
+    
+    <update id="update" parameterClass="User">
+    	update User 
+    	set 
+    	firstName = #firstName#,
+    	lastName = #lastName#,
+		email = #email#
+    	where 
+    	userId = #userId#
+    </update>
+    
+    <select id="isExistLogin" parameterClass="java.lang.String" resultClass="User">
+    	select * from User where login = #login# 
+    </select>
+    
+</sqlMap>

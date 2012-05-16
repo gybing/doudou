@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Relations_Child_User">
+
+    <typeAlias alias="Relations_Child_User" type="mayaya.vo.Relations_Child_User" />
+    <typeAlias alias="TagedChildInfo" type="mayaya.vo.model.TagedChildInfo"/>
+    
+    <insert id="create" parameterClass="Relations_Child_User">
+        insert into Relations_Child_User 
+        (
+        	childID,
+        	userID,
+        	userType
+        )
+        values 
+        (
+	        #childID#,
+	        #userID#,
+	        #userType#
+        )
+        <selectKey keyProperty="relationID" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Relations_Child_User limit 1
+        </selectKey>
+    </insert>
+    
+    
+    <select id="read" parameterClass="int" resultClass="Relations_Child_User">
+        select * from Relations_Child_User
+        where
+        relationID = #relationID#
+        limit 1
+    </select>
+    
+    <select id="getParentsIdByChildId" parameterClass="int" resultClass="Integer">
+    	select userID from Relations_Child_User 
+    	where
+    	childID = #childId#
+    	and userType = 'Parents'
+    </select>
+    
+    <select id="getRelatedUserIdByChildId" parameterClass="int" resultClass="Integer">
+    	select userID from Relations_Child_User 
+    	where
+    	childID = #childId#
+    </select>
+    
+    <select id="getChildrenIdByUserId" parameterClass="int" resultClass="Relations_Child_User">
+    	select rcu.* from Relations_Child_User as rcu, Child as c
+    	where
+    	rcu.userID = #userID#
+    	and rcu.childID = c.childID
+    	order by c.firstName asc
+    </select>
+    
+    <select id="getParentsNameByChildId" parameterClass="Map" resultClass="java.lang.String">
+    	select u.firstName from User as u, Relations_Child_User as rcu
+    	where 
+    	rcu.childID = #childId#
+    	and rcu.userID = u.userId
+    	and u.gender = #gender#
+    	and rcu.userType = 'Parents'
+    	limit 1
+    </select>
+    
+    <select id="getTagedChildInfo" parameterClass="int" resultClass="TagedChildInfo">
+    	select c.childID,c.firstName,c.lastName,c.photoURL,rcu.userType from Child as c, Relations_Child_User as rcu
+    	where 
+    	rcu.childID = c.childID
+    	and rcu.userID = #userId#
+    </select>
+</sqlMap>

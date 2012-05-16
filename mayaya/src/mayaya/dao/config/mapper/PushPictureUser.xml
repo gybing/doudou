@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="Push_Picture_User">
+
+    <typeAlias alias="Push_Picture_User" type="mayaya.vo.Push_Picture_User" />
+	<typeAlias alias="picture" type="mayaya.vo.Picture" />
+    
+    <select id="read" parameterClass="int" resultClass="Push_Picture_User">
+        select * from Push_Picture_User
+        where
+        push_Pic_UserID = #push_Pic_UserID#
+        limit 1
+    </select>
+    
+    <insert id="create" parameterClass="Push_Picture_User">
+        insert into Push_Picture_User 
+        (
+			pictureID,
+			toChildId,
+			publishTime,
+			self
+        )
+        values 
+        (
+			#pictureID#,
+			#toChildId#,
+			#publishTime#,
+			#self#
+        )
+        <selectKey keyProperty="push_Pic_UserID" resultClass="int">
+            SELECT last_insert_id() AS ID FROM Push_Picture_User limit 1
+        </selectKey>
+    </insert>
+    
+    <select id="getPhotoWallData" parameterClass="map" resultClass="picture">
+    	select p.* from Push_Picture_User as ppu, Picture as p
+    	where ppu.pictureID = p.pictureID
+    	<isNotEqual prepend="AND" property="toChildId" compareValue="1">
+    		toChildId = #toChildId#
+    	</isNotEqual>
+    	and timeDiff(p.publishTime,#date#) >= 0
+    	<isEqual property="toChildId" compareValue="1">
+    		group by ppu.pictureID
+    	</isEqual>
+    	order by p.publishTime desc
+    </select>
+    
+    
+    <select id="getMainPagePics" parameterClass="map" resultClass="picture">
+    	select p.*,u.firstName as userName from Push_Picture_User as ppu, Picture as p, User as u
+    	where ppu.pictureID = p.pictureID
+    	and p.userId = u.userId
+    	<isNotEqual prepend="AND" property="toChildId" compareValue="1">
+    		toChildId = #toChildId#
+    	</isNotEqual>
+    	<isEqual property="toChildId" compareValue="1">
+    		group by ppu.pictureID
+    	</isEqual>
+    	order by p.publishTime desc
+    	limit 3
+    </select>
+    
+    <select id="getPicturesCountByChildId" parameterClass="map" resultClass="int">
+    	select count(*) from Push_Picture_User as ppu where	toChildId = #toChildId#
+    </select>
+    
+    <select id="getPushChildIdListByPicId" parameterClass="int" resultClass="int">
+    	select toChildId from Push_Picture_User
+    	where pictureID = #pictureID#
+    </select>
+</sqlMap>
