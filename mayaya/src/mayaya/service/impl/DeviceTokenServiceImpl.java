@@ -28,4 +28,9 @@ public class DeviceTokenServiceImpl implements DeviceTokenService {
 		deviceTokenDao.create(dt);
 	}
 
+	@Override
+	public void updateDeviceTokenInactive(String deviceToken) {
+		deviceTokenDao.updateDeviceTokenInactive(deviceToken);
+	}
+
 }

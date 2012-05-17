@@ -7,7 +7,7 @@ import mayaya.util.dao.BaseEntityDao;
 import mayaya.util.dao.DatabaseDao;
 import mayaya.vo.DeviceToken;
 
-public class DeviceTokenDaoImpl extends BaseEntityDao<DeviceToken, Integer> implements DeviceTokenDao {
+public class DeviceTokenDaoImpl extends BaseEntityDao<DeviceToken, String> implements DeviceTokenDao {
 
 	public DeviceTokenDaoImpl(DatabaseDao database) {
 		super(database);
@@ -26,6 +26,11 @@ public class DeviceTokenDaoImpl extends BaseEntityDao<DeviceToken, Integer> impl
 	@Override
 	public List<String> getDeviceTokenByUserId(int userId) {
 		return readObjects("getDeviceTokenByUserId",userId);
+	}
+
+	@Override
+	public void updateDeviceTokenInactive(String deviceToken) {
+		update("updateDeviceTokenInactive",deviceToken);
 	}
 
 }

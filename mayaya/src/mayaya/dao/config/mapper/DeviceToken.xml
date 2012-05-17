@@ -18,6 +18,7 @@
     <select id="getDeviceTokenByUserId" resultClass="java.lang.String">
     	select deviceTokenId from DeviceToken 
     	where userId = #userId#
+    	and active = TRUE
     </select>
     
      <insert id="create" parameterClass="DeviceToken">
@@ -32,5 +33,13 @@
             #userId#
         )
     </insert>
+    
+    <update id="updateDeviceTokenInactive" parameterClass="java.lang.String">
+    	update DeviceToken 
+    	set
+    	active = FALSE
+    	where
+    	deviceTokenId = #deviceTokenId#
+    </update>
     
 </sqlMap>

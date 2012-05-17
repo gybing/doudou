@@ -7,7 +7,14 @@ public class DeviceToken implements Serializable{
 	
 	private String deviceTokenId;
 	private int userId;
+	private boolean active;
 	
+	public boolean isActive() {
+		return active;
+	}
+	public void setActive(boolean active) {
+		this.active = active;
+	}
 	public int getUserId() {
 		return userId;
 	}

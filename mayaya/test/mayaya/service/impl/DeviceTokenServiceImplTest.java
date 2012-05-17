@@ -8,11 +8,15 @@ public class DeviceTokenServiceImplTest extends TestCase {
 
 	DeviceTokenService s = DeviceTokenServiceImpl.getInstance();
 	
-	public void testAddDeviceToken() {
-		DeviceToken dt = new DeviceToken();
-		dt.setDeviceTokenId("asdfasdfasdfasdfasdfsaf");
-		dt.setUserId(4);
-		s.addDeviceToken(dt);
+//	public void testAddDeviceToken() {
+//		DeviceToken dt = new DeviceToken();
+//		dt.setDeviceTokenId("asdfasdfasdfasdfasdfsaf");
+//		dt.setUserId(4);
+//		s.addDeviceToken(dt);
+//	}
+	
+	public void testUpdateDeviceTokenInactive() {
+		s.updateDeviceTokenInactive("asdfasdfasdfasdfasdfsaf");
 	}
 
 }

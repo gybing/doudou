@@ -74,7 +74,7 @@ public class APNSManager implements Runnable{
 					pb.customField("ContentId", commentId);
 					pb.customField("NotificationType", "Comment");
 					String payload = pb.build();
-					service.push(token, payload);
+					justPush(token, payload);
 				}
 			}
 		}
@@ -85,15 +85,13 @@ public class APNSManager implements Runnable{
 		if (null!= tokenList && tokenList.size() > 0) {
 			for (String token : tokenList) {
 				if (null != token && !"".equals(token) && !"(null)".equals(token) && !"null".equals(token)) {
-					System.out.println(new Date());
 					PayloadBuilder pb = APNS.newPayload();
 					pb.alertBody(fromUser + " sent you a new photo");
 					pb.customField("ContentId", picId);
 					pb.customField("NotificationType", "PicTag");
 					String payload = pb.build();
 					System.out.println("push to deviceToken : " + token);
-					service.push(token, payload);
-					System.out.println(new Date());
+					justPush(token, payload);
 				}
 			}
 		}
@@ -109,7 +107,7 @@ public class APNSManager implements Runnable{
 					pb.customField("ContentId", evtId);
 					pb.customField("NotificationType", "EvtTag");
 					String payload = pb.build();
-					service.push(token, payload);			
+					justPush(token, payload);			
 				}
 			}
 		}
@@ -124,25 +122,60 @@ public class APNSManager implements Runnable{
 					pb.customField("ContentId", announcementId);
 					pb.customField("NotificationType", "Announcement");
 					String payload = pb.build();
-					service.push(token, payload);			
+					justPush(token, payload);
+						
 				}
 			}
 		}
 	}
+	private void justPush(String token, String pb){
+		try{
+			service.start();
+			service.push(token,pb);		
+			service.stop();
+		} catch(Exception e){
+			e.printStackTrace();
+		}
+	}
 	
 	private void push(PushVO pushVO, List<String> deviceTokenList) {
-		switch (pushVO.getTodoType()) {
-		case Comment:
-			pushComment(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
-			break;
-		case PicTag:
-			pushPicTaged(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
-			break;
-		case EvtTag:
-			pushEvtTaged(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
-			break;
-		case Announcement:
-			pushAnnouncement(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
+		try{
+			deleteInactiveDevices();
+			
+			switch (pushVO.getTodoType()) {
+			case Comment:
+				pushComment(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
+				break;
+			case PicTag:
+				pushPicTaged(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
+				break;
+			case EvtTag:
+				pushEvtTaged(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
+				break;
+			case Announcement:
+				pushAnnouncement(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+			logger.error(e, e);
+		}
+	}
+	
+	private void deleteInactiveDevices() {
+		logger.info("deleteInactiveDevices!");
+		Map<String,Date> result = service.getInactiveDevices();
+		for (Map.Entry<String, Date> string : result.entrySet()) {
+			String deviceTokenId = string.getKey();
+			deviceTokenId = deviceTokenId.toLowerCase();
+			StringBuffer sb = new StringBuffer();
+			for (int i = 0; i < deviceTokenId.length(); i++) {
+				if (i >= 8 && i%8 == 0) {
+					sb.append(" ");
+				}
+				sb.append(deviceTokenId.charAt(i));
+			}
+			System.out.println("To delete : " + sb.toString());
+			deviceTokenDao.updateDeviceTokenInactive(sb.toString());
 		}
 	}
 
@@ -170,56 +203,33 @@ public class APNSManager implements Runnable{
 		}	
 	}
 	
-	public static void loadInactiveDevices() {
-		
-//		 String filePathAndName = MayayaConfig.getConfig();
-//		 String fileContent;
-//
-//		try {
-//			String filePath = filePathAndName;
-//			filePath = filePath.toString();
-//			File myFilePath = new File(filePath);
-//			if (!myFilePath.exists()) {
-//				myFilePath.createNewFile();
+
+//	public static void main(String[] args) {
+//		String de = "705423555A875DF7F2D7049E831172F3E7EECBAA751C4D3F84D5EAF572FBB8A1";
+//		de = de.toLowerCase();
+//		StringBuffer sb = new StringBuffer();
+//		for (int i = 0; i < de.length(); i++) {
+//			if (i >= 8 && i%8 == 0) {
+//				sb.append(" ");
 //			}
-//			FileWriter resultFile = new FileWriter(myFilePath);
-//			PrintWriter myFile = new PrintWriter(resultFile);
-//			String strContent = fileContent;
-//			myFile.println(strContent);
-//			resultFile.close();
-//
-//		} catch (Exception e) {
-//			System.out.println("新建目录操作出错");
-//			e.printStackTrace();
-//
+//			sb.append(de.charAt(i));
 //		}
-			  
-		
-		logger.info("Inactive Device Fetcher execute!!");
-		System.out.println("Start Time : " + new Date());
-		ApnsService service = APNS.newService().withCert(MayayaConfig.getConfig().getAPNSCertificatePath(), "mayaya@mayaya").withProductionDestination().build();
-		Map<String,Date> result = service.getInactiveDevices();
-		for (Map.Entry<String, Date> string : result.entrySet()) {
-			System.out.println(string.getKey());
-			System.out.println(string.getValue());
-			System.out.println();
-		}
-		System.out.println("End Time : " + new Date());
-	}
-	
-	public static void main(String[] args) {
-//		PayloadBuilder pb = APNS.newPayload();
-//		pb.alertBody("You have a new Tagged");
-//		pb.customField("secret", "what do you think?");
-//		pb.customField("secret2", "what do you think2?");
-//		String payload = pb.build();
-//		
-////		String payload = APNS.newPayload().badge(3).customField("secret", "what do you think?")
-////        .localizedKey("GAME_PLAY_REQUEST_FORMAT")
-////        .localizedArguments("Jenna", "Frank")
-////        .actionKey("Play").build();
-//        String token = "70542355 5a875df7 f2d7049e 831172f3 e7eecbaa 751c4d3f 84d5eaf5 72fbb8a1";
-//        service.push(token, payload);
-//        System.out.println(new Date());
-	}
+//		System.out.println(sb.toString());
+//		DatabaseDao myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
+//		DeviceTokenDao deviceTokenDao = myDatabaseDao.getEntityDao(DeviceTokenDao.class);
+//		deviceTokenDao.updateDeviceTokenInactive(sb.toString());
+////		PayloadBuilder pb = APNS.newPayload();
+////		pb.alertBody("You have a new Tagged");
+////		pb.customField("secret", "what do you think?");
+////		pb.customField("secret2", "what do you think2?");
+////		String payload = pb.build();
+////		
+//////		String payload = APNS.newPayload().badge(3).customField("secret", "what do you think?")
+//////        .localizedKey("GAME_PLAY_REQUEST_FORMAT")
+//////        .localizedArguments("Jenna", "Frank")
+//////        .actionKey("Play").build();
+////        String token = "70542355 5a875df7 f2d7049e 831172f3 e7eecbaa 751c4d3f 84d5eaf5 72fbb8a1";
+////        service.push(token, payload);
+////        System.out.println(new Date());
+//	}
 }
