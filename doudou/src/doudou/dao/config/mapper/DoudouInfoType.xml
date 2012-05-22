@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="DoudouInfoType">
+
+    <typeAlias alias="DoudouInfoType" type="doudou.vo.DoudouInfoType" />
+
+	<insert id="create" parameterClass="DoudouInfoType">
+        insert into DoudouInfoType 
+        (
+            infoType,
+			typeName,
+			schoolId
+        )
+        values 
+        (
+            #infoType#,
+			#typeName#,
+			#schoolId#
+        )
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM DoudouInfoType limit 1
+        </selectKey>
+    </insert>
+
+    <select id="read" parameterClass="Integer" resultClass="DoudouInfoType">
+        select * from DoudouInfoType
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+    <select id="getTeacherTypeBySchoolId" parameterClass="int" resultClass="DoudouInfoType">
+    	select * from DoudouInfoType
+    	where 
+    	schoolId = #schoolId#
+    	and infoType = 'TeacherType'
+    	and available = TRUE
+    </select>
+    
+    <select id="getMessageTypeBySchoolId" parameterClass="int" resultClass="DoudouInfoType">
+    	select * from DoudouInfoType
+    	where 
+    	schoolId = #schoolId#
+    	and infoType = 'MessageType'
+    	and available = TRUE
+    </select>
+    
+    <update id="update" parameterClass="DoudouInfoType">
+    	update DoudouInfoType 
+    	set 
+    	phrase = #phrase#,
+    	available = #available#,
+    	where 
+    	id = #id#
+    </update>
+       
+</sqlMap>

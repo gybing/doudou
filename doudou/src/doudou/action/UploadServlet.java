@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import doudou.system.DoudouBackend;
+import doudou.util.BaseServlet;
 import doudou.util.DoudouConfig;
 import doudou.util.tool.DateUtil;
 import doudou.vo.Event;
 import doudou.vo.Message;
 import doudou.vo.Picture;
+import doudou.vo.User;
 import doudou.vo.model.EvtPublishTask;
 import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.PicPublishTask;
@@ -33,7 +35,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/Upload")
-public class UploadServlet {
+public class UploadServlet extends BaseServlet{
 	
 	private Logger logger = Logger.getLogger(getClass());
 	private String savePath = "upload";
@@ -49,8 +51,8 @@ public class UploadServlet {
 			throws UnsupportedEncodingException, ServletException, IOException {
 		Object[] whoToPush = null;
 		String photoCaption = "";
-		SessionData sessionData = (SessionData)request.getAttribute("sessionData");
-		int userId = sessionData.getUser().getId();
+		User user = getUser(request);
+		int userId = user.getId();
 		logger.info("UploadServlet ---> userId = " + userId);
 		
 		// 设置编码格式
@@ -130,9 +132,9 @@ public class UploadServlet {
 	
 	@RequestMapping("/Message")
 	public void uploadNotification(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionData data = (SessionData)request.getSession().getAttribute("sessionData");
+		User user = getUser(request);
     	
-    	int userId = (Integer)data.getUser().getId();
+    	int userId = user.getId();
 		Object[] whoToPush = null;
 		
 		String jsonString = request.getParameter("jsonString");
@@ -146,6 +148,8 @@ public class UploadServlet {
 		Message noti = new Message();
 		noti.setContent(content);
 		noti.setUserId(userId);
+		//TODO
+		//noti.setTitle(title)
 		
 		MessagePubTask task = new MessagePubTask();
 		
@@ -235,47 +239,49 @@ public class UploadServlet {
 //
 //	}
 //
-//	@RequestMapping("/Event")
-//	public void uploadEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//    	int userId = (Integer)request.getAttribute("userId");
-//		Object[] whoToPush = null;
-//		
-//		String jsonString = request.getParameter("jsonString");
-//		
-//		JSONObject object = JSONObject.fromObject(jsonString);
-//		whoToPush = object.getJSONArray("whoToPush").toArray();
-//		
-//		String content = object.getString("content");
-//		System.out.println("content = " + content);
-//		String beginTimeString = object.getString("beginTimeString");
-//		System.out.println("beginTimeString = " + beginTimeString);
-//		String title = object.getString("title");
-//		System.out.println("title = " + title);
-//		String endTimeString = object.getString("endTimeString");
-//		System.out.println("endTimeString = " + endTimeString);
-//		String location  = object.getString("location");
-//		System.out.println("location = " + location);
-//		
-//		Event event = new Event();
-//		event.setContent(content);
-//		event.setBeginTime(DateUtil.getInstance().fromString(beginTimeString));
-//		event.setEndTime(DateUtil.getInstance().fromString(endTimeString));
-//		event.setTitle(title);
-//		event.setLocation(location);
-//		event.setUserID(userId);
-//		
-//		EvtPublishTask task = new EvtPublishTask();
-//		
-//		task.setEvent(event);
-//		
-//		List<Integer> childIdList = new ArrayList<Integer>();
-//		for (Object o : whoToPush) {
-//			childIdList.add((Integer)o);
-//		}
-//		task.setChildIdList(childIdList);
-//		MayayaBackend.getInstance().publishTask(task);
-//		//CacheManager.getInstance().putEvt(userId);
-//	}
+	@RequestMapping("/Event")
+	public void uploadEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		User user = getUser(request);
+    	
+    	int userId = user.getId();
+		Object[] whoToPush = null;
+		
+		String jsonString = request.getParameter("jsonString");
+		
+		JSONObject object = JSONObject.fromObject(jsonString);
+		whoToPush = object.getJSONArray("whoToPush").toArray();
+		
+		String content = object.getString("content");
+		System.out.println("content = " + content);
+		String beginTimeString = object.getString("beginTimeString");
+		System.out.println("beginTimeString = " + beginTimeString);
+		String title = object.getString("title");
+		System.out.println("title = " + title);
+		String endTimeString = object.getString("endTimeString");
+		System.out.println("endTimeString = " + endTimeString);
+		String location  = object.getString("location");
+		System.out.println("location = " + location);
+		
+		Event event = new Event();
+		event.setContent(content);
+		event.setBeginTime(DateUtil.getInstance().fromString(beginTimeString));
+		event.setEndTime(DateUtil.getInstance().fromString(endTimeString));
+		event.setTitle(title);
+		event.setLocation(location);
+		event.setUserId(userId);
+		
+		EvtPublishTask task = new EvtPublishTask();
+		
+		task.setEvent(event);
+		
+		List<Integer> childIdList = new ArrayList<Integer>();
+		for (Object o : whoToPush) {
+			childIdList.add((Integer)o);
+		}
+		task.setChildIdList(childIdList);
+		DoudouBackend.getInstance().publishTask(task);
+		//CacheManager.getInstance().putEvt(userId);
+	}
 //
 //	@RequestMapping("/Cover")
 //	public void uploadCover(HttpServletRequest request,	HttpServletResponse response) throws UnsupportedEncodingException,
@@ -350,7 +356,8 @@ public class UploadServlet {
 //
 //	@RequestMapping("/Comment")
 //	public void uploadComment(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-//    	int userId = (Integer)request.getAttribute("userId");
+//		User user = getUser(request);
+//    	int userId = user.getId();
 //    	
 //    	String content = request.getParameter("content");
 //    	System.out.println("content = " + content);

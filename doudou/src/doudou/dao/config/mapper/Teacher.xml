@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
-<sqlMap namespace="Parents">
+<sqlMap namespace="Teacher">
 
-    <typeAlias alias="Parents" type="doudou.vo.Parents" />
+    <typeAlias alias="Teacher" type="doudou.vo.Teacher" />
     <typeAlias alias="User" type="doudou.vo.User"/>
     
-    <resultMap id="ParentsResult" class="Parents">
-    	<result property="user" column="parentId" select="Parents.getUser"/>
+    <resultMap id="TeacherResult" class="Teacher">
+    	<result property="user" column="teacherId" select="Teacher.getUser"/>
     	<result property="description" column="description"/>
     	<result property="telephone" column="telephone"/>
     	<result property="mobile" column="mobile"/>
@@ -21,9 +21,9 @@
     	select * from User where id=#id#
     </select>
     <insert id="create" parameterClass="Parents">
-        insert into Parents 
+        insert into Teacher 
         (
-        	parentId,
+        	teacherId,
         	description,
         	telephone,
 			mobile,
@@ -35,7 +35,7 @@
         )
         values 
         (
-	        #parentId#,
+	        #teacherId#,
         	#description#,
         	#telephone#,
 			#mobile#,
@@ -48,10 +48,10 @@
     </insert>
     
     
-    <select id="read" parameterClass="int" resultMap="ParentsResult">
-        select * from Parents
+    <select id="read" parameterClass="int" resultMap="TeacherResult">
+        select * from Teacher
         where
-        parentId = #parentId#
+        teacherId = #teacherId#
         limit 1
     </select>
     

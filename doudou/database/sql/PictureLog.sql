@@ -1,4 +1,4 @@
-USE mayaya;
+USE doudou;
 DROP TABLE IF EXISTS PictureLog;
 CREATE TABLE PictureLog
 (

@@ -1,34 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
-<sqlMap namespace="Push_Picture_User">
+<sqlMap namespace="PictureUser">
 
-    <typeAlias alias="Push_Picture_User" type="mayaya.vo.Push_Picture_User" />
-	<typeAlias alias="picture" type="mayaya.vo.Picture" />
+    <typeAlias alias="PictureUser" type="doudou.vo.PictureUser" />
+	<typeAlias alias="picture" type="doudou.vo.Picture" />
     
-    <select id="read" parameterClass="int" resultClass="Push_Picture_User">
-        select * from Push_Picture_User
+    <select id="read" parameterClass="int" resultClass="PictureUser">
+        select * from PictureUser
         where
-        push_Pic_UserID = #push_Pic_UserID#
+        id = #id#
         limit 1
     </select>
     
-    <insert id="create" parameterClass="Push_Picture_User">
-        insert into Push_Picture_User 
+    <insert id="create" parameterClass="PictureUser">
+        insert into PictureUser 
         (
-			pictureID,
-			toChildId,
-			publishTime,
-			self
+			pictureId,
+			toChildId
         )
         values 
         (
-			#pictureID#,
-			#toChildId#,
-			#publishTime#,
-			#self#
+			#pictureId#,
+			#toChildId#
         )
-        <selectKey keyProperty="push_Pic_UserID" resultClass="int">
-            SELECT last_insert_id() AS ID FROM Push_Picture_User limit 1
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM PictureUser limit 1
         </selectKey>
     </insert>
     

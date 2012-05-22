@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import doudou.service.*;
 import doudou.util.BaseServlet;
+import doudou.util.Constants;
 import doudou.util.tool.Base64;
 import doudou.vo.User;
 import doudou.vo.model.SessionData;
@@ -132,10 +133,11 @@ public class LoginServlet extends BaseServlet{
 		else{
 			User user = userService.verifyUserNamePwd(userName, passWd);
 	    	if (null != user) {
-	    		String tokenString = user.getId() + "/" + user.getLogin();
+	    		String tokenString = Constants.DOUDOU_TICKET + "/" + user.getId() + "/" + user.getLogin();
+	    		System.out.println("Before Encode : " + tokenString);
 				String token = Base64.encode(tokenString.getBytes());
-				System.out.println("token = " + token);
-				Cookie cookie = new Cookie("DouDou_Ticket",token);
+				System.out.println("After Encode : token = " + token);
+				Cookie cookie = new Cookie(Constants.DOUDOU_TICKET,token);
 				cookie.setMaxAge(3600);
 				cookie.setPath("/");
 				response.addCookie(cookie);

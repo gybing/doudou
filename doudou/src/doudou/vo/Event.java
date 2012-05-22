@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import doudou.util.tool.DateUtil;
+import doudou.vo.type.PublishLevel;
 
 @SuppressWarnings("serial")
 public class Event implements Serializable {
@@ -19,6 +20,8 @@ public class Event implements Serializable {
 	private String atChildList;
 	private Date publishTime;
 	private boolean allday;
+	private PublishLevel publishLevel;
+	
 	// 
 	private String userName;
 	private String pushType;
@@ -128,6 +131,12 @@ public class Event implements Serializable {
 	public String getPublishTimeString() {
 		return DateUtil.getInstance().toFullString(publishTime);
 	}
+	public PublishLevel getPublishLevel() {
+		return publishLevel;
+	}
 
+	public void setPublishLevel(PublishLevel publishLevel) {
+		this.publishLevel = publishLevel;
+	}
 	
 }

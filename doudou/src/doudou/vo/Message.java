@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import doudou.util.tool.DateUtil;
-
-enum PublishLevel {
-	School, Class
-}
+import doudou.vo.type.PublishLevel;
 
 @SuppressWarnings("serial")
 public class Message implements Serializable{

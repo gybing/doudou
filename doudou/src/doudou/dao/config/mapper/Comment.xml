@@ -2,7 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="Comment">
 
-    <typeAlias alias="Comment" type="mayaya.vo.Comment" />
+    <typeAlias alias="Comment" type="doudou.vo.Comment" />
 
     <select id="read" parameterClass="int" resultClass="Comment">
         select * from Comment

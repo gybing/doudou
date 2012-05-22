@@ -6,7 +6,7 @@ import java.io.Serializable;
 public class MessageUser implements Serializable {
 	
 	private int id;
-	private int eventId;
+	private int messageId;
 	private int toChildId;
 	
 	public int getId() {
@@ -15,11 +15,12 @@ public class MessageUser implements Serializable {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getEventId() {
-		return eventId;
+	
+	public int getMessageId() {
+		return messageId;
 	}
-	public void setEventId(int eventId) {
-		this.eventId = eventId;
+	public void setMessageId(int messageId) {
+		this.messageId = messageId;
 	}
 	public int getToChildId() {
 		return toChildId;

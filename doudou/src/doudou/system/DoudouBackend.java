@@ -9,6 +9,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import doudou.dao.DaoFactory;
 import doudou.dao.UserDao;
+import doudou.util.Constants;
 import doudou.util.DoudouConfig;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.tool.Base64;
@@ -29,8 +30,6 @@ public class DoudouBackend {
 	private DoudouConfig doudouConfig = DoudouConfig.getConfig();
 	public static int zeroCount = 0;
 	private ExecutorService exec = null;
-	private Map<String, Integer> tokenMap;
-	private Map<String,Integer> userAuthMap;
 	
 	private DatabaseDao myDatabaseDao;
 	private UserDao userDao;
@@ -56,7 +55,6 @@ public class DoudouBackend {
 	private void start() {
 		if (exec == null) {
 			
-			userAuthMap = new HashMap<String,Integer>();
 			picTaskQueue = new LinkedBlockingQueue<PicPublishTask>();
 			evtTaskQueue = new LinkedBlockingQueue<EvtPublishTask>();
 			messageTaskQueue = new LinkedBlockingQueue<MessagePubTask>();
@@ -77,14 +75,6 @@ public class DoudouBackend {
 			}
 		}
 			
-	}
-	
-	public int verify(String token) {
-		if (tokenMap.containsKey(token)) {
-			return tokenMap.get(token);
-		} else {
-			return -1;
-		}
 	}
 	
 	public static DoudouBackend getInstance() {
@@ -131,29 +121,22 @@ public class DoudouBackend {
 		}
 	}
 	
-	public synchronized void addUserAuthData(String veriCode, int userId) {
-		logger.info(String.format("AddUserAuthData veriCode : %s, userId: %d", veriCode,userId));
-		userAuthMap.put(veriCode, userId);
-	}
 	
-	public synchronized int getUserByVeriCode(String veriCode) {
-		return userAuthMap.get(veriCode);
-	}
-	
-	public synchronized String getVeriCodeByUserId(int userId) {
-		if (userAuthMap.containsValue(userId)) {
-			for (String veriCode : userAuthMap.keySet()) {
-				if (userAuthMap.get(veriCode).intValue() == userId) {
-					return veriCode;
-				}
+	public synchronized int getUserByCookie(String cookie) {
+		try{
+			String decodedString = Base64.decode(cookie).toString();
+			String[] decodedArray = decodedString.split("/");
+			if (decodedArray.length == 3 && Constants.DOUDOU_TICKET.equals(decodedArray[0])) {
+				return Integer.parseInt(decodedArray[1]);
+			} else {
+				return -1;
 			}
-		} 
-		return null;
+		} catch (Exception e) {
+			logger.error(e, e);
+			return -1;
+		}
 	}
 	
-	public synchronized boolean isContainedVeriCode(String veriCode) {
-		return userAuthMap.containsKey(veriCode);
-	}
 	
 	public void addPushVO(PushVO pushVO) {
 		try {

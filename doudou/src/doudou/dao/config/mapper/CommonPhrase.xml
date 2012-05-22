@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="CommonPhrase">
+
+    <typeAlias alias="CommonPhrase" type="doudou.vo.CommonPhrase" />
+
+	<insert id="create" parameterClass="CommonPhrase">
+        insert into CommonPhrase 
+        (
+            phrase,
+            classId,
+        )
+        values 
+        (
+            #phrase#,
+            #classId#,
+        )
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM CommonPhrase limit 1
+        </selectKey>
+    </insert>
+
+    <select id="read" parameterClass="Integer" resultClass="CommonPhrase">
+        select * from CommonPhrase
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+    <select id="getCommonPhraseListByClassId" parameterClass="Integer" resultClass="CommonPhrase">
+        select * from CommonPhrase
+        where classId = #classId#
+        and available = TRUE
+    </select>
+    
+    <update id="update" parameterClass="CommonPhrase">
+    	update CommonPhrase 
+    	set 
+    	phrase = #phrase#,
+    	available = #available#,
+    	where 
+    	id = #id#
+    </update>
+       
+</sqlMap>

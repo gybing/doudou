@@ -7,8 +7,9 @@ enum InfoType {
 }
 
 @SuppressWarnings("serial")
-public class DouDouInfoType implements Serializable{
+public class DoudouInfoType implements Serializable{
 	private int id;
+	private InfoType infoType;
 	private String typeName;
 	private int schoolId;
 	private boolean available;
@@ -18,6 +19,12 @@ public class DouDouInfoType implements Serializable{
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public InfoType getInfoType() {
+		return infoType;
+	}
+	public void setInfoType(InfoType infoType) {
+		this.infoType = infoType;
 	}
 	public String getTypeName() {
 		return typeName;

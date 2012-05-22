@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 
+import doudou.vo.User;
+import doudou.vo.model.SessionData;
+
 public class BaseServlet {
 
 	public static final String ERROR_PAGE = "/error.html";
@@ -14,6 +17,10 @@ public class BaseServlet {
     public static final String ERROR_MESSAGE = "errorMessage";
     
     protected Logger logger = Logger.getLogger(getClass());
+    
+    public User getUser(final HttpServletRequest request) {
+    	return ((SessionData)request.getSession().getAttribute("sessionData")).getUser();
+    }
     
     public int getIntParameter(final HttpServletRequest request, final String name, final int def) {
         final String s = getStringParameter(request, name);

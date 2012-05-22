@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="SchoolClass">
+
+    <typeAlias alias="SchoolClass" type="doudou.vo.SchoolClass" />
+	<typeAlias alias="Child" type="doudou.dao.Child"/>
+	
+	<insert id="create" parameterClass="SchoolClass">
+        insert into SchoolClass 
+        (
+            schoolClassName,
+            description,
+            schoolId
+        )
+        values 
+        (
+            #schoolClassName#,
+            #description#,
+            #schoolId#
+        )
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM SchoolClass limit 1
+        </selectKey>
+    </insert>
+
+    <select id="read" parameterClass="Integer" resultClass="SchoolClass">
+        select * from SchoolClass
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+    <select id="getChildListByClassId" parameterClass="Integer" resultClass="Child">
+    	select c.* from Child as c,ChildClass as cc
+    	where cc.classId = #classId#
+    	and cc.available = TRUE
+    	and c.id = cc.childId
+    </select>
+    
+</sqlMap>

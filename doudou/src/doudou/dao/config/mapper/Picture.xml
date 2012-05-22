@@ -2,8 +2,7 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="Picture">
 
-    <typeAlias alias="Picture" type="mayaya.vo.Picture" />
-	<typeAlias alias="NotificationVO" type="mayaya.vo.model.NotificationVO" />
+    <typeAlias alias="Picture" type="doudoua.vo.Picture" />
 
     <select id="read" parameterClass="int" resultClass="Picture">
         select * from Picture

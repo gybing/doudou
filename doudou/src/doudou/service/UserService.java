@@ -1,6 +1,5 @@
 package doudou.service;
 
-import javax.annotation.Resource;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import doudou.dao.DaoFactory;
 import doudou.dao.UserDao;
 import doudou.util.dao.DatabaseDao;
-import doudou.util.tool.MD5;
 import doudou.vo.User;
 
 
@@ -22,15 +20,11 @@ public class UserService {
 	private final UserDao userDao;
 	
 	private UserService() {
-
 		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
 		userDao = myDatabaseDao.getEntityDao(UserDao.class);
-		
 	}
 	
 	public User verifyUserNamePwd(String userName, String passWd) {
 		return userDao.verifyUserNamePwd(userName, passWd);
 	}
-	 
-	
 }

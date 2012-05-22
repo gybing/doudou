@@ -1,32 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
-<sqlMap namespace="Relations_Event_User">
+<sqlMap namespace="EventUser">
 
-    <typeAlias alias="Relations_Event_User" type="mayaya.vo.Relations_Event_User" />
-	<typeAlias alias="event" type="mayaya.vo.Event" />
+    <typeAlias alias="EventUser" type="doudou.vo.EventUser" />
+	<typeAlias alias="event" type="doudou.vo.Event" />
     
-    <select id="read" parameterClass="int" resultClass="Relations_Event_User">
-        select * from Relations_Event_User
+    <select id="read" parameterClass="int" resultClass="EventUser">
+        select * from EventUser
         where
-        relationID = #relationID#
+        id = #id#
         limit 1
     </select>
     
-    <insert id="create" parameterClass="Relations_Event_User">
-        insert into Relations_Event_User 
+    <insert id="create" parameterClass="EventUser">
+        insert into EventUser 
         (
-			eventID,
-			toChildId,
-			self
+			eventId,
+			toChildId
         )
         values 
         (
-			#eventID#,
-			#toChildId#,
-			#self#
+			#eventId#,
+			#toChildId#
         )
-        <selectKey keyProperty="relationID" resultClass="int">
-            SELECT last_insert_id() AS ID FROM Relations_Event_User limit 1
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM EventUser limit 1
         </selectKey>
     </insert>
     

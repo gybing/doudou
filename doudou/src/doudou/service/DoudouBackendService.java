@@ -11,24 +11,30 @@ import org.apache.log4j.Logger;
 import doudou.dao.ChildDao;
 import doudou.dao.DaoFactory;
 import doudou.dao.EventDao;
+import doudou.dao.EventUserDao;
 import doudou.dao.MessageDao;
+import doudou.dao.MessageUserDao;
 import doudou.dao.PictureDao;
 import doudou.dao.PictureUserDao;
 import doudou.dao.TodoDao;
 import doudou.dao.UserDao;
 import doudou.system.DoudouBackend;
 import doudou.util.dao.DatabaseDao;
+import doudou.vo.Event;
+import doudou.vo.EventUser;
 import doudou.vo.Message;
+import doudou.vo.MessageUser;
 import doudou.vo.Picture;
 import doudou.vo.PictureUser;
 import doudou.vo.Todo;
 import doudou.vo.model.EmailTask;
+import doudou.vo.model.EvtPublishTask;
 import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.PicPublishTask;
 import doudou.vo.model.PushVO;
 import doudou.vo.type.TodoType;
 /*
- * For mayaya backend threads
+ * For doudou backend threads
  * 
  * */
 public class DoudouBackendService {
@@ -39,10 +45,11 @@ public class DoudouBackendService {
 	private final PictureDao pictureDao;
 	private final EventDao eventDao;
 	private final PictureUserDao pictureUserDao;
-	//private final EventUserDao eventUserDao;
+	private final EventUserDao eventUserDao;
 	private final ChildDao childDao;
 	private final TodoDao todoDao;
 	private final MessageDao messageDao;
+	private final MessageUserDao messageUserDao;
 	private final UserDao userDao;
 	
 	private DoudouBackendService() {
@@ -51,10 +58,11 @@ public class DoudouBackendService {
 		eventDao = myDatabaseDao.getEntityDao(EventDao.class);
 		pictureDao = myDatabaseDao.getEntityDao(PictureDao.class);
 		pictureUserDao = myDatabaseDao.getEntityDao(PictureUserDao.class);
-		//eventUserDao = myDatabaseDao.getEntityDao(RelationsEventUserDao.class); 
+		eventUserDao = myDatabaseDao.getEntityDao(EventUserDao.class); 
 		childDao = myDatabaseDao.getEntityDao(ChildDao.class);
 		todoDao = myDatabaseDao.getEntityDao(TodoDao.class);
 		messageDao = myDatabaseDao.getEntityDao(MessageDao.class);
+		messageUserDao = myDatabaseDao.getEntityDao(MessageUserDao.class);
 		userDao = myDatabaseDao.getEntityDao(UserDao.class);
 	}
 	
@@ -82,15 +90,20 @@ public class DoudouBackendService {
 			Set<Integer> relatedIdSet = new HashSet<Integer>();
 			
 			//使得通知发布人自己也能看见自己的通知
-			Todo todo = new Todo();
-			todo.setContentId(evt.getId());
-			todo.setTodoType(TodoType.Message);
-			todo.setUserId(evt.getUserId());
-			todoDao.create(todo);
+//			Todo todo = new Todo();
+//			todo.setContentId(evt.getId());
+//			todo.setTodoType(TodoType.Message);
+//			todo.setUserId(evt.getUserId());
+//			todoDao.create(todo);
+			
 			
 			for (Integer childId : task.getChildrenList()) {
-				List<Integer> relatedIdList = childUserDao
-						.getRelatedUserIDByChildId(childId);
+				MessageUser mu = new MessageUser();
+				mu.setMessageId(evt.getId());
+				mu.setToChildId(childId);
+				messageUserDao.create(mu);
+				
+				List<Integer> relatedIdList = childUserDao.getRelatedUserIDByChildId(childId);
 				relatedIdSet.addAll(relatedIdList);
 			}
 			String fromUser = userDao.read(evt.getUserId()).getFirstName();
@@ -157,56 +170,55 @@ public class DoudouBackendService {
 				DoudouBackend.getInstance().addEmailTask(emailTask);
 			}
 	}
-//	
-//	public void publishTask(EvtPublishTask task) {
-//		StringBuffer atChildList = new StringBuffer();
-//		logger.info("task child list size : " + task.getChildIdList().size());
-//		for(Integer childId : task.getChildIdList()) {
-//			atChildList.append(childDao.read(childId).getFirstName()+",");
-//		}
-//		if (atChildList.length() > 1) {
-//			atChildList.deleteCharAt(atChildList.length()-1);
-//		}
-//		Event evt = task.getEvent();
-//		evt.setAtChildList(atChildList.toString());
-//		Set<Integer> relatedIdSet = new HashSet<Integer>();
-//
-//		if ((Integer) eventDao.create(evt) > 0) {
-//			PushVO pushVO = new PushVO();
-//			pushVO.setTodoType(TodoType.EvtTag);
-//			pushVO.setContentId(evt.getEventID());
-//			for (Integer childId : task.getChildIdList()) {
-//				Relations_Event_User reu = new Relations_Event_User();
-//				reu.setEventID(evt.getEventID());
-//				// input the childID
-//				reu.setToChildId(childId);
-//				reu.setSelf(false);
-//				relationsEventUserDao.create(reu);
-//
-//				// APNS
-//				List<Integer> relatedIdList = relationsChildUserDao.getRelatedUserIDByChildId(childId);
-//				relatedIdSet.addAll(relatedIdList);
+	
+	public void publishTask(EvtPublishTask task) {
+		StringBuffer atChildList = new StringBuffer();
+		logger.info("task child list size : " + task.getChildIdList().size());
+		for(Integer childId : task.getChildIdList()) {
+			atChildList.append(childDao.read(childId).getFirstName()+",");
+		}
+		if (atChildList.length() > 1) {
+			atChildList.deleteCharAt(atChildList.length()-1);
+		}
+		Event evt = task.getEvent();
+		evt.setAtChildList(atChildList.toString());
+		Set<Integer> relatedIdSet = new HashSet<Integer>();
+
+		if ((Integer) eventDao.create(evt) > 0) {
+			PushVO pushVO = new PushVO();
+			pushVO.setTodoType(TodoType.Event);
+			pushVO.setContentId(evt.getId());
+			for (Integer childId : task.getChildIdList()) {
+				EventUser reu = new EventUser();
+				reu.setEventId(evt.getId());
+				// input the childID
+				reu.setToChildId(childId);
+				eventUserDao.create(reu);
+
+				// APNS
+				List<Integer> relatedIdList = relationsChildUserDao.getRelatedUserIDByChildId(childId);
+				relatedIdSet.addAll(relatedIdList);
+			}
+//			for (int userId : relatedIdSet) {
+//				CacheManager.getInstance().putEvt(userId);
 //			}
-////			for (int userId : relatedIdSet) {
-////				CacheManager.getInstance().putEvt(userId);
-////			}
-//			relatedIdSet.remove(evt.getUserID());
-//			String fromUser = userDao.read(evt.getUserID()).getFirstName();
-//			pushVO.setUserIdList(relatedIdSet);
-//			pushVO.setFromUser(fromUser);
-//			logger.info(String.format("publish Event task, relatedIdSet = %s;remove userId : %d",
-//					relatedIdSet, evt.getUserID()));
-//			MayayaBackend.getInstance().addPushVO(pushVO);
-//			
-//			// Email
-//			EmailTask emailTask = new EmailTask();
-//			emailTask.setTodoType(TodoType.EvtTag);
-//			emailTask.setTo(getEmailListFromIdSet(relatedIdSet));
-//			emailTask.setFromUser(fromUser);
-//			emailTask.setContent(evt);
-//			MayayaBackend.getInstance().addEmailTask(emailTask);
-//		}
-//	}
+			relatedIdSet.remove(evt.getUserId());
+			String fromUser = userDao.read(evt.getUserId()).getFirstName();
+			pushVO.setUserIdList(relatedIdSet);
+			pushVO.setFromUser(fromUser);
+			logger.info(String.format("publish Event task, relatedIdSet = %s;remove userId : %d",
+					relatedIdSet, evt.getUserId()));
+			DoudouBackend.getInstance().addPushVO(pushVO);
+			
+			// Email
+			EmailTask emailTask = new EmailTask();
+			emailTask.setTodoType(TodoType.Event);
+			emailTask.setTo(getEmailListFromIdSet(relatedIdSet));
+			emailTask.setFromUser(fromUser);
+			emailTask.setContent(evt);
+			DoudouBackend.getInstance().addEmailTask(emailTask);
+		}
+	}
 //	
 //	private String[] getEmailListFromIdSet(Set<Integer> relatedIdSet) {
 //		String[] emailArray = new String[relatedIdSet.size()];

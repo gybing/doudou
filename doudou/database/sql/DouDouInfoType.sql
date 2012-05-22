@@ -1,6 +1,6 @@
 USE doudou;
-DROP TABLE IF EXISTS DouDouInfoType;
-CREATE TABLE DouDouInfoType
+DROP TABLE IF EXISTS DoudouInfoType;
+CREATE TABLE DoudouInfoType
 (
 	id				 	INT UNSIGNED NOT NULL AUTO_INCREMENT,
     infoType            enum('TeacherType', 'MessageType') NOT NULL DEFAULT 'TeacherType',

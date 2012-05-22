@@ -6,6 +6,7 @@ import java.io.Serializable;
 public class Parents implements Serializable{
 	
 	private User user;
+	private int parentId;
 	private String description;
 	private String telephone;
 	private String mobile;
@@ -15,11 +16,18 @@ public class Parents implements Serializable{
 	private String contact2;
 	private String otherInfo;
 	
+	
 	public User getUser() {
 		return user;
 	}
 	public void setUser(User user) {
 		this.user = user;
+	}
+	public int getParentId() {
+		return parentId;
+	}
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
 	public String getDescription() {
 		return description;

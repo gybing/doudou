@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="PasswdLog">
+
+    <typeAlias alias="PasswdLog" type="doudou.vo.PasswdLog" />
+
+	<insert id="create" parameterClass="PasswdLog">
+        insert into PasswdLog 
+        (
+            oldPasswd,
+            newPasswd,
+            operator,
+            modifyTime
+        )
+        values 
+        (
+            #oldPasswd#,
+            #newPasswd#,
+            #operator#,
+            now()
+        )
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM PasswdLog limit 1
+        </selectKey>
+    </insert>
+
+</sqlMap>

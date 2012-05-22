@@ -23,7 +23,7 @@ public class MyDatabaseDao extends BaseDatabaseDao {
 //		entities.put(FriendsFromToDao.class, new FriendsFromToDaoImpl(this));
 		entities.put(PictureUserDao.class, new PictureUserDaoImpl(this));
 //		entities.put(RelationsChildUserDao.class, new RelationsChildUserDaoImpl(this));
-//		entities.put(RelationsEventUserDao.class, new RelationsEventUserDaoImpl(this));
+		entities.put(ParentsDao.class, new ParentsDaoImpl(this));
 		entities.put(TodoDao.class, new TodoDaoImpl(this));
 		entities.put(DeviceTokenDao.class, new DeviceTokenDaoImpl(this));
 		entities.put(MessageDao.class, new MessageDaoImpl(this));

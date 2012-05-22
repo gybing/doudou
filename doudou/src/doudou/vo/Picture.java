@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import doudou.util.tool.DateUtil;
+import doudou.vo.type.PublishLevel;
 
 @SuppressWarnings("serial")
 public class Picture implements Serializable {

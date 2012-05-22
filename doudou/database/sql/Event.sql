@@ -1,4 +1,4 @@
-USE mayaya;
+USE doudou;
 DROP TABLE IF EXISTS Event;
 CREATE TABLE Event
 (
@@ -12,6 +12,7 @@ CREATE TABLE Event
     atChildList			 TEXT NOT NULL,
     publishTime			 DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
     allday				 BOOL NOT NULL DEFAULT FALSE,
+    publishLevel		 enum('School', 'Class') NOT NULL DEFAULT 'School',
     
     PRIMARY KEY (id)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;

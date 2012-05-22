@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="MessageUser">
+
+    <typeAlias alias="MessageUser" type="doudou.vo.MessageUser" />
+	<typeAlias alias="event" type="doudou.vo.Event" />
+    
+    <select id="read" parameterClass="int" resultClass="MessageUser">
+        select * from MessageUser
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+    <insert id="create" parameterClass="MessageUser">
+        insert into MessageUser 
+        (
+			messageId,
+			toChildId
+        )
+        values 
+        (
+			#messageId#,
+			#toChildId#
+        )
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM MessageUser limit 1
+        </selectKey>
+    </insert>
+    
+    
+    <select id="getMainPageEvents" parameterClass="map" resultClass="event">
+    	select * from 
+    	(select e.* from Event as e
+    	where
+    	isSchool = TRUE
+    	and e.endTime &gt;= #date# 
+    	UNION
+    	select e.* from Relations_Event_User as reu, Event as e
+    	where reu.eventID = e.eventID
+    	<isNotEqual prepend="AND" property="toChildId" compareValue="1">
+    		toChildId = #toChildId#
+    	</isNotEqual>
+    	and e.endTime &gt;= #date#
+    	<isEqual property="toChildId" compareValue="1">
+    		group by reu.eventID
+    	</isEqual>
+    	) b
+    	group by Date(b.beginTime) 
+    	order by b.beginTime asc
+    	limit 3
+    </select>
+    
+    <select id="getEventByDate" parameterClass="map" resultClass="event">
+    	select e.* from Event as e
+    	where isSchool = TRUE 
+    	and Date(e.beginTime) &lt;= Date(#date#)
+		and Date(e.endTime) &gt;= Date(#date#)
+    	UNION
+    	select e.* from Relations_Event_User as reu, Event as e
+    	where reu.eventID = e.eventID
+    	<isNotEqual prepend="AND" property="toChildId" compareValue="1">
+    		toChildId = #toChildId#
+    	</isNotEqual>
+    	and e.isSchool = FALSE 
+    	and Date(e.beginTime) &lt;= Date(#date#)
+		and Date(e.endTime) &gt;= Date(#date#)
+		<isEqual property="toChildId" compareValue="1">
+    		group by reu.eventID
+    	</isEqual>
+    </select>
+    
+    <select id="getEventsCountByChildId" parameterClass="map" resultClass="int">
+	    select count(*) from Relations_Event_User where	toChildId = #toChildId#
+    </select>
+    
+    <select id="getSchoolEventCount" resultClass="int">
+    	select count(*) from Event
+    	where isSchool = TRUE;
+    </select>
+    
+    
+</sqlMap>

@@ -83,24 +83,24 @@ public class AuthFilter implements Filter {
 		Cookie[] cookies = req.getCookies();
 	    if (null != cookies && cookies.length > 0) {
 	        for (Cookie cookie : cookies) {
-	            if (cookie.getName().equals("DouDou_Ticket")) {
+	            if (cookie.getName().equals(Constants.DOUDOU_TICKET)) {
 	                ticket = cookie.getValue();
 	                break;
 	            }
 	        }
 	    }
 	    if (ticket != null) {
-	    	int veriCode = DoudouBackend.getInstance().verify(ticket);
+	    	int veriCode = DoudouBackend.getInstance().getUserByCookie(ticket);
 	    	if (veriCode != -1) {
 	    		SessionData sessionData = new SessionData();
 	    		sessionData.setUser(userDao.read(veriCode));
 	    		
 	        	req.getSession(true).setAttribute("sessionData", sessionData);
-				logger.info("Token verified Success! userId = " + veriCode);
+				logger.info("Filter cookie verified Success! userId = " + veriCode);
 				chain.doFilter(req, resp);
 			} else {
 				resp.sendRedirect(NOT_AUTHED_PAGE);
-				logger.info("Token verified Error! token = " + ticket);
+				logger.info("Filter cookie verified Error! token = " + ticket);
 			}
 			
 		} else {

@@ -1,5 +1,7 @@
 package doudou.dao.impl;
 
+import java.util.List;
+
 import doudou.dao.CommonPhraseDao;
 import doudou.util.dao.BaseEntityDao;
 import doudou.util.dao.DatabaseDao;
@@ -17,6 +19,9 @@ public class CommonPhraseDaoImpl extends BaseEntityDao<CommonPhrase, Integer>
 		return "CommonPhrase";
 	}
 
-	
+	@Override
+	public List<CommonPhrase> getCommonPhraseListByClassId(int classId) {
+		return reads("getCommonPhraseListByClassId",classId);
+	}
 
 }
