@@ -8,6 +8,12 @@ public class MessageUser implements Serializable {
 	private int id;
 	private int messageId;
 	private int toChildId;
+	private boolean readStatus;
+	private String readerName;
+	private String feedbackContent; 
+	private String feedbackUser;
+	//Add For Get Teacher MessageList More Easily
+	private int childClassId;
 	
 	public int getId() {
 		return id;
@@ -28,5 +34,35 @@ public class MessageUser implements Serializable {
 	public void setToChildId(int toChildId) {
 		this.toChildId = toChildId;
 	}
-
+	public boolean isReadStatus() {
+		return readStatus;
+	}
+	public void setReadStatus(boolean readStatus) {
+		this.readStatus = readStatus;
+	}
+	public String getFeedbackContent() {
+		return feedbackContent;
+	}
+	public void setFeedbackContent(String feedbackContent) {
+		this.feedbackContent = feedbackContent;
+	}
+	public String getReaderName() {
+		return readerName;
+	}
+	public void setReaderName(String readerName) {
+		this.readerName = readerName;
+	}
+	public String getFeedbackUser() {
+		return feedbackUser;
+	}
+	public void setFeedbackUser(String feedbackUser) {
+		this.feedbackUser = feedbackUser;
+	}
+	public int getChildClassId() {
+		return childClassId;
+	}
+	public void setChildClassId(int childClassId) {
+		this.childClassId = childClassId;
+	}
+	
 }

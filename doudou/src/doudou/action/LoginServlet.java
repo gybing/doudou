@@ -31,6 +31,8 @@ public class LoginServlet extends BaseServlet{
 
 	@Autowired
 	UserService userService;
+	@Autowired
+	DoudouService doudouService;
 	
 	/** 设定被随机选取的字符,用于生成验证码 */
 	private static final String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -133,10 +135,7 @@ public class LoginServlet extends BaseServlet{
 		else{
 			User user = userService.verifyUserNamePwd(userName, passWd);
 	    	if (null != user) {
-	    		String tokenString = Constants.DOUDOU_TICKET + "/" + user.getId() + "/" + user.getLogin();
-	    		System.out.println("Before Encode : " + tokenString);
-				String token = Base64.encode(tokenString.getBytes());
-				System.out.println("After Encode : token = " + token);
+	    		String token = doudouService.getToken(user);
 				Cookie cookie = new Cookie(Constants.DOUDOU_TICKET,token);
 				cookie.setMaxAge(3600);
 				cookie.setPath("/");

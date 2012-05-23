@@ -17,6 +17,8 @@ public class Message implements Serializable{
 	private String atChildList;
 	private Date publishTime;
 	private PublishLevel publishLevel;
+	private int publishTargetId;
+	
 	private boolean mustFeedBack;
 	private boolean available;
 	
@@ -94,7 +96,7 @@ public class Message implements Serializable{
 		this.available = available;
 	}
 	public String getPushType() {
-		return "Announcement";
+		return "Message";
 	}
 	public String getUserName() {
 		return userName;
@@ -102,4 +104,11 @@ public class Message implements Serializable{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	public int getPublishTargetId() {
+		return publishTargetId;
+	}
+	public void setPublishTargetId(int publishTargetId) {
+		this.publishTargetId = publishTargetId;
+	}
+	
 }

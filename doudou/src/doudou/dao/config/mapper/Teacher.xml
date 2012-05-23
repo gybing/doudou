@@ -4,6 +4,7 @@
 
     <typeAlias alias="Teacher" type="doudou.vo.Teacher" />
     <typeAlias alias="User" type="doudou.vo.User"/>
+    <typeAlias alias="SchoolClass" type="doudou.vo.SchoolClass" />
     
     <resultMap id="TeacherResult" class="Teacher">
     	<result property="user" column="teacherId" select="Teacher.getUser"/>

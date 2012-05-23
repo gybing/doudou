@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="TeacherClass">
+
+    <typeAlias alias="TeacherClass" type="doudou.vo.TeacherClass" />
+	
+    <select id="read" parameterClass="Integer" resultClass="TeacherClass">
+        select * from TeacherClass
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+    <select id="getClassListByTeacherId" parameterClass="Integer" resultClass="int">
+    	select sc.* from SchoolClass as sc, TeacherClass as tc 
+    	where tc.teacherId = #teacherId#
+    	and sc.id = tc.classId
+    </select>
+    
+</sqlMap>

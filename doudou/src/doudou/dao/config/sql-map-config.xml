@@ -27,7 +27,7 @@
 <!--	<sqlMap resource="mayaya/dao/config/mapper/Comment.xml" />-->
 	<sqlMap resource="doudou/dao/config/mapper/User.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Parents.xml" />
-<!--	<sqlMap resource="mayaya/dao/config/mapper/Child.xml" />-->
+	<sqlMap resource="doudou/dao/config/mapper/Child.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Event.xml" />
 <!--	<sqlMap resource="mayaya/dao/config/mapper/FriendsFromTo.xml" />-->
 <!--	<sqlMap resource="mayaya/dao/config/mapper/PushPictureUser.xml" />-->

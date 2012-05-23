@@ -2,6 +2,7 @@ package doudou.vo.model;
 
 
 import java.io.Serializable;
+import java.util.Map;
 
 import doudou.vo.User;
 
@@ -9,7 +10,7 @@ import doudou.vo.User;
 public class SessionData implements Serializable {
 
 	private User user;
-	//private List<TagedChildInfo> childrenToTag;
+	private Map<String,TagedInfo> tagedInfoMap;
 	
 	public User getUser() {
 		return user;
@@ -17,10 +18,12 @@ public class SessionData implements Serializable {
 	public void setUser(User user) {
 		this.user = user;
 	}
-//	public List<TagedChildInfo> getChildrenToTag() {
-//		return childrenToTag;
-//	}
-//	public void setChildrenToTag(List<TagedChildInfo> childrenToTag) {
-//		this.childrenToTag = childrenToTag;
-//	}
+	
+	public void addTagedInfo(String teacherType, TagedInfo tagedInfo){
+		tagedInfoMap.put(teacherType, tagedInfo);
+	}
+	public Map<String,TagedInfo> getTagedInfoMap() {
+		return tagedInfoMap;
+	}
+	
 }

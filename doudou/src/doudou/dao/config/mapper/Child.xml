@@ -9,7 +9,6 @@
         (
             firstName,
             lastName,
-            classes,
             gender,
             birthDate,
             photoURL
@@ -18,7 +17,6 @@
         (
             #firstName#,
             #lastName#,
-            #classes#,
             #gender#,
             #birthDate#,
             #photoURL#
@@ -35,30 +33,7 @@
         limit 1
     </select>
     
-    <select id="getChildListByUserId" parameterClass="Integer" resultClass="Child">
-        select c.* from Child as c, Relations_Child_User as rcu
-        where c.childID = rcu.childID
-        and rcu.userID = #userId#
-    </select>
-    
-    <update id="update" parameterClass="Child">
-    	update Child 
-    	set 
-    	firstName = #firstName#,
-    	lastName = #lastName#,
-    	birthDate = #birthDate#,
-    	classes = #classes#
-    	where 
-    	id = #id#
-    </update>
-    
-    <update id="updateHeadPic" parameterClass="Child">
-    	update Child 
-    	set 
-    	photoURL = #photoURL#
-    	where 
-    	id = #id#
-    </update>
+   
     
     <update id="updateCover" parameterClass="Child">
     	update Child 

@@ -9,6 +9,7 @@ public class School implements Serializable {
 	private int cityId;
 	private String suffix;
 	private boolean available;
+	
 	public int getId() {
 		return id;
 	}

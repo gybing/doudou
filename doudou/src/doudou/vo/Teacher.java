@@ -14,6 +14,8 @@ public class Teacher implements Serializable {
 	private String contact2;
 	private String otherInfo;
 	
+	private int schoolId;
+	
 	public User getUser() {
 		return user;
 	}
@@ -68,4 +70,11 @@ public class Teacher implements Serializable {
 	public void setOtherInfo(String otherInfo) {
 		this.otherInfo = otherInfo;
 	}
+	public int getSchoolId() {
+		return schoolId;
+	}
+	public void setSchoolId(int schoolId) {
+		this.schoolId = schoolId;
+	}
+	
 }
