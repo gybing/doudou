@@ -10,10 +10,11 @@
 <link rel="shortcut icon"  href="favicon.ico" /> 
 <link type="text/css" rel="stylesheet" href="CSS/loginCSS.css"/>	
 <script type="text/javascript" src="JS/loginJS.js"></script>
-<script type="text/javascript" src="JS/lib/jquery-1.4.2.js"></script>
+<script type="text/javascript" src="JS/lib/jquery.js"></script>
 <script type="text/javascript" src="JS/lib/jquery.form.js"></script>
 <script type="text/javascript" src="JS/lib/jquery.validate.js"></script>
 <script type="text/javascript" src="JS/lib/jquery.cookie.js"></script>
+<script type="text/javascript" src="JS/lib/jquery.placeholder.js"></script>
 <script type="text/javascript" src="JS/md5-min.js"></script>
 <script type="text/javascript">
 	
@@ -146,20 +147,19 @@
 				<div class="notice" id="noticeID">*Error!</div>
 			</div>
 			<div style="float:left; width:500px;">
-				<input type="text" class="username" id="usernameID" name="username" placeholder="用户名" onfocus="un_onFocus()" onblur="un_onBlur()"></input>
-				<input type="password" class="password" id="passwordID" name="passwd" onfocus="psw_onFocus()" onblur="psw_onBlur()"></input>
-				<div class="passwordlabel" id="passwordlabelID" onclick="pswla_onClick()">密码</div>
+				<input type="text" class="username" id="usernameID" name="username" placeholder="用户名"></input>
+				<input type="password" class="password" id="passwordID" name="passwd" placeholder="密码"></input>
 				<input type="hidden" name="password" id="hiddenpassword" />
 			</div>
 			
 			<div style="float:left; width:500px;">
-				<input type="text" class="code" id="codefield" name="code" placeholder="验证码" onfocus="code_onFocus()" onblur="code_onBlur()"></input>
+				<input type="text" class="code" id="codefield" name="code" placeholder="验证码"></input>
 				<div id="codepic_field" class="codepic_field"><img id="codepic" src="WebLogin/getIdentifyCode.do"/></div>
 				<a href="javascript:reloadVerifyCode();">看不清楚？</a>
 			</div>
 			
 			<div style="float:left; width:500px;">
-				<input type="checkbox" class="stayon" onclick="saveToCookie()">记住登录状态</input> | 
+				<input type="checkbox" class="stayon" id="stayon" onclick="saveToCookie()">记住登录状态</input> | 
 				<a href="">哦不，忘记密码了？</a>
 			</div>
 			

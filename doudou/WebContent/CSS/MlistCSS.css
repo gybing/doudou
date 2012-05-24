@@ -1,0 +1,244 @@
+.AddMsg{
+	width: 100%;
+	height: 60px;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	float: left;
+	background-color: black;
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:20px;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 40px;
+}
+.FilterPanel{
+	float: left;
+	width: 90%;
+	min-width: 585px;
+	height: 100px;
+	background-color: gray;
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}
+.MsgDetailList{
+	width: 100%;
+	min-width: 650px;
+	color: white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}
+.MsgListHeader{
+	float: left;
+	height: 35px;
+	width: 100%;
+	min-width: 650px;
+	background-color: fuchsia;
+	font-size:25px;
+	padding-top: 5px;
+	border-bottom: 2px solid white;
+}
+.MsgListHeader span{
+	margin-left: 10px;
+}
+.search{
+	float: left;
+	width: 10%;
+	min-width: 65px;
+	height: 60px;
+	background-color:green;
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:15px;
+	padding-top: 40px;
+    text-align: center;
+}
+.fact{
+	float: left;
+	margin-left: 10px;
+	margin-top: 15px;
+	width: 100px;
+	height: 30px;
+}
+.category{
+	float: left;
+	margin-left: 0px;
+	margin-top: 15px;
+	width: 100px;
+	margin-right: 0px;
+	height: 30px;
+}
+.starttime{
+	float: left;
+	margin-left: 0px;
+	margin-top: 15px;
+	width:180px;
+	margin-right: 10px;
+	padding-top: 5px;
+	height: 30px;
+}
+.endtime{
+	float: left;
+	padding-top: 5px;
+	margin-left: 0px;
+	margin-top: 15px;
+	margin-right: 0px;
+	width: 180px;
+	height: 30px;
+}
+.publisher{
+	float: left;
+	margin-left: -370px;
+	margin-top: 50px;
+	width: 200px;
+	padding-top: 5px;
+	height: 30px;
+}
+.publisher select{
+	width: 93px;
+	margin-left: 27px;
+}
+.feedback{
+	float: left;
+	margin-left: -180px;
+	margin-top: 50px;
+	width: 90px;
+	padding-top: 7px;
+	height: 30px;
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}
+.title{
+	float: left;
+	margin-left: -570px;
+	margin-top: 50px;
+	width: 200px;
+	padding-top: 5px;
+	height: 30px;
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}
+.title input{
+	width: 130px;
+	margin-left: 3px;
+}
+
+.delMsg{
+	float: right;
+	margin-right: 10px;
+	width: 30px;
+	height: 30px;
+	background-image: url(../img/logo.png);
+}
+.MsgListBody{
+	float: left;
+	width: 100%;
+	min-width: 650px;
+	color:black;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}
+.MsgItem{
+	width: 100%;
+	min-width: 650px;
+	height: 80px;
+	background-color: white;	
+}
+.MsgItem_CheckBox{
+	float: left;
+	margin-top: 32px;
+	margin-left: 10px;
+	width: 6%;
+	min-width:34px; 
+	display: block;
+}
+.MsgItem_notice{
+	font-size:15px;
+	margin-bottom: 5px;
+}
+.MsgItem_title{
+	margin-bottom: 10px;
+}
+.MsgItem_content{
+	height: 15px;
+	overflow: hidden;
+	color: #7b7b7b;
+}
+.sender{
+	color: blue;
+}
+.noticeclass{
+	color: blue;
+}
+.MsgItem_date{
+	width: 100%;
+	color: #7b7b7b;
+}
+.FeedbackCon{
+	float: left;
+	margin-top: 3px;
+	margin-left: 2px;
+	font-size: 15px;
+	text-align: center;
+}
+.Unfeedback{
+	float: left;
+	margin-top: 3px;
+	margin-left:20px;
+	font-size:15px;
+	text-align: center;
+}
+.NewMesLightBox {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1000;
+	display: block;
+}
+.overlay {
+	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=40)";
+	opacity: 0.8;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #3F3F3F;
+}
+.new-conversation{
+	position: absolute;
+	top: 60px;
+	left: 50%;
+	visibility: block;
+	background-color: white;
+	border-radius: 5px;
+	color:black;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:15px;
+}
+.newConversation_body ul{
+	text-decoration: none;
+}

@@ -1,0 +1,172 @@
+body{
+	margin:0 auto;
+	/*text-align:center;*/
+	/*background-color:#f2f2f2;*/
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}
+.main-container{
+	margin:0 auto;
+	padding-top:0px;
+	min-width: 1000px;
+	clear:both;
+	overflow: hidden;
+}
+.upbar{
+	width: 100%;
+	height: 45px;
+	overflow: hidden;
+	min-width: 1000px;
+	background-color: #564a4a;
+}
+.left{
+	float: left;
+	width: 19%;
+	height: 400px;
+	min-width: 190px;	
+	background-color: black;
+	
+}
+.middle{
+	float: left;
+	width: 65%;
+	min-width: 650px;
+	height: 400px;
+	background-color: blue;
+}
+.right{
+	float: left;
+	width: 16%;
+	min-width: 160px;
+	height: 400px;
+	background-color: yellow;
+}
+.logo{
+	float: left;
+	height: 39px;
+	width: 200px;
+	margin-top: 3px;
+	margin-left: 10px;
+	background-image: url(../img/logo.png);
+}
+ul{
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+li{
+	float:left;
+}
+.nav{
+	height: 45px;
+	width: 492px;
+	margin-left: 170px;
+	float: left;
+	/*overflow:hidden;*/
+}
+
+ul{
+	color: #272626;
+	text-decoration: none;
+}
+.nav1{
+	float: left;
+	width: 120px;
+	height: 45px;
+	margin-top: 0px;
+	margin-left: 0px;
+	cursor:pointer;
+}
+.split1{
+	float: left;
+	width: 4px;
+	margin-top: 0xp;
+	margin-left: 0px;
+	height: 45px;
+}
+.nav2{
+	float: left;
+	width: 120px;
+	height: 45px;
+	margin-top: 0px;
+	margin-left: 0px;
+	cursor:pointer;
+}
+.split2{
+	float: left;
+	width: 4px;
+	height: 45px;
+	margin-top: 0xp;
+	margin-left: 0px;
+}
+.nav3{
+	float: left;
+	height: 45px;
+	width: 120px;
+	margin-top: 0px;
+	margin-left: 0px;
+	cursor:pointer;
+}
+.split3{
+	float: left;
+	width: 4px;
+	margin-top: 0px;
+	margin-left: 0px;
+	height: 45px;
+}
+.nav4{
+	float: left;
+	margin-top: 0px;
+	width: 120px;
+	margin-left: 0px;
+	height: 45px;
+	cursor:pointer;
+}
+.nav5{
+	float: right;
+	margin-top: 0px;
+	width: 120px;
+	margin-right: 10px;
+	height: 45px;
+	cursor:pointer;
+}
+.portrait{
+	float: left;
+	width: 50px;
+	height: 50px;
+	margin-left: 15px;
+	margin-top: 15px;
+}
+.name{
+	float: left;
+	margin-left: 10px;
+	margin-top: 15px;
+	margin-right: 5px;
+	width: 110px;
+	max-width:120px;
+	min-width: 40px;
+	height: 15px;
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}
+.identity{
+	float: left;
+	margin-left: 10px;
+	margin-top: 10px;
+	width: 110px;
+	max-width:120px;
+	min-width: 40px;
+	margin-right: 5px;
+	height: 15px;
+	color:white;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:12px;
+}

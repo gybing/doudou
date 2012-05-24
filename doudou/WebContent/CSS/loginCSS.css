@@ -122,21 +122,6 @@ a:hover{
 	font-family:Arial,"Arial Black", Gadget, sans-serif;
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
 	font-size:20px;
-	
-}
-.passwordlabel{
-	margin-top: 12px;
-	margin-left: -225px;
-	margin-right: 0px;
-	margin-bottom: 0px;
-	height: 25px;
-	width: 60px;
-	float: left;
-	color:#c1c1c1;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
-	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
-	font-size:25px;
 }
 
 .password{
