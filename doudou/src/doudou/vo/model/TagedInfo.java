@@ -9,6 +9,10 @@ import doudou.vo.SchoolClass;
 public class TagedInfo {
 	private HashMap<SchoolClass, List<Child>> classChildMap;
 
+	public TagedInfo() {
+		classChildMap = new HashMap<SchoolClass, List<Child>>();
+	}
+	
 	public void addClassAndChildList(SchoolClass schoolClass, List<Child> childList) {
 		classChildMap.put(schoolClass, childList);
 	}

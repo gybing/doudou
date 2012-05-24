@@ -2,19 +2,15 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="Picture">
 
-    <typeAlias alias="Picture" type="doudoua.vo.Picture" />
+    <typeAlias alias="Picture" type="doudou.vo.Picture" />
 
     <select id="read" parameterClass="int" resultClass="Picture">
         select * from Picture
         where
-        pictureID = #pictureID#
+        id = #id#
         limit 1
     </select>
 
-	<select id="getPictures" resultClass="Picture">
-		select * from Picture
-	</select>
-	
     <insert id="create" parameterClass="Picture">
         insert into Picture 
         (
@@ -32,17 +28,9 @@
             #description#,
             #atChildList#
         )
-        <selectKey keyProperty="pictureID" resultClass="int">
+        <selectKey keyProperty="id" resultClass="int">
             SELECT last_insert_id() AS ID FROM Picture limit 1
         </selectKey>
     </insert>
-    
-    <select id="getNotificationVOById" parameterClass="int" resultClass="Picture">
-    	select u.firstName as userName, p.*
-    	from Picture as p, User as u
-    	where 
-     	pictureID = #contentId#
-     	and p.userId = u.userId
-    </select>
     
 </sqlMap>

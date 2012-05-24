@@ -3,6 +3,8 @@ package doudou.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import doudou.vo.type.UserType;
+
 
 @SuppressWarnings("serial")
 public class User implements Serializable {
@@ -70,6 +72,15 @@ public class User implements Serializable {
 	}
 	public void setAvailable(boolean available) {
 		this.available = available;
+	}
+	
+	public boolean isTeacher() {
+		return getUserType().contains(UserType.Teacher.name());
+	}
+	
+	public String[] getUserTypeArray() {
+		String[] userTypeArray = getUserType().split(";");
+		return userTypeArray;
 	}
 	
 }

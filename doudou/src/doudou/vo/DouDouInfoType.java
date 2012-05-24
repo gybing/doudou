@@ -2,9 +2,8 @@ package doudou.vo;
 
 import java.io.Serializable;
 
-enum InfoType {
-	TeacherType, MessageType
-}
+import doudou.vo.type.InfoType;
+
 
 @SuppressWarnings("serial")
 public class DoudouInfoType implements Serializable{

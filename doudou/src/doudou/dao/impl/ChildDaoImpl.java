@@ -1,5 +1,7 @@
 package doudou.dao.impl;
 
+import java.util.List;
+
 import doudou.dao.ChildDao;
 import doudou.util.dao.BaseEntityDao;
 import doudou.util.dao.DatabaseDao;
@@ -15,6 +17,11 @@ public class ChildDaoImpl extends BaseEntityDao<Child, Integer> implements
 	@Override
 	public String getNamespace() {
 		return "Child";
+	}
+
+	@Override
+	public List<Child> getChildListByClassId(int classId) {
+		return reads("getChildListByClassId",classId);
 	}
 
 	

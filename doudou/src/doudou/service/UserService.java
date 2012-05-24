@@ -19,7 +19,7 @@ public class UserService {
 	
 	private final UserDao userDao;
 	
-	private UserService() {
+	public UserService() {
 		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
 		userDao = myDatabaseDao.getEntityDao(UserDao.class);
 	}

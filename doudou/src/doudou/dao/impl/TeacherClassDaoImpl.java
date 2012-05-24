@@ -20,8 +20,13 @@ public class TeacherClassDaoImpl extends BaseEntityDao<TeacherClass, Integer> im
 		return "TeacherClass";
 	}
 
+//	@Override
+//	public List<SchoolClass> getClassListByTeacherId(int teacherId) {
+//		return (List<SchoolClass>)readObjects("getClassListByTeacherId",teacherId);
+//	}
+
 	@Override
-	public List<SchoolClass> getClassListByTeacherId(int teacherId) {
-		return (List<SchoolClass>)readObjects("getClassListByTeacherId",teacherId);
+	public List<TeacherClass> getTeacherClassListByTeacherId(int teacherId) {
+		return reads("getTeacherClassListByTeacherId",teacherId);
 	}
 }

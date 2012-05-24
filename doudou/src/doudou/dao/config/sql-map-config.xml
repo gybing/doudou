@@ -23,19 +23,19 @@
         </dataSource>
     </transactionManager>
     
-<!--	<sqlMap resource="mayaya/dao/config/mapper/Picture.xml" />-->
-<!--	<sqlMap resource="mayaya/dao/config/mapper/Comment.xml" />-->
+	<sqlMap resource="doudou/dao/config/mapper/Picture.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/User.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Parents.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Child.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/ChildClass.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Event.xml" />
-<!--	<sqlMap resource="mayaya/dao/config/mapper/FriendsFromTo.xml" />-->
-<!--	<sqlMap resource="mayaya/dao/config/mapper/PushPictureUser.xml" />-->
+	<sqlMap resource="doudou/dao/config/mapper/School.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/SchoolClass.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/Teacher.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/DoudouInfoType.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/TeacherClass.xml" />
+	
 <!--	<sqlMap resource="mayaya/dao/config/mapper/DeviceToken.xml" />-->
-<!--	<sqlMap resource="mayaya/dao/config/mapper/RelationsChildUser.xml" />-->
-<!--	<sqlMap resource="mayaya/dao/config/mapper/RelationsEventUser.xml" />-->
 <!--	<sqlMap resource="mayaya/dao/config/mapper/Todo.xml" />-->
-<!--	<sqlMap resource="mayaya/dao/config/mapper/Announcement.xml" />-->
-<!--	-->
     
 </sqlMapConfig>

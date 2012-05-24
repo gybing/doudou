@@ -5,6 +5,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class Teacher implements Serializable {
 	private User user;
+	private int teacherId;
 	private String description;
 	private String telephone;
 	private String mobile;
@@ -14,8 +15,16 @@ public class Teacher implements Serializable {
 	private String contact2;
 	private String otherInfo;
 	
+	//TOBE determined
 	private int schoolId;
 	
+	
+	public int getTeacherId() {
+		return teacherId;
+	}
+	public void setTeacherId(int teacherId) {
+		this.teacherId = teacherId;
+	}
 	public User getUser() {
 		return user;
 	}

@@ -5,7 +5,7 @@ CREATE TABLE TeacherClass
 	id				 	INT UNSIGNED NOT NULL AUTO_INCREMENT,
     teacherId           INT UNSIGNED NOT NULL DEFAULT 0,
     classId             INT UNSIGNED NOT NULL DEFAULT 0,
-    teacherType			VARCHAR(30) NOT NULL DEFAULT '',
+    teacherTypeId		INT UNSIGNED NOT NULL DEFAULT 0,	
     available			BOOL NOT NULL DEFAULT TRUE,
     
     PRIMARY KEY (id),

@@ -7,6 +7,6 @@ import doudou.vo.SchoolClass;
 import doudou.vo.TeacherClass;
 
 public interface TeacherClassDao extends EntityDao<TeacherClass, Integer>{
-	List<SchoolClass> getClassListByTeacherId(int teacherId);
-
+	//List<SchoolClass> getClassListByTeacherId(int teacherId);
+	List<TeacherClass> getTeacherClassListByTeacherId(int teacherId);
 }

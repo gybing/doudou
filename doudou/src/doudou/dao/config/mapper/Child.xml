@@ -33,7 +33,13 @@
         limit 1
     </select>
     
-   
+   <select id="getChildListByClassId" parameterClass="Integer" resultClass="Child">
+   		select c.* from Child as c, ChildClass as cc
+   		where
+   		cc.classId = #classId#
+   		and cc.childId = c.id
+   		and cc.available = TRUE
+   </select>
     
     <update id="updateCover" parameterClass="Child">
     	update Child 

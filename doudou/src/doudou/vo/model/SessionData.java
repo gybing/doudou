@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Map;
 
 import doudou.vo.User;
+import doudou.vo.type.UserType;
 
 @SuppressWarnings("serial")
 public class SessionData implements Serializable {
@@ -25,5 +26,10 @@ public class SessionData implements Serializable {
 	public Map<String,TagedInfo> getTagedInfoMap() {
 		return tagedInfoMap;
 	}
+	public void setTagedInfoMap(Map<String,TagedInfo> tagedInfoMap) {
+		this.tagedInfoMap = tagedInfoMap;
+	}
+	
+	
 	
 }

@@ -7,8 +7,11 @@ public class TeacherClass implements Serializable{
 	private int id;
 	private int teacherId;
 	private int classId;
-	private String teacherType;
+	private int teacherTypeId;
     private boolean available;
+    
+    private DoudouInfoType teacherType;
+    private SchoolClass schoolClass;
     
 	public int getId() {
 		return id;
@@ -28,11 +31,11 @@ public class TeacherClass implements Serializable{
 	public void setClassId(int classId) {
 		this.classId = classId;
 	}
-	public String getTeacherType() {
-		return teacherType;
+	public int getTeacherTypeId() {
+		return teacherTypeId;
 	}
-	public void setTeacherType(String teacherType) {
-		this.teacherType = teacherType;
+	public void setTeacherTypeId(int teacherTypeId) {
+		this.teacherTypeId = teacherTypeId;
 	}
 	public boolean isAvailable() {
 		return available;
@@ -40,4 +43,17 @@ public class TeacherClass implements Serializable{
 	public void setAvailable(boolean available) {
 		this.available = available;
 	}
+	public DoudouInfoType getTeacherType() {
+		return teacherType;
+	}
+	public void setTeacherType(DoudouInfoType teacherType) {
+		this.teacherType = teacherType;
+	}
+	public SchoolClass getSchoolClass() {
+		return schoolClass;
+	}
+	public void setSchoolClass(SchoolClass schoolClass) {
+		this.schoolClass = schoolClass;
+	}
+	
 }

@@ -21,7 +21,7 @@
     <select id="getUser" parameterClass="int" resultClass="User">
     	select * from User where id=#id#
     </select>
-    <insert id="create" parameterClass="Parents">
+    <insert id="create" parameterClass="Teacher">
         insert into Teacher 
         (
         	teacherId,

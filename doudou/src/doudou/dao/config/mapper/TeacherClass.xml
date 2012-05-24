@@ -3,6 +3,16 @@
 <sqlMap namespace="TeacherClass">
 
     <typeAlias alias="TeacherClass" type="doudou.vo.TeacherClass" />
+	<typeAlias alias="DoudouInfoType" type="doudou.vo.DoudouInfoType"/>
+	<typeAlias alias="SchoolClass" type="doudou.vo.SchoolClass"/>
+	
+	<resultMap class="TeacherClass" id="TeacherClassMap">
+		<result property="id" column="id"/>
+		<result property="teacherId" column="teacherId"/>
+		<result property="schoolClass" column="classId" select="TeacherClass.selectClass"/>
+		<result property="teacherType" column="teacherTypeId" select="TeacherClass.selectTeacherType"/>
+		<result property="available" column="available"/>
+	</resultMap>
 	
     <select id="read" parameterClass="Integer" resultClass="TeacherClass">
         select * from TeacherClass
@@ -11,10 +21,41 @@
         limit 1
     </select>
     
-    <select id="getClassListByTeacherId" parameterClass="Integer" resultClass="int">
-    	select sc.* from SchoolClass as sc, TeacherClass as tc 
-    	where tc.teacherId = #teacherId#
-    	and sc.id = tc.classId
+    <select id="selectClass" parameterClass="int" resultClass="SchoolClass">
+    	select * from SchoolClass where id = #classId# and available = TRUE
     </select>
     
+    <select id="selectTeacherType" parameterClass="int" resultClass="DoudouInfoType">
+    	select * from DoudouInfoType where id = #teacherTypeId# and available = TRUE
+    </select>
+    
+<!--    <select id="getClassListByTeacherId" parameterClass="Integer" resultClass="int">-->
+<!--    	select sc.* from SchoolClass as sc, TeacherClass as tc -->
+<!--    	where tc.teacherId = #teacherId#-->
+<!--    	and sc.id = tc.classId-->
+<!--    </select>-->
+	<select id="getTeacherClassListByTeacherId" parameterClass="int" resultMap="TeacherClassMap">
+		select * from TeacherClass 
+		where
+		teacherId = #teacherId#
+		and available = TRUE
+	</select>
+    
+    <insert id="create" parameterClass="TeacherClass">
+    	insert into TeacherClass
+    	(
+    		teacherId,
+    		classId,
+    		teacherTypeId
+    	)
+    	values
+    	(
+    		#teacherId#,
+    		#classId#,
+    		#teacherTypeId#
+    	)
+    	<selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM TeacherClass limit 1
+        </selectKey>
+    </insert>
 </sqlMap>

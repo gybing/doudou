@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="ChildClass">
+
+    <typeAlias alias="ChildClass" type="doudou.vo.ChildClass" />
+
+	<insert id="create" parameterClass="ChildClass">
+        insert into ChildClass 
+        (
+            classId,
+            childId,
+            startTime,
+            endTime
+        )
+        values 
+        (
+            #classId#,
+            #childId#,
+            #startTime#,
+            #endTime#
+        )
+        <selectKey keyProperty="id" resultClass="int">
+            SELECT last_insert_id() AS ID FROM ChildClass limit 1
+        </selectKey>
+    </insert>
+
+    <select id="read" parameterClass="Integer" resultClass="ChildClass">
+        select * from ChildClass
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+</sqlMap>

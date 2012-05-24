@@ -3,7 +3,7 @@
 <sqlMap namespace="SchoolClass">
 
     <typeAlias alias="SchoolClass" type="doudou.vo.SchoolClass" />
-	<typeAlias alias="Child" type="doudou.dao.Child"/>
+	<typeAlias alias="Child" type="doudou.vo.Child"/>
 	
 	<insert id="create" parameterClass="SchoolClass">
         insert into SchoolClass 

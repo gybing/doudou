@@ -15,21 +15,24 @@ public class MyDatabaseDao extends BaseDatabaseDao {
 	
 	public MyDatabaseDao(DatabaseClient client){
 		super(client);
-//		entities.put(CommentDao.class, new CommentDaoImpl(this));
 		entities.put(PictureDao.class, new PictureDaoImpl(this));
 		entities.put(UserDao.class, new UserDaoImpl(this));
 		entities.put(ChildDao.class, new ChildDaoImpl(this));
 		entities.put(EventDao.class, new EventDaoImpl(this));
-//		entities.put(FriendsFromToDao.class, new FriendsFromToDaoImpl(this));
 		entities.put(PictureUserDao.class, new PictureUserDaoImpl(this));
-//		entities.put(RelationsChildUserDao.class, new RelationsChildUserDaoImpl(this));
 		entities.put(ParentsDao.class, new ParentsDaoImpl(this));
 		entities.put(TodoDao.class, new TodoDaoImpl(this));
 		entities.put(DeviceTokenDao.class, new DeviceTokenDaoImpl(this));
 		entities.put(MessageDao.class, new MessageDaoImpl(this));
+		entities.put(TeacherClassDao.class, new TeacherClassDaoImpl(this));
+		entities.put(SchoolDao.class, new SchoolDaoImpl(this));
+		entities.put(SchoolClassDao.class, new SchoolClassDaoImpl(this));
+		entities.put(ChildClassDao.class, new ChildClassDaoImpl(this));
+		entities.put(TeacherDao.class, new TeacherDaoImpl(this));
+		entities.put(DoudouInfoTypeDao.class, new DoudouInfoTypeDaoImpl(this));
+		entities.put(TeacherClassDao.class, new TeacherClassDaoImpl(this));
 		
 	}
-		
 
 	@SuppressWarnings("unchecked")
 	@Override

@@ -45,13 +45,4 @@
     	and available = TRUE
     </select>
     
-    <update id="update" parameterClass="DoudouInfoType">
-    	update DoudouInfoType 
-    	set 
-    	phrase = #phrase#,
-    	available = #available#,
-    	where 
-    	id = #id#
-    </update>
-       
 </sqlMap>
