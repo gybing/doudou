@@ -21,7 +21,6 @@ public class Event implements Serializable {
 	private Date publishTime;
 	private boolean allday;
 	private PublishLevel publishLevel;
-	private int schoolId;
 	
 	// 
 	private String userName;
