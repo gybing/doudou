@@ -74,4 +74,48 @@
         limit #offset#, #count#
     </select>
     
+    <select id="getEventListByClassIdListAndDate" parameterClass="Map" resultClass="Event">
+    	select e.* from Event as e where e.id in (
+    		select eventId from EventClass where classId in
+    		<iterate property="classIdList" open="(" close=")" conjunction=",  ">
+	            #classIdList[]#
+	        </iterate> 
+    		group by eventId
+    	) and beginTime &lt;= #date# and endTime &gt;= #date#
+    </select>
+    
+    <select id="getClassAllEventList" parameterClass="Map" resultClass="Event">
+    	select SQL_CALC_FOUND_ROWS e.* from Event as e where e.id in (
+    		select eventId from EventClass where classId in
+    		<iterate property="classIdList" open="(" close=")" conjunction=",">
+	            #classIdList[]#
+	        </iterate> 
+    		group by eventId
+    	) limit #offset#, #count#
+    </select>
+    
+    <select id="queryClassEventList" parameterClass="Map" resultClass="Event">
+    	select SQL_CALC_FOUND_ROWS e.* from Event as e where e.id in (
+    		select eventId from EventClass where classId in
+    		<iterate property="classIdList" open="(" close=")" conjunction=",">
+	            #classIdList[]#
+	        </iterate> 
+    		group by eventId
+    	) 
+    	<dynamic>
+            <isNotNull prepend="AND" property="title">
+                title like '%$title$%'
+            </isNotNull>
+            <isNotNull prepend="AND" property="publishLevel">
+                publishLevel = #publishLevel#
+            </isNotNull>
+        </dynamic>
+    	limit #offset#, #count#
+    </select>
+    
+    
+    <select id="getFoundRows" resultClass="int" >
+		SELECT FOUND_ROWS()
+	</select>
+    
 </sqlMap>

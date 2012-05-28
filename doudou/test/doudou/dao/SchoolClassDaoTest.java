@@ -17,9 +17,9 @@ public class SchoolClassDaoTest extends TestCase {
 		
 	public void testAddClass() {
 		SchoolClass sc = new SchoolClass();
-		sc.setSchoolClassName("测试班级1");
+		sc.setSchoolClassName("测试班级3");
 		sc.setSchoolId(1);
-		sc.setDescription("这是测试班级");
+		sc.setDescription("这是测试班级3");
 		schoolClassDao.create(sc);
 		
 	}

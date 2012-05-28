@@ -3,7 +3,6 @@
 <sqlMap namespace="MessageUser">
 
     <typeAlias alias="MessageUser" type="doudou.vo.MessageUser" />
-	<typeAlias alias="event" type="doudou.vo.Event" />
     
     <select id="read" parameterClass="int" resultClass="MessageUser">
         select * from MessageUser

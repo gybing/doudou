@@ -2,8 +2,13 @@ package doudou.vo.model;
 
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import doudou.vo.SchoolClass;
 import doudou.vo.User;
 import doudou.vo.type.UserType;
 
@@ -29,7 +34,13 @@ public class SessionData implements Serializable {
 	public void setTagedInfoMap(Map<String,TagedInfo> tagedInfoMap) {
 		this.tagedInfoMap = tagedInfoMap;
 	}
-	
+	public Set<SchoolClass> getSchoolClassList() {
+		Set<SchoolClass> classSet = new HashSet<SchoolClass>();
+		for (TagedInfo tagedInfo : tagedInfoMap.values()) {
+			classSet.addAll(tagedInfo.getClassChildMap().keySet());
+		}
+		return classSet;
+	}
 	
 	
 }

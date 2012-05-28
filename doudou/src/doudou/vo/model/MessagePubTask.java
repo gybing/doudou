@@ -1,12 +1,9 @@
 package doudou.vo.model;
 
-import java.util.List;
-
 import doudou.vo.Message;
 
-public class MessagePubTask {
+public class MessagePubTask extends PublishTask {
 	private Message message;
-	private List<Integer> childrenList;
 	
 	public Message getMessage() {
 		return message;
@@ -14,11 +11,10 @@ public class MessagePubTask {
 	public void setMessage(Message message) {
 		this.message = message;
 	}
-	public List<Integer> getChildrenList() {
-		return childrenList;
-	}
-	public void setChildrenList(List<Integer> childrenList) {
-		this.childrenList = childrenList;
+	
+	@Override
+	public void setChildrenListString(String atChildList) {
+		message.setAtChildList(atChildList);
 	}
 
 }

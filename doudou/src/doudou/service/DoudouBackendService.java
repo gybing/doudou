@@ -72,16 +72,6 @@ public class DoudouBackendService {
 	
 	
 	public void publishTask(MessagePubTask task) {
-		StringBuffer atChildList = new StringBuffer();
-		logger.info("message task child list size : " + task.getChildrenList().size());
-		for(Integer childId : task.getChildrenList()) {
-			atChildList.append(childDao.read(childId).getFirstName()+",");
-		}
-		if (atChildList.length() > 1) {
-			atChildList.deleteCharAt(atChildList.length()-1);
-		}
-		Message evt = task.getMessage();
-		evt.setAtChildList(atChildList.toString());
 		
 		if ((Integer) messageDao.create(evt) > 0) {
 			PushVO pushVO = new PushVO();

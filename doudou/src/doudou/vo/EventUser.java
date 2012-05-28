@@ -9,6 +9,9 @@ public class EventUser implements Serializable {
 	private int eventId;
 	private int toChildId;
 	
+	// Add for Get Teacher EventList More Easily
+	private int schoolClassId;
+	
 	public int getId() {
 		return id;
 	}
@@ -27,5 +30,11 @@ public class EventUser implements Serializable {
 	public void setToChildId(int toChildId) {
 		this.toChildId = toChildId;
 	}
-
+	public int getSchoolClassId() {
+		return schoolClassId;
+	}
+	public void setSchoolClassId(int schoolClassId) {
+		this.schoolClassId = schoolClassId;
+	}
+	
 }

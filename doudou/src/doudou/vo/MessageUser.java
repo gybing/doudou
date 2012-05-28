@@ -12,8 +12,6 @@ public class MessageUser implements Serializable {
 	private String readerName;
 	private String feedbackContent; 
 	private String feedbackUser;
-	//Add For Get Teacher MessageList More Easily
-	private int childClassId;
 	
 	public int getId() {
 		return id;
@@ -57,12 +55,6 @@ public class MessageUser implements Serializable {
 	}
 	public void setFeedbackUser(String feedbackUser) {
 		this.feedbackUser = feedbackUser;
-	}
-	public int getChildClassId() {
-		return childClassId;
-	}
-	public void setChildClassId(int childClassId) {
-		this.childClassId = childClassId;
 	}
 	
 }

@@ -40,11 +40,24 @@
         </selectKey>
     </insert>
     
-    <select id="getNotificationVOById" parameterClass="int" resultClass="Announcement">
-    	select u.firstName as userName,a.* 
-    	from Message as a, User as u
-    	where 
-     	a.id = #contentId#
-     	and a.userId = u.userId
+    <select id="getMessageListByClassIdList" parameterClass="Map" resultClass="Message">
+    	select SQL_CALC_FOUND_ROWS m.* from Message as m where m.id in ( 
+    		select messageId from MessageClass 
+    		where classId in 
+	    	<iterate property="classIdList" open="(" close=")" conjunction=",  ">
+	            #classIdList[]#
+	        </iterate> 
+    		group by messageId
+    	)
+    	limit #offset#, #count#
     </select>
+    
+    <select id="readAll" resultClass="Message">
+    	select SQL_CALC_FOUND_ROWS m.* FROM Message as m
+    	limit 0,1;
+    </select>
+    
+    <select id="getFoundRows" resultClass="int" >
+		SELECT FOUND_ROWS()
+	</select>
 </sqlMap>

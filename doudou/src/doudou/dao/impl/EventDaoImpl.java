@@ -3,11 +3,11 @@ package doudou.dao.impl;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import doudou.dao.EventDao;
 import doudou.util.dao.BaseEntityDao;
 import doudou.util.dao.DatabaseDao;
+import doudou.util.vo.ListResult;
 import doudou.vo.Event;
 import doudou.vo.type.PublishLevel;
 
@@ -23,51 +23,46 @@ public class EventDaoImpl extends BaseEntityDao<Event, Integer> implements Event
 		return "Event";
 	}
 
+
 	@Override
-	public List<Event> getEventListByChildId(int childId) {
-		Map<String,Object> params = new HashMap<String,Object>();
-		params.put("toChildId", childId);
-		return reads("getEventListByChildId",params);
+	public List<Event> getEventListByClassIdListAndDate(
+			List<Integer> classIdList, Date date) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("classIdList", classIdList);
+		conditions.put("date", date);
+		return reads("getEventListByClassIdListAndDate",conditions);
 	}
 
 	@Override
-	public Event getNotificationVOById(int contentId) {
-		return read("getNotificationVOById",contentId);
+	public ListResult<Event> getClassAllEventList(List<Integer> classIdList,
+			int offset, int count) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("classIdList", classIdList);
+		conditions.put("offset", offset);
+		conditions.put("count", count);
+		
+		List<Event> entities = reads("getClassAllEventList",conditions);
+		int counts = count("getFoundRows", null);
+		
+		return new ListResult<Event>(entities,counts);
 	}
 
 	@Override
-	public List<Event> queryList(String title, PublishLevel publishLevel,Date eventData, int offset, int count) {
-		Map<String, Object> conditions = new HashMap<String, Object>();
+	public ListResult<Event> queryClassEventList(List<Integer> classIdList,
+			String title, PublishLevel publishLevel, int offset, int count) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		conditions.put("classIdList", classIdList);
+		conditions.put("offset", offset);
+		conditions.put("count", count);
 		if (null != title && !title.isEmpty()) {
         	conditions.put("title", title);
-        }
-        if (null != eventData) {
-        	conditions.put("date", eventData);
         }
         if (null != publishLevel) {
 			conditions.put("publishLevel", publishLevel);
 		}
-		
-        conditions.put("offset", offset);
-        conditions.put("count", count);
-
-		return reads("queryList", conditions);
-	}
-
-	@Override
-	public int queryCount(String title, PublishLevel publishLevel,Date eventData) {
-		Map<String, Object> conditions = new HashMap<String, Object>();
-		if (null != title && !title.isEmpty()) {
-        	conditions.put("title", title);
-        }
-        if (null != eventData) {
-        	conditions.put("date", eventData);
-        }
-        if (null != publishLevel) {
-			conditions.put("publishLevel", publishLevel);
-		}
-		
-		return count("queryCount",conditions);
+		List<Event> entities = reads("queryClassEventList",conditions);
+		int counts = count("getFoundRows", null);
+		return new ListResult<Event>(entities,counts);
 	}
 
 	

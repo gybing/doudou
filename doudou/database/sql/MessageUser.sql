@@ -9,7 +9,6 @@ CREATE TABLE MessageUser
 	readerName			 VARCHAR(100) NOT NULL DEFAULT '',
 	feedbackContent		 VARCHAR(100) NOT NULL DEFAULT '',
 	feedbackUser		 VARCHAR(20) NOT NULL DEFAULT '',
-	childClassId		 INT UNSIGNED NOT NULL, 
 	
     PRIMARY KEY (id),
     index idx_mu_toChildId(toChildId)

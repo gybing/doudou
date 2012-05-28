@@ -17,15 +17,19 @@ public class ChildClassDaoTest extends TestCase {
 		childClassDao = dao.getEntityDao(ChildClassDao.class);
 	}
 	
-	public void testAddChildClass() {
-		ChildClass cc = new ChildClass();
-		cc.setChildId(1);
-		cc.setClassId(1);
-		cc.setEndTime(new Date());
-		cc.setStartTime(new Date());
+//	public void testAddChildClass() {
+//		ChildClass cc = new ChildClass();
+//		cc.setChildId(1);
+//		cc.setClassId(1);
+//		cc.setEndTime(new Date());
+//		cc.setStartTime(new Date());
+//		
+//		
+//		int r = (Integer)childClassDao.create(cc);
+//		System.out.println(r);
+//	}
+	
+	public void testPageination(){
 		
-		
-		int r = (Integer)childClassDao.create(cc);
-		System.out.println(r);
 	}
 }
