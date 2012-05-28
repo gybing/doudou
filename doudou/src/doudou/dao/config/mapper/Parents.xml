@@ -4,6 +4,7 @@
 
     <typeAlias alias="Parents" type="doudou.vo.Parents" />
     <typeAlias alias="User" type="doudou.vo.User"/>
+    <typeAlias alias="Child" type="doudou.vo.Child" />
     
     <resultMap id="ParentsResult" class="Parents">
     	<result property="user" column="parentId" select="Parents.getUser"/>
@@ -53,6 +54,18 @@
         where
         parentId = #parentId#
         limit 1
+    </select>
+    
+    <select id="getParentsListByChildId" parameterClass="int" resultClass="Parents">
+    	select p.* from Parents as p, ParentsChild as pc
+    	where pc.childId = #childId#
+    	and p.parentId = pc.parentId
+    </select>
+    
+    <select id="getChildListByParentId" parameterClass="int" resultClass="Child">
+    	select c.* from Child as c, ParentsChild as pc
+    	where pc.parentId = #parentId#
+    	and c.id = pc.childId
     </select>
     
 </sqlMap>

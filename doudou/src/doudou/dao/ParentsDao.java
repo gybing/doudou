@@ -7,5 +7,6 @@ import doudou.vo.Child;
 import doudou.vo.Parents;
 
 public interface ParentsDao extends EntityDao<Parents, Integer>{
-	List<Child> getChildList(int parentId); 
+	List<Child> getChildListByParentId(int parentId); 
+	List<Parents> getParentsListByChildId(int childId);
 }

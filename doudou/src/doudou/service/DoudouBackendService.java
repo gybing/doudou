@@ -2,6 +2,8 @@ package doudou.service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 
@@ -10,22 +12,31 @@ import org.apache.log4j.Logger;
 
 import doudou.dao.ChildDao;
 import doudou.dao.DaoFactory;
+import doudou.dao.EventClassDao;
 import doudou.dao.EventDao;
 import doudou.dao.EventUserDao;
+import doudou.dao.MessageClassDao;
 import doudou.dao.MessageDao;
 import doudou.dao.MessageUserDao;
+import doudou.dao.ParentsChildDao;
+import doudou.dao.ParentsDao;
 import doudou.dao.PictureDao;
 import doudou.dao.PictureUserDao;
 import doudou.dao.TodoDao;
 import doudou.dao.UserDao;
 import doudou.system.DoudouBackend;
 import doudou.util.dao.DatabaseDao;
+import doudou.vo.Child;
 import doudou.vo.Event;
+import doudou.vo.EventClass;
 import doudou.vo.EventUser;
 import doudou.vo.Message;
+import doudou.vo.MessageClass;
 import doudou.vo.MessageUser;
+import doudou.vo.Parents;
 import doudou.vo.Picture;
 import doudou.vo.PictureUser;
+import doudou.vo.SchoolClass;
 import doudou.vo.Todo;
 import doudou.vo.model.EmailTask;
 import doudou.vo.model.EvtPublishTask;
@@ -44,6 +55,7 @@ public class DoudouBackendService {
 	
 	private final PictureDao pictureDao;
 	private final EventDao eventDao;
+	private final EventClassDao eventClassDao;
 	private final PictureUserDao pictureUserDao;
 	private final EventUserDao eventUserDao;
 	private final ChildDao childDao;
@@ -51,11 +63,15 @@ public class DoudouBackendService {
 	private final MessageDao messageDao;
 	private final MessageUserDao messageUserDao;
 	private final UserDao userDao;
+	private final MessageClassDao messageClassDao;
+	private final ParentsDao parentsDao;
+	
 	
 	private DoudouBackendService() {
 		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
 		
 		eventDao = myDatabaseDao.getEntityDao(EventDao.class);
+		eventClassDao = myDatabaseDao.getEntityDao(EventClassDao.class);
 		pictureDao = myDatabaseDao.getEntityDao(PictureDao.class);
 		pictureUserDao = myDatabaseDao.getEntityDao(PictureUserDao.class);
 		eventUserDao = myDatabaseDao.getEntityDao(EventUserDao.class); 
@@ -64,6 +80,8 @@ public class DoudouBackendService {
 		messageDao = myDatabaseDao.getEntityDao(MessageDao.class);
 		messageUserDao = myDatabaseDao.getEntityDao(MessageUserDao.class);
 		userDao = myDatabaseDao.getEntityDao(UserDao.class);
+		messageClassDao = myDatabaseDao.getEntityDao(MessageClassDao.class);
+		parentsDao = myDatabaseDao.getEntityDao(ParentsDao.class);
 	}
 	
 	public static DoudouBackendService getInstance() {
@@ -72,152 +90,160 @@ public class DoudouBackendService {
 	
 	
 	public void publishTask(MessagePubTask task) {
+		Message message = task.getMessage();
 		
-		if ((Integer) messageDao.create(evt) > 0) {
-			PushVO pushVO = new PushVO();
-			pushVO.setTodoType(TodoType.Message);
-			pushVO.setContentId(evt.getId());
-			Set<Integer> relatedIdSet = new HashSet<Integer>();
+		PushVO pushVO = new PushVO();
+		pushVO.setTodoType(TodoType.Message);
+		pushVO.setContentId(message.getId());
+		Set<Integer> relatedIdSet = new HashSet<Integer>();
+		Set<String> relatedEmailSet = new HashSet<String>();
+		
+		for (Entry<SchoolClass,List<Child>> entrySet : task.getTagedInfo().getClassChildMap().entrySet()) {
+			SchoolClass sc = entrySet.getKey();
+			//插入消息和班级的对应数据
+			MessageClass mc = new MessageClass();
+			mc.setMessageId(message.getId());
+			mc.setClassId(sc.getId());
+			mc.setSchoolId(task.getSchoolId());
+			logger.info(String.format("Message PublishTask....messageId : %d,classId : %d,schoolId:%d.", message.getId(),sc.getId(),task.getSchoolId()));
+			messageClassDao.create(mc);
 			
-			//使得通知发布人自己也能看见自己的通知
-//			Todo todo = new Todo();
-//			todo.setContentId(evt.getId());
-//			todo.setTodoType(TodoType.Message);
-//			todo.setUserId(evt.getUserId());
-//			todoDao.create(todo);
-			
-			
-			for (Integer childId : task.getChildrenList()) {
+			for (Child child : entrySet.getValue()) {
+				//插入班级和孩子对应信息
 				MessageUser mu = new MessageUser();
-				mu.setMessageId(evt.getId());
-				mu.setToChildId(childId);
+				mu.setMessageId(message.getId());
+				mu.setToChildId(child.getId());
 				messageUserDao.create(mu);
-				
-				List<Integer> relatedIdList = childUserDao.getRelatedUserIDByChildId(childId);
-				relatedIdSet.addAll(relatedIdList);
+
+				List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(child.getId());
+				for (Parents parents : relatedParentsList) {
+					//这里可以do more
+					relatedIdSet.add(parents.getParentId());
+					relatedEmailSet.add(parents.getPrivateEmail());
+				}
 			}
-			String fromUser = userDao.read(evt.getUserId()).getFirstName();
-			relatedIdSet.remove(evt.getUserId());
-			pushVO.setFromUser(fromUser);
-			pushVO.setUserIdList(relatedIdSet);
-			logger.info(String.format("publish announcement task, relatedIdSet = %s;remove userId : %d",
-							relatedIdSet, evt.getUserId()));
-			DoudouBackend.getInstance().addPushVO(pushVO);
-			
-			// Email
-			EmailTask emailTask = new EmailTask();
-			emailTask.setTodoType(TodoType.Message);
-			emailTask.setTo(getEmailListFromIdSet(relatedIdSet));
-			emailTask.setFromUser(fromUser);
-			emailTask.setContent(evt);
-			DoudouBackend.getInstance().addEmailTask(emailTask);
-			
+				
 		}
+		String fromUser = userDao.read(message.getUserId()).getFirstName();
+//		relatedIdSet.remove(message.getUserId()); 不刪除自己 TODO
+		pushVO.setFromUser(fromUser);
+		pushVO.setUserIdList(relatedIdSet);
+		logger.info(String.format("publish message task, relatedIdSet = %s;fromUser :%s",
+							relatedIdSet, fromUser));
+		DoudouBackend.getInstance().addPushVO(pushVO);
+			
+		// Email
+		EmailTask emailTask = new EmailTask();
+		emailTask.setTodoType(TodoType.Message);
+		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
+		emailTask.setFromUser(fromUser);
+		emailTask.setContent(message);
+		DoudouBackend.getInstance().addEmailTask(emailTask);
+			
 	}
 	
 	public void publishTask(PicPublishTask task) {
-		StringBuffer atChildList = new StringBuffer();
-		logger.info("task child list size : " + task.getChildrenList().size());
-		for(Integer childId : task.getChildrenList()) {
-			atChildList.append(childDao.read(childId).getFirstName()+",");
-		}
-		if (atChildList.length() > 1) {
-			atChildList.deleteCharAt(atChildList.length()-1);
-		}
-		Picture pic = task.getPicture();
-		pic.setAtChildList(atChildList.toString());
-		logger.info("atChildList : " + atChildList.toString());
+		Picture picture = task.getPicture();
+		
+		PushVO pushVO = new PushVO();
+		pushVO.setTodoType(TodoType.Picture);
+		pushVO.setContentId(picture.getId());
 		Set<Integer> relatedIdSet = new HashSet<Integer>();
-			if ((Integer)pictureDao.create(pic) > 0) {
-				
-				PushVO pushVO = new PushVO();
-				pushVO.setTodoType(TodoType.Picture);
-				pushVO.setContentId(pic.getId());
-				for (Integer childId : task.getChildrenList()) {
-					PictureUser ppu = new PictureUser();
-					ppu.setPictureId(pic.getId());
-					ppu.setToChildId(childId);
-					pictureUserDao.create(ppu);
-					
-					// APNS
-					
-					List<Integer> relatedIdList = relationsChildUserDao.getRelatedUserIDByChildId(childId);
-					relatedIdSet.addAll(relatedIdList);
+		Set<String> relatedEmailSet = new HashSet<String>();
+		
+		for (Entry<SchoolClass,List<Child>> entrySet : task.getTagedInfo().getClassChildMap().entrySet()) {
+			SchoolClass sc = entrySet.getKey();
+			//插入消息和班级的对应数据
+			MessageClass mc = new MessageClass();
+			mc.setMessageId(picture.getId());
+			mc.setClassId(sc.getId());
+			mc.setSchoolId(task.getSchoolId());
+			logger.info(String.format("Message PublishTask....messageId : %d,classId : %d,schoolId:%d.", picture.getId(),sc.getId(),task.getSchoolId()));
+			messageClassDao.create(mc);
+			
+			for (Child child : entrySet.getValue()) {
+				//插入班级和孩子对应信息
+				MessageUser mu = new MessageUser();
+				mu.setMessageId(picture.getId());
+				mu.setToChildId(child.getId());
+				messageUserDao.create(mu);
+
+				List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(child.getId());
+				for (Parents parents : relatedParentsList) {
+					//这里可以do more
+					relatedIdSet.add(parents.getParentId());
+					relatedEmailSet.add(parents.getPrivateEmail());
 				}
-				String fromUser = userDao.read(pic.getUserId()).getFirstName();
-				relatedIdSet.remove(pic.getUserId());
-				pushVO.setUserIdList(relatedIdSet);
-				pushVO.setFromUser(fromUser);
-				logger.info(String.format("publish picture task, relatedIdSet = %s;remove userId : %d",relatedIdSet,pic.getUserId()));
-				DoudouBackend.getInstance().addPushVO(pushVO);
-				
-				// Email
-				EmailTask emailTask = new EmailTask();
-				emailTask.setTo(getEmailListFromIdSet(relatedIdSet));
-				emailTask.setTodoType(TodoType.Picture);
-				emailTask.setFromUser(fromUser);
-				emailTask.setContent(pic);
-				DoudouBackend.getInstance().addEmailTask(emailTask);
 			}
+				
+		}
+		String fromUser = userDao.read(picture.getUserId()).getFirstName();
+//		relatedIdSet.remove(message.getUserId()); 不刪除自己 TODO
+		pushVO.setFromUser(fromUser);
+		pushVO.setUserIdList(relatedIdSet);
+		logger.info(String.format("publish message task, relatedIdSet = %s;fromUser :%s",
+							relatedIdSet, fromUser));
+		DoudouBackend.getInstance().addPushVO(pushVO);
+			
+		// Email
+		EmailTask emailTask = new EmailTask();
+		emailTask.setTodoType(TodoType.Message);
+		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
+		emailTask.setFromUser(fromUser);
+		emailTask.setContent(picture);
+		DoudouBackend.getInstance().addEmailTask(emailTask);
 	}
 	
 	public void publishTask(EvtPublishTask task) {
-		StringBuffer atChildList = new StringBuffer();
-		logger.info("task child list size : " + task.getChildIdList().size());
-		for(Integer childId : task.getChildIdList()) {
-			atChildList.append(childDao.read(childId).getFirstName()+",");
-		}
-		if (atChildList.length() > 1) {
-			atChildList.deleteCharAt(atChildList.length()-1);
-		}
-		Event evt = task.getEvent();
-		evt.setAtChildList(atChildList.toString());
+		Event event = task.getEvent();
+		
+		PushVO pushVO = new PushVO();
+		pushVO.setTodoType(TodoType.Event);
+		pushVO.setContentId(event.getId());
 		Set<Integer> relatedIdSet = new HashSet<Integer>();
-
-		if ((Integer) eventDao.create(evt) > 0) {
-			PushVO pushVO = new PushVO();
-			pushVO.setTodoType(TodoType.Event);
-			pushVO.setContentId(evt.getId());
-			for (Integer childId : task.getChildIdList()) {
-				EventUser reu = new EventUser();
-				reu.setEventId(evt.getId());
-				// input the childID
-				reu.setToChildId(childId);
-				eventUserDao.create(reu);
-
-				// APNS
-				List<Integer> relatedIdList = relationsChildUserDao.getRelatedUserIDByChildId(childId);
-				relatedIdSet.addAll(relatedIdList);
-			}
-//			for (int userId : relatedIdSet) {
-//				CacheManager.getInstance().putEvt(userId);
-//			}
-			relatedIdSet.remove(evt.getUserId());
-			String fromUser = userDao.read(evt.getUserId()).getFirstName();
-			pushVO.setUserIdList(relatedIdSet);
-			pushVO.setFromUser(fromUser);
-			logger.info(String.format("publish Event task, relatedIdSet = %s;remove userId : %d",
-					relatedIdSet, evt.getUserId()));
-			DoudouBackend.getInstance().addPushVO(pushVO);
+		Set<String> relatedEmailSet = new HashSet<String>();
+		
+		for (Entry<SchoolClass,List<Child>> entrySet : task.getTagedInfo().getClassChildMap().entrySet()) {
+			SchoolClass sc = entrySet.getKey();
+			//插入消息和班级的对应数据
+			EventClass ec = new EventClass();
+			ec.setEventId(event.getId());
+			ec.setClassId(sc.getId());
+			ec.setSchoolId(task.getSchoolId());
+			logger.info(String.format("Message PublishTask....messageId : %d,classId : %d,schoolId:%d.", event.getId(),sc.getId(),task.getSchoolId()));
+			eventClassDao.create(ec);
 			
-			// Email
-			EmailTask emailTask = new EmailTask();
-			emailTask.setTodoType(TodoType.Event);
-			emailTask.setTo(getEmailListFromIdSet(relatedIdSet));
-			emailTask.setFromUser(fromUser);
-			emailTask.setContent(evt);
-			DoudouBackend.getInstance().addEmailTask(emailTask);
+			for (Child child : entrySet.getValue()) {
+				//插入班级和孩子对应信息
+				EventUser mu = new EventUser();
+				mu.setEventId(event.getId());
+				mu.setToChildId(child.getId());
+				eventUserDao.create(mu);
+
+				List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(child.getId());
+				for (Parents parents : relatedParentsList) {
+					//这里可以do more
+					relatedIdSet.add(parents.getParentId());
+					relatedEmailSet.add(parents.getPrivateEmail());
+				}
+			}
+				
 		}
+		String fromUser = userDao.read(event.getUserId()).getFirstName();
+//		relatedIdSet.remove(message.getUserId()); 不刪除自己 TODO
+		pushVO.setFromUser(fromUser);
+		pushVO.setUserIdList(relatedIdSet);
+		logger.info(String.format("publish event task, relatedIdSet = %s;fromUser :%s",
+							relatedIdSet, fromUser));
+		DoudouBackend.getInstance().addPushVO(pushVO);
+			
+		// Email
+		EmailTask emailTask = new EmailTask();
+		emailTask.setTodoType(TodoType.Event);
+		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
+		emailTask.setFromUser(fromUser);
+		emailTask.setContent(event);
+		DoudouBackend.getInstance().addEmailTask(emailTask);
 	}
-//	
-//	private String[] getEmailListFromIdSet(Set<Integer> relatedIdSet) {
-//		String[] emailArray = new String[relatedIdSet.size()];
-//		int index = 0;
-//		for (Integer integer : relatedIdSet) {
-//			String email = userDao.getUserEmailById(integer);
-//			emailArray[index++] = email;
-//		}
-//		return emailArray;
-//	}
 	
 }

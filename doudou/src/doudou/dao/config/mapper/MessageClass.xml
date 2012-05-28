@@ -11,7 +11,22 @@
         limit 1
     </select>
     
-    
-    
+    <insert id="create" parameterClass="MessageClass">
+	    	insert into MessageClass 
+	        (
+				messageId,
+				classId,
+				schoolId
+	        )
+	        values 
+	        (
+				#messageId#,
+				#classId#,
+				#schoolId#
+	        )
+	        <selectKey keyProperty="id" resultClass="int">
+	            SELECT last_insert_id() AS ID FROM MessageClass limit 1
+	        </selectKey>
+    </insert>
     
 </sqlMap>

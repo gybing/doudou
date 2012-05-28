@@ -11,6 +11,9 @@ import doudou.vo.type.PublishLevel;
 public interface EventDao extends EntityDao<Event, Integer>{
 	
 	List<Event> getEventListByClassIdListAndDate(List<Integer> classIdList, Date date);
+	
 	ListResult<Event> getClassAllEventList(List<Integer> classIdList, int offset, int count);
+	
 	ListResult<Event> queryClassEventList(List<Integer> classIdList, String title, PublishLevel publishLevel, int offset, int count);
+
 }

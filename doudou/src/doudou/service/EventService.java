@@ -89,5 +89,19 @@ public class EventService {
 		ListResult<Event> result = eventDao.queryClassEventList(classIdList, title, publishLevel, offset, count);
 		return result;
 	}
+	/**
+	 * 更新Event
+	 * @param childIdList 新添加的孩子列表
+	 * */
+	public boolean updateEvent(SessionData sessionData, Event event, List<Integer> childIdList) {
+		//检查是否有权限 (是否为自己发的事件)
+		if (sessionData.getUser().getId() == event.getId()) {
+			//TODO
+			
+			return eventDao.update(event) > 0;
+		} else {
+			return false;
+		}
+	}
 	
 }

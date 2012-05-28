@@ -21,7 +21,12 @@ public class ParentsDaoImpl extends BaseEntityDao<Parents, Integer> implements P
 	}
 
 	@Override
-	public List<Child> getChildList(int parentId) {
-		return (List<Child>)readObjects("getChildList",parentId);
+	public List<Child> getChildListByParentId(int parentId) {
+		return (List<Child>)readObjects("getChildListByParentId",parentId);
+	}
+
+	@Override
+	public List<Parents> getParentsListByChildId(int childId) {
+		return (List<Parents>)readObjects("getParentsListByChildId",childId);
 	}
 }

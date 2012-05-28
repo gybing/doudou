@@ -151,8 +151,6 @@ public class LoginServlet extends BaseServlet{
 				veriResult = -1;
 			}
 		}
-    	//TODO
-		ModelAndView mav = new ModelAndView("/WEB-INF/views/accounts/show.jsp");
     	response.getOutputStream().print(veriResult);
     }
 	
