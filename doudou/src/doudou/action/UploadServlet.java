@@ -115,7 +115,7 @@ public class UploadServlet extends BaseServlet{
 						for (Object o : whoToPush) {
 							childIdList.add((Integer)o);
 						}
-						task.setChildrenList(childIdList);
+						//task.setChildrenList(childIdList);
 						DoudouBackend.getInstance().publishTask(task);
 					} else {
 						logger.info("没有选择文件！");
@@ -159,7 +159,7 @@ public class UploadServlet extends BaseServlet{
 		for (Object o : whoToPush) {
 			childIdList.add(Integer.parseInt((String)o));
 		}
-		task.setChildrenList(childIdList);
+		//task.setChildrenList(childIdList);
 		DoudouBackend.getInstance().publishTask(task);
     }
 	
@@ -278,7 +278,7 @@ public class UploadServlet extends BaseServlet{
 		for (Object o : whoToPush) {
 			childIdList.add((Integer)o);
 		}
-		task.setChildIdList(childIdList);
+		//task.setChildIdList(childIdList);
 		DoudouBackend.getInstance().publishTask(task);
 		//CacheManager.getInstance().putEvt(userId);
 	}
