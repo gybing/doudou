@@ -14,6 +14,7 @@
 		<result property="mustFeedBack" column="mustFeedBack" />
 		<result property="available" column="available" />
 		<result property="messageType" column="messageTypeId" select="Message.selectMessageType" />
+		<result property="id" column="id"/>
 	</resultMap>
 	
     <select id="read" parameterClass="int" resultMap="MessageResult">
