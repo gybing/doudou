@@ -3,6 +3,7 @@ package doudou.action;
 import doudou.service.DoudouService;
 import doudou.service.MessageService;
 import doudou.util.BaseServlet;
+import doudou.util.tool.DateUtil;
 import doudou.util.vo.ListResult;
 import doudou.vo.DoudouInfoType;
 import doudou.vo.Message;
@@ -10,6 +11,7 @@ import doudou.vo.model.SessionData;
 import doudou.vo.type.PublishLevel;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.Servlet;
@@ -89,7 +91,23 @@ public class MessageServlet extends BaseServlet {
 		int count = getIntParameter(request, "perPageCount", 20);
 		int offset = (pageIndex-1)*count;
 		SessionData sessionData = (SessionData)request.getAttribute("SessionData");
+		boolean isUserSelf = getBoolParameter(request, "isUserSelf", false);
+		boolean mustFeedBack = getBoolParameter(request, "mustFeedBack", false);
+		String publishLevelString = getStringParameter(request, "publishLevel","");
+		String beginTimeS = getStringParameter(request, "startTime", "");
+		String endTimeS = getStringParameter(request, "endTime", "");
+		String title = getStringParameter(request, "title","");
 		
+		Date beginTime = DateUtil.getInstance().fromFullString(beginTimeS);
+		Date endTime = DateUtil.getInstance().fromFullString(endTimeS);
+		PublishLevel publishLevel = PublishLevel.valueOf(publishLevelString);
+		
+		ListResult<Message> result = messageService.queryClassMessageList(sessionData, offset,
+				count, title, publishLevel, beginTime, endTime, mustFeedBack, isUserSelf);
+		
+		JSONObject jsonObj = JSONObject.fromObject(result);
+		response.setContentType("text/x-json;charset=UTF-8");
+		response.getWriter().print(jsonObj);
 	}
 	
 }

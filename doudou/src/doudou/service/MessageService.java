@@ -2,6 +2,7 @@ package doudou.service;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -56,15 +57,19 @@ public class MessageService {
 	
 	/**
 	 * 班级管理员搜索消息列表
-	 * TODO
+	 * 
 	 * */
-	public ListResult<Message> queryClassMessageList(SessionData sessionData, int offset, int count) {
+	public ListResult<Message> queryClassMessageList(SessionData sessionData, int offset, int count,
+			String title, PublishLevel publishLevel, Date beginTime, Date endTime, boolean mustFeedBack, boolean isUserSelf) {
 		//获取该老师相关的班级id List
 		Set<SchoolClass> classSet = sessionData.getSchoolClassList();
 		List<Integer> classIdList = new ArrayList<Integer>();
 		
 		for (SchoolClass schoolClass : classSet) {
 			classIdList.add(schoolClass.getId());
+		}
+		if (isUserSelf) {
+			
 		}
 		ListResult<Message> result = messageDao.queryClassMessageList(classIdList, offset, count);
 		fulfillFeedBackOrReadStatusInfo(result.getEntities());

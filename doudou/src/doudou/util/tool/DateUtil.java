@@ -29,14 +29,23 @@ public class DateUtil {
 		return instance;
 	}
 	
+	/**
+	 * @return yyyyMMddHHmmss
+	 * */
 	public String getDetailStringFromDate(Date date) {
 		return detail.format(date);
 	}
 	
+	/**
+	 * @return yyyy-MM-dd HH:mm
+	 * */
 	public String getStringFromDate(Date date) {
 		return sdf.format(date);
 	}
 	
+	/**
+	 * @param dateString yyyy-MM-dd HH:mm
+	 * */
 	public Date fromString(String dateString) {
 		try {
 			return sdf.parse(dateString);
@@ -45,7 +54,9 @@ public class DateUtil {
 			return null;
 		}
 	}
-	
+	/**
+	 * @param dateString yyyy-MM-dd HH:mm:ss
+	 * */
 	public Date fromFullString(String dateString) {
 		try {
 			return fullDateFormat.parse(dateString);
@@ -54,23 +65,37 @@ public class DateUtil {
 			return null;
 		}
 	}
-	
+	/**
+	 * @return yyyy-MM-dd HH:mm:ss
+	 * */
 	public String toFullString(Date date) {
 		return fullDateFormat.format(date);
 	}
 	
+	/**
+	 * @return yyyy-MM
+	 * */
 	public String toYearMonthString(Date date) {
 		return yearWithMoth.format(date);
 	}
 	
+	/**
+	 * @return yyyy-MM-dd 00:00:00
+	 * */
 	public String getBeginTimeOfDate(Date date) {
 		return dateFormat.format(date) + " 00:00:00";
 	}
 	
+	/**
+	 * @return yyyy-MM-dd 23:59:59
+	 * */
 	public String getEndTimeOfDate(Date date) {
 		return dateFormat.format(date) + " 23:59:59";
 	}
 	
+	/**
+	 * @param dateString yyyy-MM-dd
+	 * */
 	public Date getDateFromString(String dateString) {
 		try {
 			return dateFormat.parse(dateString);
@@ -79,11 +104,16 @@ public class DateUtil {
 			return null;
 		}
 	}
-	
+	/**
+	 * @return yyyy-MM-dd
+	 * */
 	public String getDateString(Date date) {
 		return dateFormat.format(date);
 	}
 	
+	/**
+	 * @return yyyy-MM-dd h:mm a (with am pm)
+	 * */
 	public String toAnnounceString(Date date) {
 		return announceFormat.format(date);
 	}
