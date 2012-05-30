@@ -58,7 +58,9 @@ public class MessageServlet extends BaseServlet {
 		
 		List<Integer> childIdList = doudouService.getChildIdListFromString(atChildList);
 		List<Integer> classIdList = doudouService.getClassIdListFromChildIdList(childIdList);
-		messageService.addMessage(message , childIdList, classIdList);
+		int result = messageService.addMessage(message , childIdList, classIdList);
+		
+		response.getWriter().print(result);
 	}
 	
 	@RequestMapping("/getMessageTypes")
