@@ -7,11 +7,12 @@ import doudou.vo.type.TodoType;
 
 public abstract class PublishTask {
 	
-	private List<Integer> addedChildIdList;
-	private List<Integer> classIdList;
+	private List<Integer> newChildIdList;
+	private List<Integer> newClassIdList;
 	private int schoolId;
 	private TodoType todoType;
-	private List<Integer>
+	private List<Integer> oldChildIdList;
+	private List<Integer> oldClassIdList;
 	
 	public int getSchoolId() {
 		return schoolId;
@@ -21,13 +22,6 @@ public abstract class PublishTask {
 		this.schoolId = schoolId;
 	}
 
-	public TagedInfo getTagedInfo() {
-		return tagedInfo;
-	}
-
-	public void setTagedInfo(TagedInfo tagedInfo) {
-		this.tagedInfo = tagedInfo;
-	}
 
 	public String generateAtChildrenListString() {
 		StringBuffer atChildList = new StringBuffer();
