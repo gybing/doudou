@@ -5,9 +5,9 @@ body{
 	background-image: url(../img/login_bk.png);
 	background-repeat: repeat;
 	color:#949494;
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
-	font-family: "微软雅黑" "黑体" "宋体";
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:12px;
 }
 .main-container{
@@ -39,9 +39,9 @@ form{
 	border-radius: 7px;
 	border: 1px #cdcdcd solid;
 	color:#c1c1c1;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:25px;
 	padding-left: 5px;
 }
@@ -57,14 +57,11 @@ form{
 	border-radius: 7px;
 	border: 1px #cdcdcd solid;
 	color:#c1c1c1;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:25px;
 	padding-left: 5px;
-}
-.codepic_field{
-	margin-top: 24px;
 }
 a{
 	margin-top: 20px;
@@ -72,9 +69,9 @@ a{
 	margin-right: 0px;
 	margin-bottom: 0px;
 	color:#564a4a;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:12px;
 	text-decoration: none;
 }
@@ -84,9 +81,9 @@ a:hover{
 	margin-right: 0px;
 	margin-bottom: 0px;
 	color:#66a344;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:12px;
 	text-decoration: none;
 }
@@ -103,9 +100,9 @@ a:hover{
 	margin-left: 10px;
 	/*float: left;*/
 	color:#564a4a;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:20px;
 }
 .notice{
@@ -118,10 +115,25 @@ a:hover{
 	padding-left: 8px;
 	padding-right: 8px;
 	color:#d64246;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:20px;
+	
+}
+.passwordlabel{
+	margin-top: 12px;
+	margin-left: -225px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	height: 25px;
+	width: 60px;
+	float: left;
+	color:#c1c1c1;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:25px;
 }
 
 .password{
@@ -136,9 +148,9 @@ a:hover{
 	border-radius: 7px;
 	border: 1px #cdcdcd solid;
 	color:#c1c1c1;
-	font-family: "微软雅黑" "黑体" "宋体";
-	font-family:Arial,"Arial Black", Gadget, sans-serif;
+	font-family: "微软雅黑", "黑体", "宋体";
 	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
 	font-size:25px;
 	padding-left: 5px;
 }

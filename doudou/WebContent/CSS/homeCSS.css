@@ -62,7 +62,7 @@ li{
 }
 .nav{
 	height: 45px;
-	width: 492px;
+	width: 616px;
 	margin-left: 170px;
 	float: left;
 	/*overflow:hidden;*/
@@ -118,6 +118,14 @@ ul{
 	height: 45px;
 }
 .nav4{
+	float: left;
+	margin-top: 0px;
+	width: 120px;
+	margin-left: 0px;
+	height: 45px;
+	cursor:pointer;
+}
+.nav11{
 	float: left;
 	margin-top: 0px;
 	width: 120px;

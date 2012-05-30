@@ -213,7 +213,6 @@
 	right: 0;
 	bottom: 0;
 	z-index: 1000;
-	display: block;
 }
 .overlay {
 	filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=40);
@@ -241,4 +240,26 @@
 }
 .newConversation_body ul{
 	text-decoration: none;
+}
+.MsgListConPanel{
+}
+.OneMessageCon{
+
+}
+.EditOneMessage{
+
+}
+.SelectKidsList{
+	color:black;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:20px;
+}
+.FeedBacksAll{
+	color:black;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-family:Myriad Pro,Verdana, Geneva, sans-serif;
+	font-family:Arial,Arial Black, Gadget, sans-serif;
+	font-size:20px;
 }
