@@ -39,7 +39,7 @@ public class MessageServlet extends BaseServlet {
     
 	@RequestMapping("/addMessage")
 	public void addMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionData sessionData = (SessionData) request.getAttribute("SessionData");
+		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		String title = getStringParameter(request, "title", "");
 		String content = getStringParameter(request, "content", "");
 		int messageTypeId = getIntParameter(request, "messageType" , 0);
