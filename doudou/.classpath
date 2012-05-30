@@ -83,9 +83,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-api-1.6.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-log4j12-1.6.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/standard.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/struts2-convention-plugin-2.2.1.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/struts2-core-2.2.1.1.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/struts2-spring-plugin-2.2.1.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/webwork-2.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/xwork-core-2.2.1.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>

@@ -71,7 +71,8 @@ public class MessageService {
 		if (isUserSelf) {
 			
 		}
-		ListResult<Message> result = messageDao.queryClassMessageList(classIdList, offset, count);
+		ListResult<Message> result = messageDao.queryClassMessageList(classIdList, offset, count, title,
+				publishLevel, beginTime, endTime, mustFeedBack, isUserSelf);
 		fulfillFeedBackOrReadStatusInfo(result.getEntities());
 		return result;
 	}

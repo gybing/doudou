@@ -1,5 +1,6 @@
 package doudou.dao.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import doudou.util.dao.BaseEntityDao;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
 import doudou.vo.Message;
+import doudou.vo.type.PublishLevel;
 
 public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements MessageDao{
 
@@ -68,6 +70,25 @@ public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements M
 	@Override
 	public int getNotReadCount(int messageId) {
 		return count("getNotReadCount",messageId);
+	}
+
+	@Override
+	public ListResult<Message> queryClassMessageList(List<Integer> classIdList,
+			int offset, int count, String title, PublishLevel publishLevel,
+			Date beginTime, Date endTime, boolean mustFeedBack,
+			boolean isUserSelf) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		if (classIdList.size() > 0) {
+			conditions.put("classIdList", classIdList);
+			conditions.put("offset", offset);
+			conditions.put("count", count);
+		} else {
+			return new ListResult<Message>();
+		}
+		List<Message> messageList = reads("getMessageListByClassIdList", conditions);
+		int counts = count("getFoundRows",null);
+		ListResult<Message> result = new ListResult<Message>(messageList, counts);
+		return null;
 	}
 	
 }
