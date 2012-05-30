@@ -64,15 +64,15 @@ public class MessageService {
 		//获取该老师相关的班级id List
 		Set<SchoolClass> classSet = sessionData.getSchoolClassList();
 		List<Integer> classIdList = new ArrayList<Integer>();
-		
+		int userId = -1;
 		for (SchoolClass schoolClass : classSet) {
 			classIdList.add(schoolClass.getId());
 		}
 		if (isUserSelf) {
-			
+			userId = sessionData.getUser().getId();
 		}
 		ListResult<Message> result = messageDao.queryClassMessageList(classIdList, offset, count, title,
-				publishLevel, beginTime, endTime, mustFeedBack, isUserSelf);
+				publishLevel, beginTime, endTime, mustFeedBack, userId);
 		fulfillFeedBackOrReadStatusInfo(result.getEntities());
 		return result;
 	}

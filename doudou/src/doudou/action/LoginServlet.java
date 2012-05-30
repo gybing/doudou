@@ -146,7 +146,7 @@ public class LoginServlet extends BaseServlet{
 				
 				SessionData sessionData = doudouService.getSessionData(user);
 	    		
-	    		request.getSession(true).setAttribute("sessionData", sessionData);
+	    		request.getSession().setAttribute("SessionData", sessionData);
 			} else {
 				veriResult = -1;
 			}

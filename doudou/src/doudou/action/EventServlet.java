@@ -63,7 +63,7 @@ public class EventServlet extends BaseServlet{
 	
 	@RequestMapping("/getAllEvent")
 	public void getAllEvent(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		SessionData sessionData = (SessionData)request.getAttribute("SessionData");
+		SessionData sessionData = (SessionData)request.getSession().getAttribute("SessionData");
 		int pageIndex = getIntParameter(request, "pageIndex", 1);
 		int count = getIntParameter(request, "perPageCount", 20);
 		int offset = (pageIndex-1)*count;
@@ -76,7 +76,7 @@ public class EventServlet extends BaseServlet{
 	
 	@RequestMapping("/getClassEventListByDate")
 	public void getClassEventListByDate(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		SessionData sessionData = (SessionData)request.getAttribute("SessionData");
+		SessionData sessionData = (SessionData)request.getSession().getAttribute("SessionData");
 		String dateString = getStringParameter(request, "date","2012-5-28");
 		Date date = DateUtil.getInstance().getDateFromString(dateString);
 		List<Event> result = eventService.getClassEventListByDate(sessionData, date);
@@ -88,7 +88,7 @@ public class EventServlet extends BaseServlet{
 	
 	@RequestMapping("/queryClassEventList")
 	public void queryClassEventList(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
-		SessionData sessionData = (SessionData)request.getAttribute("SessionData");
+		SessionData sessionData = (SessionData)request.getSession().getAttribute("SessionData");
 		String title = getStringParameter(request, "title", "");
 		String publishLevelString = getStringParameter(request, "publishLevel", "");
 		PublishLevel publishLevel = PublishLevel.valueOf(publishLevelString);

@@ -33,7 +33,7 @@
         	title,
             content,
             userId,
-            messageType,
+            messageTypeId,
             atChildList,
             publishTime,
             publishLevel,
@@ -44,7 +44,7 @@
         	#title#,
             #content#,
             #userId#,
-            #messageType#,
+            #messageTypeId#,
             #atChildList#,
             now(),
             #publishLevel#,
@@ -67,6 +67,36 @@
     	limit #offset#, #count#
     </select>
     
+    <select id="queryClassMessageList" parameterClass="Map" resultMap="MessageResult">
+    	select SQL_CALC_FOUND_ROWS m.* from Message as m where m.id in ( 
+    		select messageId from MessageClass 
+    		where classId in 
+	    	<iterate property="classIdList" open="(" close=")" conjunction=",  ">
+	            #classIdList[]#
+	        </iterate> 
+    		group by messageId
+    	)
+    	<dynamic>
+            <isNotNull prepend="AND" property="title">
+                title like '%$title$%'
+            </isNotNull>
+            <isNotNull prepend="AND" property="publishLevel">
+                publishLevel = #publishLevel#
+            </isNotNull>
+            <isNotEqual prepend="AND" property="userId" compareValue="-1">
+            	userId = #userId#
+            </isNotEqual>
+            <isNotNull prepend="AND" property="beginTime">
+                publishTime &gt;= #beginTime#
+            </isNotNull>
+            <isNotNull prepend="AND" property="endTime">
+                publishTime &lt;= #endTime#
+            </isNotNull>   
+        </dynamic>
+        and mustFeedBack = #mustFeedBack#
+    	limit #offset#, #count#
+    </select>
+    
     <select id="readAll" resultClass="Message">
     	select SQL_CALC_FOUND_ROWS m.* FROM Message as m
     	limit 0,1;
@@ -77,25 +107,25 @@
 	</select>
 	
 	<select id="getFeedBackCount" resultClass="int" parameterClass="int">
-		select count from MessageUser 
+		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and feedbackStatus = TRUE
 	</select>
 	
 	<select id="getNotFeedBackCount" resultClass="int" parameterClass="int">
-		select count from MessageUser 
+		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and feedbackStatus = False
 	</select>
 	
 	<select id="getReadCount" resultClass="int" parameterClass="int">
-		select count from MessageUser 
+		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and readStatus = TRUE
 	</select>
 	
 	<select id="getNotReadCount" resultClass="int" parameterClass="int">
-		select count from MessageUser 
+		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and readStatus = False
 	</select>

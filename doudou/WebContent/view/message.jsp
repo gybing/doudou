@@ -302,7 +302,7 @@ PageClick = function(pageclickednumber)
 					<li>
 						<!-- 选择孩子 -->
 						<div><select multiple="multiple" class="w-options">			
-  						<c:forEach var="entry" items="${sessionData.tagedInfoMap}" varStatus="theCount">
+  						<c:forEach var="entry" items="${SessionData.tagedInfoMap}" varStatus="theCount">
 							<c:forEach var="ccEntry" items="${entry.value.classChildMap}">
 							   <c:forEach var="child" items="${ccEntry.value}">
 							   		<option value="${child.id}">${child.firstName}</option>
@@ -363,7 +363,7 @@ PageClick = function(pageclickednumber)
 						<li>
 						<input type="hidden" id="taged" name="atChildList"/>
 						<select multiple="multiple" class="tagingList" id="tagingList">
-						<c:forEach var="entry" items="${sessionData.tagedInfoMap}" varStatus="theCount">
+						<c:forEach var="entry" items="${SessionData.tagedInfoMap}" varStatus="theCount">
 							<c:forEach var="ccEntry" items="${entry.value.classChildMap}">
 							   <c:forEach var="child" items="${ccEntry.value}">
 							   		<option value="${child.id}">${child.firstName}</option>

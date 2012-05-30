@@ -76,19 +76,33 @@ public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements M
 	public ListResult<Message> queryClassMessageList(List<Integer> classIdList,
 			int offset, int count, String title, PublishLevel publishLevel,
 			Date beginTime, Date endTime, boolean mustFeedBack,
-			boolean isUserSelf) {
+			int userId) {
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
 		if (classIdList.size() > 0) {
 			conditions.put("classIdList", classIdList);
 			conditions.put("offset", offset);
 			conditions.put("count", count);
+			conditions.put("mustFeedBack", mustFeedBack);
+			conditions.put("userId", userId);
+			if (null != title && !title.isEmpty()) {
+	        	conditions.put("title", title);
+	        }
+	        if (null != publishLevel) {
+				conditions.put("publishLevel", publishLevel);
+			}
+	        if (null != beginTime) {
+	        	conditions.put("beginTime", beginTime);
+			}
+	        if (null != endTime) {
+				conditions.put("endTime", endTime);
+			}
 		} else {
 			return new ListResult<Message>();
 		}
-		List<Message> messageList = reads("getMessageListByClassIdList", conditions);
+		List<Message> messageList = reads("queryClassMessageList", conditions);
 		int counts = count("getFoundRows",null);
 		ListResult<Message> result = new ListResult<Message>(messageList, counts);
-		return null;
+		return result;
 	}
 	
 }

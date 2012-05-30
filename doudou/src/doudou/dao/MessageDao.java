@@ -20,5 +20,5 @@ public interface MessageDao extends EntityDao<Message, Integer>{
 	int getNotReadCount(int messageId);
 	
 	ListResult<Message> queryClassMessageList(List<Integer> classIdList, int offset, int count,
-			String title, PublishLevel publishLevel, Date beginTime, Date endTime, boolean mustFeedBack, boolean isUserSelf);
+			String title, PublishLevel publishLevel, Date beginTime, Date endTime, boolean mustFeedBack, int userId);
 }

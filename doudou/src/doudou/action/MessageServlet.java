@@ -46,14 +46,14 @@ public class MessageServlet extends BaseServlet {
 		String atChildList = getStringParameter(request, "atChildList", "");
 		boolean mustFeedBack = getBoolParameter(request, "mustFeedBack", false);
 		
-		PublishLevel publishLevel = sessionData.getCurrentPublishLevel();
+		//PublishLevel publishLevel = sessionData.getCurrentPublishLevel();
 		
 		Message message = new Message();
 		message.setAtChildList(atChildList);
 		message.setTitle(title);
 		message.setContent(content);
 		message.setMessageTypeId(messageTypeId);
-		message.setPublishLevel(publishLevel);
+		message.setPublishLevel(PublishLevel.Class);
 		message.setMustFeedBack(mustFeedBack);
 		
 		List<Integer> childIdList = doudouService.getChildIdListFromString(atChildList);
@@ -65,7 +65,7 @@ public class MessageServlet extends BaseServlet {
 	
 	@RequestMapping("/getMessageTypes")
 	public void getMessageTypes (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionData sessionData = (SessionData) request.getAttribute("SessionData");
+		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		List<DoudouInfoType> result = messageService.getMessageTypeList(sessionData.getSchoolId());
 
 		JSONObject jsonObj = JSONObject.fromObject(result);
@@ -78,7 +78,7 @@ public class MessageServlet extends BaseServlet {
 		int pageIndex = getIntParameter(request, "pageIndex", 1);
 		int count = getIntParameter(request, "perPageCount", 20);
 		int offset = (pageIndex-1)*count;
-		SessionData sessionData = (SessionData)request.getAttribute("SessionData");
+		SessionData sessionData = (SessionData)request.getSession().getAttribute("SessionData");
 		
 		ListResult<Message> result = messageService.getClassMessageList(sessionData, offset, count);
 		
@@ -92,7 +92,7 @@ public class MessageServlet extends BaseServlet {
 		int pageIndex = getIntParameter(request, "pageIndex", 1);
 		int count = getIntParameter(request, "perPageCount", 20);
 		int offset = (pageIndex-1)*count;
-		SessionData sessionData = (SessionData)request.getAttribute("SessionData");
+		SessionData sessionData = (SessionData)request.getSession().getAttribute("SessionData");
 		boolean isUserSelf = getBoolParameter(request, "isUserSelf", false);
 		boolean mustFeedBack = getBoolParameter(request, "mustFeedBack", false);
 		String publishLevelString = getStringParameter(request, "publishLevel","");

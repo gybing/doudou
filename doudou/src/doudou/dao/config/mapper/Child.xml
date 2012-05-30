@@ -41,7 +41,7 @@
    		and cc.available = TRUE
    </select>
    
-   <select id="getClassIdListByChildIdList" parameterClass="List" resultClass="int">
+   <select id="getClassIdListByChildIdList" parameterClass="map" resultClass="int">
    		select classId from ChildClass 
    		where
    		childId in

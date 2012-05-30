@@ -5,7 +5,7 @@ CREATE TABLE Message
 	id					 INT UNSIGNED NOT NULL AUTO_INCREMENT,
 	title				 VARCHAR(30) NOT NULL DEFAULT '',
 	content				 TEXT NOT NULL,
-	messageType			 VARCHAR(30) NOT NULL DEFAULT '',
+	messageTypeId		 INT UNSIGNED NOT NULL, 
 	userId               INT UNSIGNED NOT NULL, 
     atChildList			 TEXT NOT NULL,
 	publishTime			 DATETIME DEFAULT '0000-00-00 00:00:00' NOT NULL,
