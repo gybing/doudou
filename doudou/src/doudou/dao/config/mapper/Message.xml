@@ -4,13 +4,28 @@
 
     <typeAlias alias="Message" type="doudou.vo.Message" />
 
-    <select id="read" parameterClass="int" resultClass="Message">
+	<resultMap class="Message" id="MessageResult">
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="userId" column="userId"/>
+		<result property="atChildList" column="atChildList"/>
+		<result property="publishTime" column="publishTime"/>
+		<result property="publishLevel" column="publishLevel"/>
+		<result property="mustFeedBack" column="mustFeedBack" />
+		<result property="available" column="available" />
+		<result property="messageType" column="messageTypeId" select="Message.selectMessageType" />
+	</resultMap>
+	
+    <select id="read" parameterClass="int" resultMap="MessageResult">
         select * from Message
         where
         id = #id#
         limit 1
     </select>
-
+	
+	<select id="selectMessageType" parameterClass="int" resultClass="DoudouInfoType">
+    	select * from DoudouInfoType where id = #messageTypeId# and available = TRUE
+    </select>
    
     <insert id="create" parameterClass="Message">
         insert into Message 
@@ -40,7 +55,7 @@
         </selectKey>
     </insert>
     
-    <select id="getMessageListByClassIdList" parameterClass="Map" resultClass="Message">
+    <select id="getMessageListByClassIdList" parameterClass="Map" resultMap="MessageResult">
     	select SQL_CALC_FOUND_ROWS m.* from Message as m where m.id in ( 
     		select messageId from MessageClass 
     		where classId in 

@@ -3,11 +3,15 @@ package doudou.vo.model;
 import java.util.List;
 
 import doudou.vo.Child;
+import doudou.vo.type.TodoType;
 
 public abstract class PublishTask {
 	
-	private TagedInfo tagedInfo;
+	private List<Integer> addedChildIdList;
+	private List<Integer> classIdList;
 	private int schoolId;
+	private TodoType todoType;
+	private List<Integer>
 	
 	public int getSchoolId() {
 		return schoolId;

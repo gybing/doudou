@@ -17,9 +17,6 @@ public class Child implements Serializable {
 	
 	// Not related data in db
 	private String birthDateString;
-	private String mother;
-	private String father;
-	
 	
 	public int getId() {
 		return id;
@@ -74,18 +71,6 @@ public class Child implements Serializable {
 	}
 	public void setBirthDateString(String birthDateString) {
 		this.birthDateString = birthDateString;
-	}
-	public String getMother() {
-		return mother;
-	}
-	public void setMother(String mother) {
-		this.mother = mother;
-	}
-	public String getFather() {
-		return father;
-	}
-	public void setFather(String father) {
-		this.father = father;
 	}
 	
 }

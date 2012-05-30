@@ -7,4 +7,5 @@ import doudou.vo.Child;
 
 public interface ChildDao extends EntityDao<Child, Integer> {
 	List<Child> getChildListByClassId(int classId);
+	List<Integer> getClassIdListByChildIdList(List<Integer> childIdList);
 }

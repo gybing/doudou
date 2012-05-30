@@ -24,6 +24,12 @@ public class ChildDaoImpl extends BaseEntityDao<Child, Integer> implements
 		return reads("getChildListByClassId",classId);
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Integer> getClassIdListByChildIdList(List<Integer> childIdList) {
+		return readObjects("getClassIdListByChildIdList", childIdList);
+	}
+
 	
 
 }

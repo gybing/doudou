@@ -15,6 +15,7 @@ import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
 import doudou.vo.Event;
 import doudou.vo.SchoolClass;
+import doudou.vo.model.EvtPublishTask;
 import doudou.vo.model.SessionData;
 import doudou.vo.type.PublishLevel;
 
@@ -32,9 +33,16 @@ public class EventService {
 		eventDao = myDatabaseDao.getEntityDao(EventDao.class);
 	}
 	
-	//TODO
-	public int addEvent(Event newObject) {
-		return (Integer)eventDao.create(newObject);
+	public int addEvent(EvtPublishTask eventTask) {
+		//完成对象属性填充...TOBE optimized
+		eventTask.setChildrenListString(eventTask.generateAtChildrenListString());
+		
+		int result = (Integer)eventDao.create(eventTask.getEvent());
+		if (result > 0) {
+			DoudouBackendService.getInstance().publishTask(eventTask);
+		} 
+		return result;
+		
 	}
 	
 	/**
@@ -92,10 +100,11 @@ public class EventService {
 	/**
 	 * 更新Event
 	 * @param childIdList 新添加的孩子列表
+	 * @param deletedChildIdList 删除的孩子id列表
 	 * */
-	public boolean updateEvent(SessionData sessionData, Event event, List<Integer> childIdList) {
+	public boolean updateEvent(SessionData sessionData, Event event, List<Integer> addedChildIdList , List<Integer> deletedChildIdList) {
 		//检查是否有权限 (是否为自己发的事件)
-		if (sessionData.getUser().getId() == event.getId()) {
+		if (sessionData.getUser().getId() == event.getUserId()) {
 			//TODO
 			
 			return eventDao.update(event) > 0;

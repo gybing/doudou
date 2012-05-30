@@ -9,7 +9,7 @@ import doudou.dao.TodoDao;
 import doudou.util.DoudouConfig;
 import doudou.util.dao.DatabaseDao;
 import doudou.vo.Todo;
-import doudou.vo.model.PushVO;
+import doudou.vo.model.APNSPushVO;
 
 import org.apache.log4j.Logger;
 
@@ -20,7 +20,7 @@ import com.notnoop.apns.PayloadBuilder;
 public class APNSManager implements Runnable{
 	
 	private ApnsService service;
-	private LinkedBlockingQueue<PushVO> pushQueue;
+	private LinkedBlockingQueue<APNSPushVO> pushQueue;
 	private Logger logger = Logger.getLogger(getClass());
 	private DeviceTokenDao deviceTokenDao;
 	private TodoDao todoDao;
@@ -28,7 +28,7 @@ public class APNSManager implements Runnable{
 	private DatabaseDao myDatabaseDao;
 	private DoudouConfig doudouConfig = DoudouConfig.getConfig();
 	
-	public APNSManager(LinkedBlockingQueue<PushVO> pushQueue) {
+	public APNSManager(LinkedBlockingQueue<APNSPushVO> pushQueue) {
 		String cerPath = doudouConfig.getAPNSCertificatePath();
 		service = APNS.newService().withCert(cerPath, "mayaya@mayaya").withProductionDestination().build();
 		this.pushQueue = pushQueue;
@@ -119,18 +119,18 @@ public class APNSManager implements Runnable{
 		}
 	}
 	
-	private void push(PushVO pushVO, List<String> deviceTokenList) {
+	private void push(APNSPushVO pushVO, List<String> deviceTokenList) {
 		switch (pushVO.getTodoType()) {
 		case Comment:
 			pushComment(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
 			break;
-		case Picture:
+		case NewPicture:
 			pushPicTaged(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
 			break;
-		case Event:
+		case NewEvent:
 			pushEvtTaged(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
 			break;
-		case Message:
+		case NewMessage:
 			pushAnnouncement(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
 		}
 	}
@@ -138,7 +138,7 @@ public class APNSManager implements Runnable{
 	@Override
 	public void run() {
 		System.out.println("APNSManager start succeed!");
-		PushVO pushVO = null;			
+		APNSPushVO pushVO = null;			
 		while(true){
 			try {
 				pushVO = pushQueue.take();

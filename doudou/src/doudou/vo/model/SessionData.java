@@ -17,7 +17,15 @@ public class SessionData implements Serializable {
 
 	private User user;
 	private Map<String,TagedInfo> tagedInfoMap;
+	private int schoolId;
 	
+	
+	public int getSchoolId() {
+		return schoolId;
+	}
+	public void setSchoolId(int schoolId) {
+		this.schoolId = schoolId;
+	}
 	public User getUser() {
 		return user;
 	}

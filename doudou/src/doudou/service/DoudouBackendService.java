@@ -42,7 +42,7 @@ import doudou.vo.model.EmailTask;
 import doudou.vo.model.EvtPublishTask;
 import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.PicPublishTask;
-import doudou.vo.model.PushVO;
+import doudou.vo.model.APNSPushVO;
 import doudou.vo.type.TodoType;
 /*
  * For doudou backend threads
@@ -92,8 +92,8 @@ public class DoudouBackendService {
 	public void publishTask(MessagePubTask task) {
 		Message message = task.getMessage();
 		
-		PushVO pushVO = new PushVO();
-		pushVO.setTodoType(TodoType.Message);
+		APNSPushVO pushVO = new APNSPushVO();
+		pushVO.setTodoType(TodoType.NewMessage);
 		pushVO.setContentId(message.getId());
 		Set<Integer> relatedIdSet = new HashSet<Integer>();
 		Set<String> relatedEmailSet = new HashSet<String>();
@@ -134,7 +134,7 @@ public class DoudouBackendService {
 			
 		// Email
 		EmailTask emailTask = new EmailTask();
-		emailTask.setTodoType(TodoType.Message);
+		emailTask.setTodoType(TodoType.NewMessage);
 		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
 		emailTask.setFromUser(fromUser);
 		emailTask.setContent(message);
@@ -145,8 +145,8 @@ public class DoudouBackendService {
 	public void publishTask(PicPublishTask task) {
 		Picture picture = task.getPicture();
 		
-		PushVO pushVO = new PushVO();
-		pushVO.setTodoType(TodoType.Picture);
+		APNSPushVO pushVO = new APNSPushVO();
+		pushVO.setTodoType(TodoType.NewPicture);
 		pushVO.setContentId(picture.getId());
 		Set<Integer> relatedIdSet = new HashSet<Integer>();
 		Set<String> relatedEmailSet = new HashSet<String>();
@@ -187,7 +187,7 @@ public class DoudouBackendService {
 			
 		// Email
 		EmailTask emailTask = new EmailTask();
-		emailTask.setTodoType(TodoType.Message);
+		emailTask.setTodoType(TodoType.NewMessage);
 		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
 		emailTask.setFromUser(fromUser);
 		emailTask.setContent(picture);
@@ -197,8 +197,8 @@ public class DoudouBackendService {
 	public void publishTask(EvtPublishTask task) {
 		Event event = task.getEvent();
 		
-		PushVO pushVO = new PushVO();
-		pushVO.setTodoType(TodoType.Event);
+		APNSPushVO pushVO = new APNSPushVO();
+		pushVO.setTodoType(TodoType.NewEvent);
 		pushVO.setContentId(event.getId());
 		Set<Integer> relatedIdSet = new HashSet<Integer>();
 		Set<String> relatedEmailSet = new HashSet<String>();
@@ -239,7 +239,7 @@ public class DoudouBackendService {
 			
 		// Email
 		EmailTask emailTask = new EmailTask();
-		emailTask.setTodoType(TodoType.Event);
+		emailTask.setTodoType(TodoType.NewEvent);
 		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
 		emailTask.setFromUser(fromUser);
 		emailTask.setContent(event);

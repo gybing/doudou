@@ -12,20 +12,18 @@ public class Message implements Serializable{
 	private int id;
 	private String title;
 	private String content;
-	private String messageType;
+	private int messageTypeId;
 	private int userId;
 	private String atChildList;
 	private Date publishTime;
 	private PublishLevel publishLevel;
-	
 	private boolean mustFeedBack;
 	private boolean available;
 	
+	private DoudouInfoType messageType;
 	//
 	private String userName;
 	private String pushType;
-	private String publishTimeString;
-	private String publishTimeS;
 	
 	public Date getPublishTime() {
 		return publishTime;
@@ -64,11 +62,11 @@ public class Message implements Serializable{
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getMessageType() {
-		return messageType;
+	public int getMessageTypeId() {
+		return messageTypeId;
 	}
-	public void setMessageType(String messageType) {
-		this.messageType = messageType;
+	public void setMessageTypeId(int messageTypeId) {
+		this.messageTypeId = messageTypeId;
 	}
 	public int getUserId() {
 		return userId;
@@ -102,6 +100,12 @@ public class Message implements Serializable{
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+	public DoudouInfoType getMessageType() {
+		return messageType;
+	}
+	public void setMessageType(DoudouInfoType messageType) {
+		this.messageType = messageType;
 	}
 	
 }

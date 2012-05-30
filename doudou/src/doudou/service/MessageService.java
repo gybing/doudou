@@ -9,9 +9,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import doudou.dao.DaoFactory;
+import doudou.dao.DoudouInfoTypeDao;
 import doudou.dao.MessageDao;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
+import doudou.vo.DoudouInfoType;
+import doudou.vo.Event;
 import doudou.vo.Message;
 import doudou.vo.SchoolClass;
 import doudou.vo.model.MessagePubTask;
@@ -25,10 +28,12 @@ public class MessageService {
 	private final DatabaseDao myDatabaseDao; 
 	
 	private final MessageDao messageDao;
+	private final DoudouInfoTypeDao doudouInfoTypeDao;
 	
 	private MessageService() {
 		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
 		messageDao = myDatabaseDao.getEntityDao(MessageDao.class);
+		doudouInfoTypeDao = myDatabaseDao.getEntityDao(DoudouInfoTypeDao.class);
 	}
 	
 	/**
@@ -71,7 +76,10 @@ public class MessageService {
 		return messageDao.read(id);
 	}
 	
-	
+	/**
+	 * 添加单一事件
+	 * 
+	 * */
 	public int addMessage(MessagePubTask messageTask) {
 		//完成对象属性填充...TOBE optimized
 		messageTask.setChildrenListString(messageTask.generateAtChildrenListString());
@@ -82,6 +90,26 @@ public class MessageService {
 		} 
 		return result;
 		
+	}
+	
+	/**
+	 * 更新单一事件
+	 * @param addedChildIdList 新添加的孩子id列表
+	 * @param deletedChildIdList 删除的孩子id列表
+	 * 
+	 * */
+	public boolean updateMessage(SessionData sessionData, Message message, List<Integer> addedChildIdList , List<Integer> deletedChildIdList) {
+		//检查是否有权限 (是否为自己发的事件)
+		if (sessionData.getUser().getId() == message.getUserId()) {
+			
+			
+			return messageDao.update(message) > 0;
+		} else {
+			return false;
+		}
+	}
+	public List<DoudouInfoType> getMessageTypeList(int schoolId) {
+		return doudouInfoTypeDao.getMessageTypeBySchoolId(schoolId);
 	}
 	
 }

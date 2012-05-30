@@ -6,12 +6,15 @@ import java.util.Set;
 import doudou.vo.type.TodoType;
 
 @SuppressWarnings("serial")
-public class PushVO implements Serializable {
+public class APNSPushVO implements Serializable {
 	
 	private int contentId;
 	private TodoType todoType;
 	private Set<Integer> userIdList;
 	private String fromUser;
+	
+	//Used when modified 
+	private int formerId;
 	
 	public String getFromUser() {
 		return fromUser;
@@ -38,4 +41,11 @@ public class PushVO implements Serializable {
 	public void setTodoType(TodoType todoType) {
 		this.todoType = todoType;
 	}
+	public int getFormerId() {
+		return formerId;
+	}
+	public void setFormerId(int formerId) {
+		this.formerId = formerId;
+	}
+	
 }

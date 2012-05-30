@@ -19,7 +19,7 @@ import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.EmailTask;
 import doudou.vo.model.EvtPublishTask;
 import doudou.vo.model.PicPublishTask;
-import doudou.vo.model.PushVO;
+import doudou.vo.model.APNSPushVO;
 
 import org.apache.log4j.Logger;
 import org.springframework.web.context.ContextLoader;
@@ -40,7 +40,7 @@ public class DoudouBackend {
 	
 	private LinkedBlockingQueue<String> imgQueue;
 	private LinkedBlockingQueue<String> headPicQueue;
-	private LinkedBlockingQueue<PushVO> apnsPushQueue;
+	private LinkedBlockingQueue<APNSPushVO> apnsPushQueue;
 	private LinkedBlockingQueue<EmailTask> emailQueue;
 	
 	private Logger logger = Logger.getLogger(getClass());
@@ -58,7 +58,7 @@ public class DoudouBackend {
 			picTaskQueue = new LinkedBlockingQueue<PicPublishTask>();
 			evtTaskQueue = new LinkedBlockingQueue<EvtPublishTask>();
 			messageTaskQueue = new LinkedBlockingQueue<MessagePubTask>();
-			apnsPushQueue = new LinkedBlockingQueue<PushVO>();
+			apnsPushQueue = new LinkedBlockingQueue<APNSPushVO>();
 			imgQueue = new LinkedBlockingQueue<String>();
 			headPicQueue = new LinkedBlockingQueue<String>();
 			emailQueue = new LinkedBlockingQueue<EmailTask>();
@@ -138,7 +138,7 @@ public class DoudouBackend {
 	}
 	
 	
-	public void addPushVO(PushVO pushVO) {
+	public void addPushVO(APNSPushVO pushVO) {
 		try {
 			apnsPushQueue.put(pushVO);
 		} catch (InterruptedException e) {

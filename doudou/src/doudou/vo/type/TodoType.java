@@ -1,5 +1,8 @@
 package doudou.vo.type;
 
 public enum TodoType {
-	Friend, Comment, Picture, Event, Message, Modified
+	Friend, Comment, 
+	NewPicture, NewEvent, NewMessage, 
+	ModPicture, ModEvent, ModMessage,
+	DelPicture, DelEvent, DelMessage
 }

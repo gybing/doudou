@@ -40,13 +40,17 @@
    		and cc.childId = c.id
    		and cc.available = TRUE
    </select>
-    
-    <update id="updateCover" parameterClass="Child">
-    	update Child 
-    	set 
-    	cover = #cover#
-    	where 
-    	id = #id#
-    </update>
+   
+   <select id="getClassIdListByChildIdList" parameterClass="List" resultClass="int">
+   		select classId from ChildClass 
+   		where
+   		childId in
+   		<iterate property="childIdList" open="(" close=")" conjunction=",">
+	        #childIdList[]#
+	    </iterate> 
+	    group by classId
+   		and available = TRUE
+   </select> 
+   
     
 </sqlMap>

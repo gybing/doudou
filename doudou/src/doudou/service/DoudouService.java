@@ -1,5 +1,6 @@
 package doudou.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import doudou.dao.ChildDao;
 import doudou.dao.DaoFactory;
 import doudou.dao.TeacherClassDao;
-import doudou.dao.UserDao;
 import doudou.util.Constants;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.tool.Base64;
@@ -70,4 +70,21 @@ public class DoudouService {
 		sessionData.setTagedInfoMap(tagedInfoMap);
 		return sessionData;
 	}
+	
+	public List<Integer> getChildIdListFromString(String idString) {
+		logger.info("Parse idString : " + idString);
+		String[] idArray = idString.split(",");
+		List<Integer> result = new ArrayList<Integer>();
+		for (String idS : idArray) {
+			result.add(Integer.parseInt(idS));
+		}
+		return result;
+	}
+	
+	public List<Integer> getClassIdListFromChildIdList(List<Integer> childIdList) {
+		List<Integer> classIdList = childDao.getClassIdListByChildIdList(childIdList);
+		logger.info(String.format("Get child class Id : %s",classIdList));
+		return classIdList;
+	}
+	
 }

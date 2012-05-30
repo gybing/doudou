@@ -1,5 +1,6 @@
 package doudou.action;
 
+import doudou.service.DoudouService;
 import doudou.service.EventService;
 import doudou.util.BaseServlet;
 import doudou.util.tool.DateUtil;
@@ -32,6 +33,8 @@ public class EventServlet extends BaseServlet{
 
 	@Autowired
 	EventService eventService;
+	@Autowired
+	DoudouService doudouService;
 	
 	@RequestMapping("/addEvent")
     public void addEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -43,7 +46,9 @@ public class EventServlet extends BaseServlet{
         String allday = request.getParameter("allday");
         String content = request.getParameter("content");
         //eventService;
-    }
+        List<Integer> childIdList = doudouService.getChildIdListFromString(atChildList);
+        List<Integer> classIdList = doudouService.getClassIdListFromChildIdList(childIdList);
+	}
 	
 	@RequestMapping("/getAllEvent")
 	public void getAllEvent(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {

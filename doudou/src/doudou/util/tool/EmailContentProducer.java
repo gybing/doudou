@@ -28,10 +28,10 @@ public class EmailContentProducer {
 			BodyPart htmlPart = new MimeBodyPart();
 			bodyMultipart.addBodyPart(htmlPart);
 			switch(task.getTodoType()) {
-			case Picture: 
+			case NewPicture: 
 				htmlPart.setContent(getPicEmailContent(task),"text/html;charset=GBK");
 				break;
-			case Event: 
+			case NewEvent: 
 				BodyPart attachment = new MimeBodyPart();
 				bodyMultipart.addBodyPart(attachment);
 				String icsPath = ICSCalendarManager.getInstance().icsProducer((Event)task.getContent());
@@ -48,7 +48,7 @@ public class EmailContentProducer {
 				
 				htmlPart.setContent(getEvtEmailContent(task),"text/html;charset=GBK");
 				break;
-			case Message: 
+			case NewMessage: 
 				htmlPart.setContent(getAnnounceEmailContent(task),"text/html;charset=GBK");
 				break;
 			}
@@ -63,13 +63,13 @@ public class EmailContentProducer {
 		String title = "";
 
 		switch (task.getTodoType()) {
-		case Picture:
+		case NewPicture:
 			title = task.getFromUser() + " 发送的新照片 - DouDou兜兜";
 			break;
-		case Event:
+		case NewEvent:
 			title = task.getFromUser() + " 发送的新日历通知 - DouDou兜兜";
 			break;
-		case Message:
+		case NewMessage:
 			title = task.getFromUser() + " 发送的新通知 - DouDou兜兜";
 			break;
 		}
