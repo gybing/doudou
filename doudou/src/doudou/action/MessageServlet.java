@@ -1,5 +1,6 @@
 package doudou.action;
 
+import doudou.service.DoudouService;
 import doudou.service.MessageService;
 import doudou.util.BaseServlet;
 import doudou.util.vo.ListResult;
@@ -31,17 +32,19 @@ public class MessageServlet extends BaseServlet {
 
     @Autowired
     MessageService messageService;
-
+    @Autowired
+    DoudouService doudouService;
+    
 	@RequestMapping("/addMessage")
 	public void addMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		SessionData sessionData = (SessionData) request.getAttribute("SessionData");
 		String title = getStringParameter(request, "title", "");
 		String content = getStringParameter(request, "content", "");
 		int messageTypeId = getIntParameter(request, "messageType" , 0);
 		String atChildList = getStringParameter(request, "atChildList", "");
-		String publishLevelString = getStringParameter(request, "publishLevel", "");
 		boolean mustFeedBack = getBoolParameter(request, "mustFeedBack", false);
 		
-		PublishLevel publishLevel = PublishLevel.valueOf(publishLevelString);
+		PublishLevel publishLevel = sessionData.getCurrentPublishLevel();
 		
 		Message message = new Message();
 		message.setAtChildList(atChildList);
@@ -51,7 +54,9 @@ public class MessageServlet extends BaseServlet {
 		message.setPublishLevel(publishLevel);
 		message.setMustFeedBack(mustFeedBack);
 		
-		//messageService.addMessage(messageTask)
+		List<Integer> childIdList = doudouService.getChildIdListFromString(atChildList);
+		List<Integer> classIdList = doudouService.getClassIdListFromChildIdList(childIdList);
+		messageService.addMessage(message , childIdList, classIdList);
 	}
 	
 	@RequestMapping("/getMessageTypes")
@@ -77,5 +82,14 @@ public class MessageServlet extends BaseServlet {
 		response.setContentType("text/x-json;charset=UTF-8");
 		response.getWriter().print(jsonObj);
 	}
-
+	
+	@RequestMapping("/queryClassMessageList")
+	public void queryClassMessageList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int pageIndex = getIntParameter(request, "pageIndex", 1);
+		int count = getIntParameter(request, "perPageCount", 20);
+		int offset = (pageIndex-1)*count;
+		SessionData sessionData = (SessionData)request.getAttribute("SessionData");
+		
+	}
+	
 }

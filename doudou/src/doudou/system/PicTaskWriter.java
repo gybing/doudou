@@ -39,7 +39,7 @@ public class PicTaskWriter implements Runnable {
 	}
 	
 	private void writeToDB(PicPublishTask task) {
-		doudouBackendService.publishTask(task);
+		//doudouBackendService.publishTask(task);
 	}
 
 }

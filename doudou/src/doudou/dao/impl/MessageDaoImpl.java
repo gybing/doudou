@@ -49,5 +49,25 @@ public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements M
 		int count = count("getFoundRows",null);
 		return new ListResult<Message>(result,count);
 	}
+
+	@Override
+	public int getFeedBackCount(int messageId) {
+		return count("getFeedBackCount",messageId);
+	}
+	
+	@Override
+	public int getNotFeedBackCount(int messageId) {
+		return count("getNotFeedBackCount",messageId);
+	}
+
+	@Override
+	public int getReadCount(int messageId) {
+		return count("getReadCount",messageId);
+	}
+
+	@Override
+	public int getNotReadCount(int messageId) {
+		return count("getNotReadCount",messageId);
+	}
 	
 }

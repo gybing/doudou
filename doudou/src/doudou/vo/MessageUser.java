@@ -12,6 +12,7 @@ public class MessageUser implements Serializable {
 	private String readerName;
 	private String feedbackContent; 
 	private String feedbackUser;
+	private boolean feedbackStatus;
 	
 	public int getId() {
 		return id;
@@ -55,6 +56,12 @@ public class MessageUser implements Serializable {
 	}
 	public void setFeedbackUser(String feedbackUser) {
 		this.feedbackUser = feedbackUser;
+	}
+	public boolean isFeedbackStatus() {
+		return feedbackStatus;
+	}
+	public void setFeedbackStatus(boolean feedbackStatus) {
+		this.feedbackStatus = feedbackStatus;
 	}
 	
 }

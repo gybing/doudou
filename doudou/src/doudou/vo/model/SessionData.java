@@ -10,6 +10,7 @@ import java.util.Set;
 
 import doudou.vo.SchoolClass;
 import doudou.vo.User;
+import doudou.vo.type.PublishLevel;
 import doudou.vo.type.UserType;
 
 @SuppressWarnings("serial")
@@ -18,7 +19,7 @@ public class SessionData implements Serializable {
 	private User user;
 	private Map<String,TagedInfo> tagedInfoMap;
 	private int schoolId;
-	
+	private PublishLevel currentPublishLevel;
 	
 	public int getSchoolId() {
 		return schoolId;
@@ -48,6 +49,12 @@ public class SessionData implements Serializable {
 			classSet.addAll(tagedInfo.getClassChildMap().keySet());
 		}
 		return classSet;
+	}
+	public PublishLevel getCurrentPublishLevel() {
+		return currentPublishLevel;
+	}
+	public void setCurrentPublishLevel(PublishLevel currentPublishLevel) {
+		this.currentPublishLevel = currentPublishLevel;
 	}
 	
 	

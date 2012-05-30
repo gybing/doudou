@@ -19,6 +19,7 @@ import doudou.vo.Message;
 import doudou.vo.SchoolClass;
 import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.SessionData;
+import doudou.vo.type.PublishLevel;
 
 
 @Service
@@ -49,6 +50,7 @@ public class MessageService {
 			classIdList.add(schoolClass.getId());
 		}
 		ListResult<Message> result = messageDao.getMessageListByClassIdList(classIdList, offset, count);
+		fulfillFeedBackOrReadStatusInfo(result.getEntities());
 		return result;
 	}
 	
@@ -64,7 +66,8 @@ public class MessageService {
 		for (SchoolClass schoolClass : classSet) {
 			classIdList.add(schoolClass.getId());
 		}
-		ListResult<Message> result = messageDao.getMessageListByClassIdList(classIdList, offset, count);
+		ListResult<Message> result = messageDao.queryClassMessageList(classIdList, offset, count);
+		fulfillFeedBackOrReadStatusInfo(result.getEntities());
 		return result;
 	}
 	
@@ -80,13 +83,16 @@ public class MessageService {
 	 * 添加单一事件
 	 * 
 	 * */
-	public int addMessage(MessagePubTask messageTask) {
+	public int addMessage(Message message, List<Integer> childIdList, List<Integer> classIdList) {
 		//完成对象属性填充...TOBE optimized
-		messageTask.setChildrenListString(messageTask.generateAtChildrenListString());
+		//messageTask.setChildrenListString(messageTask.generateAtChildrenListString());
 		
-		int result = (Integer)messageDao.create(messageTask.getMessage());
+		int result = (Integer)messageDao.create(message);
 		if (result > 0) {
-			DoudouBackendService.getInstance().publishTask(messageTask);
+			MessagePubTask task = new MessagePubTask();
+			task.setMessage(message);
+			//task.set
+			//DoudouBackendService.getInstance().publishTask(messageTask);
 		} 
 		return result;
 		
@@ -110,6 +116,19 @@ public class MessageService {
 	}
 	public List<DoudouInfoType> getMessageTypeList(int schoolId) {
 		return doudouInfoTypeDao.getMessageTypeBySchoolId(schoolId);
+	}
+	
+	private void fulfillFeedBackOrReadStatusInfo(List<Message> messageList) {
+		for (Message message : messageList) {
+			if (message.isMustFeedBack()) {
+				message.setFeedBackCount(messageDao.getFeedBackCount(message.getId()));
+				message.setNotFeedBackCount(messageDao.getNotFeedBackCount(message.getId()));
+			} else {
+				message.setReadedCount(messageDao.getReadCount(message.getId()));
+				message.setNotReadedCount(messageDao.getNotReadCount(message.getId()));
+			}
+			
+		}
 	}
 	
 }

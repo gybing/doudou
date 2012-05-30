@@ -23,7 +23,11 @@ public class Message implements Serializable{
 	private DoudouInfoType messageType;
 	//
 	private String userName;
-	private String pushType;
+	private int feedBackCount;
+	private int notFeedBackCount;
+	
+	private int readedCount;
+	private int notReadedCount;
 	
 	public Date getPublishTime() {
 		return publishTime;
@@ -106,6 +110,30 @@ public class Message implements Serializable{
 	}
 	public void setMessageType(DoudouInfoType messageType) {
 		this.messageType = messageType;
+	}
+	public int getFeedBackCount() {
+		return feedBackCount;
+	}
+	public void setFeedBackCount(int feedBackCount) {
+		this.feedBackCount = feedBackCount;
+	}
+	public int getNotFeedBackCount() {
+		return notFeedBackCount;
+	}
+	public void setNotFeedBackCount(int notFeedBackCount) {
+		this.notFeedBackCount = notFeedBackCount;
+	}
+	public int getReadedCount() {
+		return readedCount;
+	}
+	public void setReadedCount(int readedCount) {
+		this.readedCount = readedCount;
+	}
+	public int getNotReadedCount() {
+		return notReadedCount;
+	}
+	public void setNotReadedCount(int notReadedCount) {
+		this.notReadedCount = notReadedCount;
 	}
 	
 }

@@ -8,11 +8,9 @@ import doudou.vo.type.TodoType;
 public abstract class PublishTask {
 	
 	private List<Integer> newChildIdList;
-	private List<Integer> newClassIdList;
+	private List<Integer> oldChildIdList;
 	private int schoolId;
 	private TodoType todoType;
-	private List<Integer> oldChildIdList;
-	private List<Integer> oldClassIdList;
 	
 	public int getSchoolId() {
 		return schoolId;
@@ -22,20 +20,29 @@ public abstract class PublishTask {
 		this.schoolId = schoolId;
 	}
 
-
-	public String generateAtChildrenListString() {
-		StringBuffer atChildList = new StringBuffer();
-		
-		for(List<Child> childList : tagedInfo.getClassChildMap().values()) {
-			for (Child child : childList) {
-				atChildList.append(child.getFirstName()+",");
-			}
-		}
-		if (atChildList.length() > 1) {
-			atChildList.deleteCharAt(atChildList.length()-1);
-		}
-		return atChildList.toString();
+	public List<Integer> getNewChildIdList() {
+		return newChildIdList;
 	}
-	
+
+	public void setNewChildIdList(List<Integer> newChildIdList) {
+		this.newChildIdList = newChildIdList;
+	}
+
+	public List<Integer> getOldChildIdList() {
+		return oldChildIdList;
+	}
+
+	public void setOldChildIdList(List<Integer> oldChildIdList) {
+		this.oldChildIdList = oldChildIdList;
+	}
+
+	public TodoType getTodoType() {
+		return todoType;
+	}
+
+	public void setTodoType(TodoType todoType) {
+		this.todoType = todoType;
+	}
+
 	public abstract void setChildrenListString(String atChildList);
 }

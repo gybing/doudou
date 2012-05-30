@@ -38,16 +38,27 @@ public class EventServlet extends BaseServlet{
 	
 	@RequestMapping("/addEvent")
     public void addEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String atChildList = request.getParameter("atChildList");
-        String title = request.getParameter("title");
-        String location = request.getParameter("locale");
-        String beginTime = request.getParameter("beginTime");
-        String endTime = request.getParameter("endTime");
-        String allday = request.getParameter("allday");
-        String content = request.getParameter("content");
+        String atChildList = getStringParameter(request, "atChildList", "");
+        String title = getStringParameter(request, "title", "");
+        String location = getStringParameter(request, "location", "");
+        String beginTime = getStringParameter(request, "beginTime", "");
+        String endTime = getStringParameter(request, "endTime", "");
+        boolean allday = getBoolParameter(request, "allday", false);
+        String content = getStringParameter(request, "content", "");
+        
+        Event event = new Event();
+        event.setTitle(title);
+        event.setLocation(location);
+        event.setBeginTime(DateUtil.getInstance().fromString(beginTime));
+        event.setEndTime(DateUtil.getInstance().fromString(endTime));
+        event.setAllday(allday);
+        event.setContent(content);
+        
         //eventService;
         List<Integer> childIdList = doudouService.getChildIdListFromString(atChildList);
         List<Integer> classIdList = doudouService.getClassIdListFromChildIdList(childIdList);
+        
+        eventService.addEvent(event , childIdList, classIdList);
 	}
 	
 	@RequestMapping("/getAllEvent")

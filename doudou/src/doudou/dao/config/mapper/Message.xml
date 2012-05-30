@@ -75,4 +75,28 @@
     <select id="getFoundRows" resultClass="int" >
 		SELECT FOUND_ROWS()
 	</select>
+	
+	<select id="getFeedBackCount" resultClass="int" parameterClass="int">
+		select count from MessageUser 
+		where messageId = #messageId#
+		and feedbackStatus = TRUE
+	</select>
+	
+	<select id="getNotFeedBackCount" resultClass="int" parameterClass="int">
+		select count from MessageUser 
+		where messageId = #messageId#
+		and feedbackStatus = False
+	</select>
+	
+	<select id="getReadCount" resultClass="int" parameterClass="int">
+		select count from MessageUser 
+		where messageId = #messageId#
+		and readStatus = TRUE
+	</select>
+	
+	<select id="getNotReadCount" resultClass="int" parameterClass="int">
+		select count from MessageUser 
+		where messageId = #messageId#
+		and readStatus = False
+	</select>
 </sqlMap>

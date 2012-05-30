@@ -32,7 +32,7 @@ public class MessageTaskWriter implements Runnable{
 	}
 	
 	private void writeToDB(MessagePubTask task) {
-		doudouBackendService.publishTask(task);
+		//doudouBackendService.publishTask(task);
 	}
 
 }

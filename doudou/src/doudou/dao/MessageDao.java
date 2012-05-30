@@ -11,4 +11,9 @@ public interface MessageDao extends EntityDao<Message, Integer>{
 	ListResult<Message> getMessageListByClassIdList(List<Integer> classIdList, int offset, int count);
 	
 	ListResult<Message> getAllMessages();
+	int getFeedBackCount(int messageId);
+	int getNotFeedBackCount(int messageId);
+	
+	int getReadCount(int messageId);
+	int getNotReadCount(int messageId);
 }

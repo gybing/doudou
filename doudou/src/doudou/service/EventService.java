@@ -33,13 +33,13 @@ public class EventService {
 		eventDao = myDatabaseDao.getEntityDao(EventDao.class);
 	}
 	
-	public int addEvent(EvtPublishTask eventTask) {
+	public int addEvent(Event event, List<Integer> childIdList, List<Integer> classIdList) {
 		//完成对象属性填充...TOBE optimized
-		eventTask.setChildrenListString(eventTask.generateAtChildrenListString());
+		//eventTask.setChildrenListString(eventTask.generateAtChildrenListString());
 		
-		int result = (Integer)eventDao.create(eventTask.getEvent());
+		int result = (Integer)eventDao.create(event);
 		if (result > 0) {
-			DoudouBackendService.getInstance().publishTask(eventTask);
+			//DoudouBackendService.getInstance().publishTask(eventTask);
 		} 
 		return result;
 		
