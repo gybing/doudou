@@ -55,6 +55,7 @@ public class MessageServlet extends BaseServlet {
 		message.setMessageTypeId(messageTypeId);
 		message.setPublishLevel(PublishLevel.Class);
 		message.setMustFeedBack(mustFeedBack);
+		message.setUserId(sessionData.getUser().getId());
 		
 		List<Integer> childIdList = doudouService.getChildIdListFromString(atChildList);
 		List<Integer> classIdList = doudouService.getClassIdListFromChildIdList(childIdList);
