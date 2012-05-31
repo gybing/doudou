@@ -59,7 +59,7 @@ public class MessageServlet extends BaseServlet {
 		
 		List<Integer> childIdList = doudouService.getChildIdListFromString(atChildList);
 		List<Integer> classIdList = doudouService.getClassIdListFromChildIdList(childIdList);
-		int result = messageService.addMessage(message , childIdList, classIdList);
+		int result = messageService.addMessage(message , childIdList, classIdList , sessionData.getSchoolId());
 		
 		response.getWriter().print(result);
 	}
@@ -111,6 +111,11 @@ public class MessageServlet extends BaseServlet {
 		JSONObject jsonObj = JSONObject.fromObject(result);
 		response.setContentType("text/x-json;charset=UTF-8");
 		response.getWriter().print(jsonObj);
+	}
+	
+	@RequestMapping("/getMessageById")
+	public void getMessageById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 	}
 	
 }

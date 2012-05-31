@@ -35,6 +35,8 @@
 	<sqlMap resource="doudou/dao/config/mapper/DoudouInfoType.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/TeacherClass.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Message.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/MessageClass.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/MessageUser.xml" />
 	
 <!--	<sqlMap resource="mayaya/dao/config/mapper/DeviceToken.xml" />-->
 <!--	<sqlMap resource="mayaya/dao/config/mapper/Todo.xml" />-->

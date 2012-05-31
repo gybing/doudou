@@ -9,6 +9,10 @@ public abstract class PublishTask {
 	
 	private List<Integer> newChildIdList;
 	private List<Integer> oldChildIdList;
+	
+//	private List<Integer> newClassIdList;
+//	private List<Integer> oldClassIdList;
+	
 	private int schoolId;
 	private TodoType todoType;
 	
@@ -43,6 +47,22 @@ public abstract class PublishTask {
 	public void setTodoType(TodoType todoType) {
 		this.todoType = todoType;
 	}
+
+//	public List<Integer> getNewClassIdList() {
+//		return newClassIdList;
+//	}
+//
+//	public void setNewClassIdList(List<Integer> newClassIdList) {
+//		this.newClassIdList = newClassIdList;
+//	}
+//
+//	public List<Integer> getOldClassIdList() {
+//		return oldClassIdList;
+//	}
+//
+//	public void setOldClassIdList(List<Integer> oldClassIdList) {
+//		this.oldClassIdList = oldClassIdList;
+//	}
 
 	public abstract void setChildrenListString(String atChildList);
 }

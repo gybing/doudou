@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import doudou.dao.DaoFactory;
 import doudou.dao.DoudouInfoTypeDao;
+import doudou.dao.MessageClassDao;
 import doudou.dao.MessageDao;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
 import doudou.vo.DoudouInfoType;
 import doudou.vo.Event;
 import doudou.vo.Message;
+import doudou.vo.MessageClass;
 import doudou.vo.SchoolClass;
 import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.SessionData;
@@ -30,12 +32,14 @@ public class MessageService {
 	private final DatabaseDao myDatabaseDao; 
 	
 	private final MessageDao messageDao;
+	private final MessageClassDao messageClassDao;
 	private final DoudouInfoTypeDao doudouInfoTypeDao;
 	
 	private MessageService() {
 		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
 		messageDao = myDatabaseDao.getEntityDao(MessageDao.class);
 		doudouInfoTypeDao = myDatabaseDao.getEntityDao(DoudouInfoTypeDao.class);
+		messageClassDao = myDatabaseDao.getEntityDao(MessageClassDao.class);
 	}
 	
 	/**
@@ -89,16 +93,24 @@ public class MessageService {
 	 * 添加单一事件
 	 * 
 	 * */
-	public int addMessage(Message message, List<Integer> childIdList, List<Integer> classIdList) {
+	public int addMessage(Message message, List<Integer> childIdList, List<Integer> classIdList, int schoolId) {
 		//完成对象属性填充...TOBE optimized
 		//messageTask.setChildrenListString(messageTask.generateAtChildrenListString());
 		
 		int result = (Integer)messageDao.create(message);
 		if (result > 0) {
+			// 保证发布者能查看到新添加的事件
+			for (Integer classId : classIdList) {
+				MessageClass messageClass = new MessageClass();
+				messageClass.setClassId(classId);
+				messageClass.setMessageId(message.getId());
+				messageClass.setSchoolId(schoolId);
+				messageClassDao.create(messageClass);
+			}
 			MessagePubTask task = new MessagePubTask();
 			task.setMessage(message);
-			//task.set
-			//DoudouBackendService.getInstance().publishTask(messageTask);
+			task.setNewChildIdList(childIdList);
+			DoudouBackendService.getInstance().publishTask(task);
 		} 
 		return result;
 		

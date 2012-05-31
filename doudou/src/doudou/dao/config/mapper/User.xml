@@ -7,7 +7,7 @@
     <select id="read" parameterClass="int" resultClass="User">
         select * from User
         where
-        userId = #userId#
+        id = #id#
     </select>
 
     <select id="getAllUsers" resultClass="User">

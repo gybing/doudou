@@ -15,14 +15,12 @@
         insert into MessageUser 
         (
 			messageId,
-			toChildId,
-			childClassId
+			toChildId
         )
         values 
         (
 			#messageId#,
-			#toChildId#,
-			#childClassId#
+			#toChildId#
         )
         <selectKey keyProperty="id" resultClass="int">
             SELECT last_insert_id() AS ID FROM MessageUser limit 1

@@ -33,6 +33,7 @@ public class MyDatabaseDao extends BaseDatabaseDao {
 		entities.put(TeacherClassDao.class, new TeacherClassDaoImpl(this));
 		entities.put(MessageClassDao.class, new MessageClassDaoImpl(this));
 		entities.put(EventClassDao.class, new EventClassDaoImpl(this));
+		entities.put(MessageUserDao.class, new MessageUserDaoImpl(this));
 	}
 
 	@SuppressWarnings("unchecked")

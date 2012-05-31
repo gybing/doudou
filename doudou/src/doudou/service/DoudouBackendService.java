@@ -89,58 +89,46 @@ public class DoudouBackendService {
 	}
 	
 	
-//	public void publishTask(MessagePubTask task) {
-//		Message message = task.getMessage();
-//		
-//		APNSPushVO pushVO = new APNSPushVO();
-//		pushVO.setTodoType(TodoType.NewMessage);
-//		pushVO.setContentId(message.getId());
-//		Set<Integer> relatedIdSet = new HashSet<Integer>();
-//		Set<String> relatedEmailSet = new HashSet<String>();
-//		
-//		for (Entry<SchoolClass,List<Child>> entrySet : task.getTagedInfo().getClassChildMap().entrySet()) {
-//			SchoolClass sc = entrySet.getKey();
-//			//插入消息和班级的对应数据
-//			MessageClass mc = new MessageClass();
-//			mc.setMessageId(message.getId());
-//			mc.setClassId(sc.getId());
-//			mc.setSchoolId(task.getSchoolId());
-//			logger.info(String.format("Message PublishTask....messageId : %d,classId : %d,schoolId:%d.", message.getId(),sc.getId(),task.getSchoolId()));
-//			messageClassDao.create(mc);
-//			
-//			for (Child child : entrySet.getValue()) {
-//				//插入班级和孩子对应信息
-//				MessageUser mu = new MessageUser();
-//				mu.setMessageId(message.getId());
-//				mu.setToChildId(child.getId());
-//				messageUserDao.create(mu);
-//
-//				List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(child.getId());
-//				for (Parents parents : relatedParentsList) {
-//					//这里可以do more
-//					relatedIdSet.add(parents.getParentId());
-//					relatedEmailSet.add(parents.getPrivateEmail());
-//				}
-//			}
-//				
-//		}
-//		String fromUser = userDao.read(message.getUserId()).getFirstName();
-////		relatedIdSet.remove(message.getUserId()); 不刪除自己 TODO
-//		pushVO.setFromUser(fromUser);
-//		pushVO.setUserIdList(relatedIdSet);
-//		logger.info(String.format("publish message task, relatedIdSet = %s;fromUser :%s",
-//							relatedIdSet, fromUser));
-//		DoudouBackend.getInstance().addPushVO(pushVO);
-//			
-//		// Email
-//		EmailTask emailTask = new EmailTask();
-//		emailTask.setTodoType(TodoType.NewMessage);
-//		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
-//		emailTask.setFromUser(fromUser);
-//		emailTask.setContent(message);
-//		DoudouBackend.getInstance().addEmailTask(emailTask);
-//			
-//	}
+	public void publishTask(MessagePubTask task) {
+		Message message = task.getMessage();
+		
+		APNSPushVO pushVO = new APNSPushVO();
+		pushVO.setTodoType(TodoType.NewMessage);
+		pushVO.setContentId(message.getId());
+		Set<Integer> relatedIdSet = new HashSet<Integer>();
+		Set<String> relatedEmailSet = new HashSet<String>();
+		
+		for (Integer childId : task.getNewChildIdList()) {
+			//插入班级和孩子对应信息
+			MessageUser mu = new MessageUser();
+			mu.setMessageId(message.getId());
+			mu.setToChildId(childId);
+			messageUserDao.create(mu);
+
+			List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(childId);
+			for (Parents parents : relatedParentsList) {
+				//这里可以do more
+				relatedIdSet.add(parents.getParentId());
+				relatedEmailSet.add(parents.getPrivateEmail());
+			}
+		}
+		String fromUser = userDao.read(message.getUserId()).getFirstName();
+//		relatedIdSet.remove(message.getUserId()); 不刪除自己 TODO
+		pushVO.setFromUser(fromUser);
+		pushVO.setUserIdList(relatedIdSet);
+		logger.info(String.format("publish message task, relatedIdSet = %s;fromUser :%s",
+							relatedIdSet, fromUser));
+		DoudouBackend.getInstance().addPushVO(pushVO);
+			
+		// Email
+		EmailTask emailTask = new EmailTask();
+		emailTask.setTodoType(TodoType.NewMessage);
+		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
+		emailTask.setFromUser(fromUser);
+		emailTask.setContent(message);
+		DoudouBackend.getInstance().addEmailTask(emailTask);
+			
+	}
 //	
 //	public void publishTask(PicPublishTask task) {
 //		Picture picture = task.getPicture();

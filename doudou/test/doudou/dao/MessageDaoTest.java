@@ -42,7 +42,7 @@ public class MessageDaoTest extends TestCase {
 		classIdList.add(1);
 		classIdList.add(2);
 		classIdList.add(3);
-		ListResult<Message> r = messageDao.getMessageListByClassIdList(classIdList, 0, 2);
-		System.out.println(r.getEntities().size());
+		ListResult<Message> r = messageDao.getMessageListByClassIdList(classIdList, 0, 20);
+		System.out.println(r.getSize());
 	}
 }
