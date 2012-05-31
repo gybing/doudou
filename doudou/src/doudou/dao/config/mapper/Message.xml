@@ -65,6 +65,7 @@
 	        </iterate> 
     		group by messageId
     	)
+    	order by m.publishTime desc
     	limit #offset#, #count#
     </select>
     

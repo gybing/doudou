@@ -27,5 +27,11 @@
         </selectKey>
     </insert>
     
+    <select id="getListByMessageId" parameterClass="int" resultClass="MessageUser">
+    	select m.*,c.firstName as childName from MessageUser as m, Child as c
+    	where m.messageId = #messageId#
+    	and m.toChildId = c.id 
+    </select>
+    
     
 </sqlMap>

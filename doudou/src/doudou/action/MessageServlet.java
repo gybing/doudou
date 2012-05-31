@@ -7,6 +7,7 @@ import doudou.util.tool.DateUtil;
 import doudou.util.vo.ListResult;
 import doudou.vo.DoudouInfoType;
 import doudou.vo.Message;
+import doudou.vo.MessageUser;
 import doudou.vo.model.SessionData;
 import doudou.vo.type.PublishLevel;
 
@@ -115,7 +116,20 @@ public class MessageServlet extends BaseServlet {
 	
 	@RequestMapping("/getMessageById")
 	public void getMessageById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		int messageId = getIntParameter(request, "messageId" , -1);
+		if (messageId > 0) {
+			Message message = messageService.getMessageById(messageId);
+			List<MessageUser> messageUserList = messageService.getListByMessageId(messageId);
+			JSONObject jsonObj = JSONObject.fromObject(message);
+			jsonObj.accumulate("messageUserList",messageUserList);
+			
+			response.setContentType("text/x-json;charset=UTF-8");
+			response.getWriter().print(jsonObj);
+		}
+		else {
+			//Not Existed messageId
+			response.getWriter().print("-1");
+		}
 	}
 	
 }

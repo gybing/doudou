@@ -14,6 +14,9 @@ public class MessageUser implements Serializable {
 	private String feedbackUser;
 	private boolean feedbackStatus;
 	
+	// not related in db
+	private String childName;
+	
 	public int getId() {
 		return id;
 	}
@@ -62,6 +65,12 @@ public class MessageUser implements Serializable {
 	}
 	public void setFeedbackStatus(boolean feedbackStatus) {
 		this.feedbackStatus = feedbackStatus;
+	}
+	public String getChildName() {
+		return childName;
+	}
+	public void setChildName(String childName) {
+		this.childName = childName;
 	}
 	
 }

@@ -1,5 +1,7 @@
 package doudou.dao.impl;
 
+import java.util.List;
+
 import doudou.dao.MessageUserDao;
 import doudou.util.dao.BaseEntityDao;
 import doudou.util.dao.DatabaseDao;
@@ -15,6 +17,11 @@ public class MessageUserDaoImpl extends BaseEntityDao<MessageUser, Integer> impl
 	@Override
 	public String getNamespace() {
 		return "MessageUser";
+	}
+
+	@Override
+	public List<MessageUser> getListByMessageId(int messageId) {
+		return reads("getListByMessageId",messageId);
 	}
 	
 }

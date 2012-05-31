@@ -13,12 +13,14 @@ import doudou.dao.DaoFactory;
 import doudou.dao.DoudouInfoTypeDao;
 import doudou.dao.MessageClassDao;
 import doudou.dao.MessageDao;
+import doudou.dao.MessageUserDao;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
 import doudou.vo.DoudouInfoType;
 import doudou.vo.Event;
 import doudou.vo.Message;
 import doudou.vo.MessageClass;
+import doudou.vo.MessageUser;
 import doudou.vo.SchoolClass;
 import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.SessionData;
@@ -33,13 +35,15 @@ public class MessageService {
 	
 	private final MessageDao messageDao;
 	private final MessageClassDao messageClassDao;
+	private final MessageUserDao messageUserDao;
 	private final DoudouInfoTypeDao doudouInfoTypeDao;
 	
-	private MessageService() {
+	public MessageService() {
 		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
 		messageDao = myDatabaseDao.getEntityDao(MessageDao.class);
 		doudouInfoTypeDao = myDatabaseDao.getEntityDao(DoudouInfoTypeDao.class);
 		messageClassDao = myDatabaseDao.getEntityDao(MessageClassDao.class);
+		messageUserDao = myDatabaseDao.getEntityDao(MessageUserDao.class);
 	}
 	
 	/**
@@ -87,6 +91,10 @@ public class MessageService {
 	 * */
 	public Message getMessageById(int id) {
 		return messageDao.read(id);
+	}
+	
+	public List<MessageUser> getListByMessageId(int id) {
+		return messageUserDao.getListByMessageId(id);
 	}
 	
 	/**
