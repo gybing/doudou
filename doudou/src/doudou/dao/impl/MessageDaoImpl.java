@@ -27,7 +27,10 @@ public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements M
 	public List<Message> getSchoolMessageList(int offset, int count) {
 		return null;
 	}
-
+	
+	/**
+	 * 班级管理员
+	 * */
 	@Override
 	public ListResult<Message> getMessageListByClassIdList(List<Integer> classIdList, int offset, int count) {
 		HashMap<String, Object> conditions = new HashMap<String, Object>();
@@ -104,15 +107,37 @@ public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements M
 		ListResult<Message> result = new ListResult<Message>(messageList, counts);
 		return result;
 	}
-
+	
+	/**
+	 * For班级管理员
+	 * */
 	@Override
-	public Message getNextMessage(int messageId) {
-		return null;
+	public Message getNextMessage(List<Integer> classIdList,int currentMessageId) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		if (classIdList.size() > 0) {
+			conditions.put("classIdList", classIdList);
+		} else {
+			return null;
+		}
+		conditions.put("currentMessageId", currentMessageId);
+		return read("getNextMessageForClass",conditions);
 	}
 
 	@Override
-	public Message getPreviousMessage(int messageId) {
-		return null;
+	public Message getPreviousMessage(List<Integer> classIdList,int currentMessageId) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		if (classIdList.size() > 0) {
+			conditions.put("classIdList", classIdList);
+		} else {
+			return null;
+		}
+		conditions.put("currentMessageId", currentMessageId);
+		return read("getPreviousMessageForClass",conditions);
+	}
+
+	@Override
+	public void updateUnavailable(int messageId) {
+		update("updateUnavailable",messageId);
 	}
 	
 }

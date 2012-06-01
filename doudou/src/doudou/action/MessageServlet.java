@@ -131,6 +131,12 @@ public class MessageServlet extends BaseServlet {
 			response.getWriter().print("-1");
 		}
 	}
+	@RequestMapping("/deleteMessage")
+	public void deleteMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int messageId = getIntParameter(request, "messageId", 0);
+		messageService.deleteMessage(messageId);
+	}
+	
 	@RequestMapping("/updateMessage")
 	public void updateMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
@@ -167,8 +173,9 @@ public class MessageServlet extends BaseServlet {
 	@RequestMapping("getNextMessage")
 	public void getNextMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int messageId = getIntParameter(request, "messageId", 0);
+		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		
-		Message message = messageService.getNextMessage(messageId);
+		Message message = messageService.getNextMessage(sessionData, messageId);
 		List<MessageUser> messageUserList = messageService.getListByMessageId(message.getId());
 		JSONObject jsonObj = JSONObject.fromObject(message);
 		jsonObj.accumulate("messageUserList",messageUserList);
@@ -179,6 +186,15 @@ public class MessageServlet extends BaseServlet {
 	
 	@RequestMapping("getPreviousMessage")
 	public void getPreviousMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int messageId = getIntParameter(request, "messageId", 0);
+		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		
+		Message message = messageService.getPreviousMessage(sessionData, messageId);
+		List<MessageUser> messageUserList = messageService.getListByMessageId(message.getId());
+		JSONObject jsonObj = JSONObject.fromObject(message);
+		jsonObj.accumulate("messageUserList",messageUserList);
+		
+		response.setContentType("text/x-json;charset=UTF-8");
+		response.getWriter().print(jsonObj);
 	}
 }

@@ -232,6 +232,13 @@ public class MessageService {
 
 		return result;
 	}
+	
+	/**
+	 * 删除消息
+	 * */
+	public void deleteMessage(int messageId) {
+		messageDao.updateUnavailable(messageId);
+	}
 	public List<DoudouInfoType> getMessageTypeList(int schoolId) {
 		return doudouInfoTypeDao.getMessageTypeBySchoolId(schoolId);
 	}
@@ -249,11 +256,25 @@ public class MessageService {
 		}
 	}
 	
-	public Message getNextMessage(int messageId) {
-		return messageDao.getNextMessage(messageId);
+	public Message getNextMessage(SessionData sessionData, int messageId) {
+		//获取该老师相关的班级id List
+		Set<SchoolClass> classSet = sessionData.getSchoolClassList();
+		List<Integer> classIdList = new ArrayList<Integer>();
+		
+		for (SchoolClass schoolClass : classSet) {
+			classIdList.add(schoolClass.getId());
+		}
+		return messageDao.getNextMessage(classIdList,messageId);
 	}
-	public Message getPreviousMessage(int messageId) {
-		return messageDao.getPreviousMessage(messageId);
+	public Message getPreviousMessage(SessionData sessionData, int messageId) {
+		//获取该老师相关的班级id List
+		Set<SchoolClass> classSet = sessionData.getSchoolClassList();
+		List<Integer> classIdList = new ArrayList<Integer>();
+		
+		for (SchoolClass schoolClass : classSet) {
+			classIdList.add(schoolClass.getId());
+		}
+		return messageDao.getPreviousMessage(classIdList,messageId);
 	}
 	
 }

@@ -64,7 +64,8 @@
 	            #classIdList[]#
 	        </iterate> 
     		group by messageId
-    	)
+    	) 
+    	and m.available = TRUE
     	order by m.publishTime desc
     	limit #offset#, #count#
     </select>
@@ -95,7 +96,8 @@
                 publishTime &lt;= #endTime#
             </isNotNull>   
         </dynamic>
-        and mustFeedBack = #mustFeedBack#
+        and m.mustFeedBack = #mustFeedBack#
+        and m.available = TRUE
     	limit #offset#, #count#
     </select>
     
@@ -112,23 +114,62 @@
 		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and feedbackStatus = TRUE
+		and available = TRUE
 	</select>
 	
 	<select id="getNotFeedBackCount" resultClass="int" parameterClass="int">
 		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and feedbackStatus = False
+		and available = TRUE
 	</select>
 	
 	<select id="getReadCount" resultClass="int" parameterClass="int">
 		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and readStatus = TRUE
+		and available = TRUE
 	</select>
 	
 	<select id="getNotReadCount" resultClass="int" parameterClass="int">
 		select count(*) from MessageUser 
 		where messageId = #messageId#
 		and readStatus = False
+		and available = TRUE
+	</select>
+	
+	<update id="updateUnavailable" parameterClass="int">
+		update Message set available = FALSE
+		where id = #messageId#
+	</update>
+	
+	<select id="getNextMessageForClass" parameterClass="map">
+		select m.* from Message as m where m.id in ( 
+    		select messageId from MessageClass 
+    		where classId in 
+	    	<iterate property="classIdList" open="(" close=")" conjunction=",  ">
+	            #classIdList[]#
+	        </iterate> 
+    		group by messageId
+    	) 
+    	and m.available = TRUE
+    	and m.id &lt;= #currentMessageId#
+    	order by m.publishTime desc
+    	limit 1
+	</select>
+	
+	<select id="getPreviousMessageForClass" parameterClass="map">
+		select m.* from Message as m where m.id in ( 
+    		select messageId from MessageClass 
+    		where classId in 
+	    	<iterate property="classIdList" open="(" close=")" conjunction=",  ">
+	            #classIdList[]#
+	        </iterate> 
+    		group by messageId
+    	) 
+    	and m.available = TRUE
+    	and m.id &gt;= #currentMessageId#
+    	order by m.publishTime asc
+    	limit 1
 	</select>
 </sqlMap>
