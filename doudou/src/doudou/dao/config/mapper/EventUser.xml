@@ -3,7 +3,6 @@
 <sqlMap namespace="EventUser">
 
     <typeAlias alias="EventUser" type="doudou.vo.EventUser" />
-	<typeAlias alias="event" type="doudou.vo.Event" />
     
     <select id="read" parameterClass="int" resultClass="EventUser">
         select * from EventUser
@@ -28,56 +27,12 @@
         </selectKey>
     </insert>
     
-    
-    <select id="getMainPageEvents" parameterClass="map" resultClass="event">
-    	select * from 
-    	(select e.* from Event as e
+    <update id="updateEUUnavailable" parameterClass="EventUser">
+    	update EventUser set available = FALSE 
     	where
-    	isSchool = TRUE
-    	and e.endTime &gt;= #date# 
-    	UNION
-    	select e.* from Relations_Event_User as reu, Event as e
-    	where reu.eventID = e.eventID
-    	<isNotEqual prepend="AND" property="toChildId" compareValue="1">
-    		toChildId = #toChildId#
-    	</isNotEqual>
-    	and e.endTime &gt;= #date#
-    	<isEqual property="toChildId" compareValue="1">
-    		group by reu.eventID
-    	</isEqual>
-    	) b
-    	group by Date(b.beginTime) 
-    	order by b.beginTime asc
-    	limit 3
-    </select>
-    
-    <select id="getEventByDate" parameterClass="map" resultClass="event">
-    	select e.* from Event as e
-    	where isSchool = TRUE 
-    	and Date(e.beginTime) &lt;= Date(#date#)
-		and Date(e.endTime) &gt;= Date(#date#)
-    	UNION
-    	select e.* from Relations_Event_User as reu, Event as e
-    	where reu.eventID = e.eventID
-    	<isNotEqual prepend="AND" property="toChildId" compareValue="1">
-    		toChildId = #toChildId#
-    	</isNotEqual>
-    	and e.isSchool = FALSE 
-    	and Date(e.beginTime) &lt;= Date(#date#)
-		and Date(e.endTime) &gt;= Date(#date#)
-		<isEqual property="toChildId" compareValue="1">
-    		group by reu.eventID
-    	</isEqual>
-    </select>
-    
-    <select id="getEventsCountByChildId" parameterClass="map" resultClass="int">
-	    select count(*) from Relations_Event_User where	toChildId = #toChildId#
-    </select>
-    
-    <select id="getSchoolEventCount" resultClass="int">
-    	select count(*) from Event
-    	where isSchool = TRUE;
-    </select>
+    	eventId = #eventId#
+    	and toChildId = #toChildId#
+    </update>
     
     
 </sqlMap>

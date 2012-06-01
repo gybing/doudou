@@ -28,7 +28,6 @@
 	<sqlMap resource="doudou/dao/config/mapper/Parents.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Child.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/ChildClass.xml" />
-	<sqlMap resource="doudou/dao/config/mapper/Event.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/School.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/SchoolClass.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/Teacher.xml" />
@@ -37,6 +36,9 @@
 	<sqlMap resource="doudou/dao/config/mapper/Message.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/MessageClass.xml" />
 	<sqlMap resource="doudou/dao/config/mapper/MessageUser.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/Event.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/EventClass.xml" />
+	<sqlMap resource="doudou/dao/config/mapper/EventUser.xml" />
 	
 <!--	<sqlMap resource="mayaya/dao/config/mapper/DeviceToken.xml" />-->
 <!--	<sqlMap resource="mayaya/dao/config/mapper/Todo.xml" />-->

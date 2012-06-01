@@ -2,7 +2,7 @@ package doudou.vo.model;
 
 import doudou.vo.Message;
 
-public class MessagePubTask extends PublishTask {
+public class MsgPublishTask extends PublishTask {
 	private Message message;
 	
 	public Message getMessage() {

@@ -15,7 +15,7 @@ import doudou.util.dao.DatabaseDao;
 import doudou.util.tool.Base64;
 import doudou.util.tool.EmailManager;
 import doudou.vo.User;
-import doudou.vo.model.MessagePubTask;
+import doudou.vo.model.MsgPublishTask;
 import doudou.vo.model.EmailTask;
 import doudou.vo.model.EvtPublishTask;
 import doudou.vo.model.PicPublishTask;
@@ -36,7 +36,7 @@ public class DoudouBackend {
 	
 	private LinkedBlockingQueue<PicPublishTask> picTaskQueue;
 	private LinkedBlockingQueue<EvtPublishTask> evtTaskQueue;
-	private LinkedBlockingQueue<MessagePubTask> messageTaskQueue;
+	private LinkedBlockingQueue<MsgPublishTask> messageTaskQueue;
 	
 	private LinkedBlockingQueue<String> imgQueue;
 	private LinkedBlockingQueue<String> headPicQueue;
@@ -57,7 +57,7 @@ public class DoudouBackend {
 			
 			picTaskQueue = new LinkedBlockingQueue<PicPublishTask>();
 			evtTaskQueue = new LinkedBlockingQueue<EvtPublishTask>();
-			messageTaskQueue = new LinkedBlockingQueue<MessagePubTask>();
+			messageTaskQueue = new LinkedBlockingQueue<MsgPublishTask>();
 			apnsPushQueue = new LinkedBlockingQueue<APNSPushVO>();
 			imgQueue = new LinkedBlockingQueue<String>();
 			headPicQueue = new LinkedBlockingQueue<String>();
@@ -89,7 +89,7 @@ public class DoudouBackend {
 		}
 	}
 	
-	public void publishTask(MessagePubTask task) {
+	public void publishTask(MsgPublishTask task) {
 		try {
 			messageTaskQueue.put(task);
 		} catch (InterruptedException e) {

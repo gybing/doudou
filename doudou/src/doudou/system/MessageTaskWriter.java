@@ -3,24 +3,24 @@ package doudou.system;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import doudou.service.DoudouBackendService;
-import doudou.vo.model.MessagePubTask;
+import doudou.vo.model.MsgPublishTask;
 
 import org.apache.log4j.Logger;
 
 public class MessageTaskWriter implements Runnable{
 
 	private Logger logger = Logger.getLogger(getClass());
-	private LinkedBlockingQueue<MessagePubTask> queue;
+	private LinkedBlockingQueue<MsgPublishTask> queue;
 	private DoudouBackendService doudouBackendService = DoudouBackendService.getInstance();
 	
-	public MessageTaskWriter(LinkedBlockingQueue<MessagePubTask> queue) {
+	public MessageTaskWriter(LinkedBlockingQueue<MsgPublishTask> queue) {
 		this.queue = queue;
 	}
 	
 	@Override
 	public void run() {
 		try {
-			MessagePubTask task = null;			
+			MsgPublishTask task = null;			
 			while(true){
 				task = queue.take();
 				writeToDB(task);
@@ -31,7 +31,7 @@ public class MessageTaskWriter implements Runnable{
 		}
 	}
 	
-	private void writeToDB(MessagePubTask task) {
+	private void writeToDB(MsgPublishTask task) {
 		//doudouBackendService.publishTask(task);
 	}
 

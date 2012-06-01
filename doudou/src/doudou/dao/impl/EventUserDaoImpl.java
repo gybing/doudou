@@ -16,5 +16,10 @@ public class EventUserDaoImpl extends BaseEntityDao<EventUser, Integer> implemen
 	public String getNamespace() {
 		return "EventUser";
 	}
+
+	@Override
+	public void updateEUUnavailable(EventUser eventUser) {
+		update("updateEUUnavailable",eventUser);
+	}
 	
 }

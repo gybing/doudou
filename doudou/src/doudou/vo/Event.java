@@ -13,7 +13,6 @@ public class Event implements Serializable {
 	private String content;
 	private Date beginTime;
 	private Date endTime;
-	// School Event userID = 0
 	private int userId;
 	private String title;
 	private String location;
@@ -22,12 +21,8 @@ public class Event implements Serializable {
 	private boolean allday;
 	private PublishLevel publishLevel;
 	
-	// 
+	// not related 
 	private String userName;
-	private String pushType;
-	private String beginTimeString;
-	private String endTimeString;
-	private String publishTimeString;
 	
 	public int getId() {
 		return id;

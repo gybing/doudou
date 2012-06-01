@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="EventClass">
+
+    <typeAlias alias="EventClass" type="doudou.vo.EventClass" />
+    
+    <select id="read" parameterClass="int" resultClass="EventClass">
+        select * from EventClass
+        where
+        id = #id#
+        limit 1
+    </select>
+    
+    <insert id="create" parameterClass="EventClass">
+	    	insert into EventClass 
+	        (
+				eventId,
+				classId,
+				schoolId
+	        )
+	        values 
+	        (
+				#eventId#,
+				#classId#,
+				#schoolId#
+	        )
+	        <selectKey keyProperty="id" resultClass="int">
+	            SELECT last_insert_id() AS ID FROM EventClass limit 1
+	        </selectKey>
+    </insert>
+    
+    <update id="updateECUnavailable" parameterClass="EventClass">
+    	update EventClass set available = FALSE 
+    	where
+    	eventId = #eventId#
+    	and classId = #classId#
+    </update>
+    
+</sqlMap>

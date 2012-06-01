@@ -9,6 +9,7 @@ import doudou.util.dao.BaseEntityDao;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
 import doudou.vo.Event;
+import doudou.vo.Message;
 import doudou.vo.type.PublishLevel;
 
 public class EventDaoImpl extends BaseEntityDao<Event, Integer> implements EventDao {
@@ -65,5 +66,36 @@ public class EventDaoImpl extends BaseEntityDao<Event, Integer> implements Event
 		return new ListResult<Event>(entities,counts);
 	}
 
+	@Override
+	public void updateUnavailable(int eventId) {
+		update("updateUnavailable",eventId);
+	}
+	
+	/**
+	 * For班级管理员
+	 * */
+	@Override
+	public Event getNextEvent(List<Integer> classIdList, int currentEventId) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		if (classIdList.size() > 0) {
+			conditions.put("classIdList", classIdList);
+		} else {
+			return null;
+		}
+		conditions.put("currentEventId", currentEventId);
+		return read("getNextEventForClass",conditions);
+	}
+
+	@Override
+	public Event getPreviousEvent(List<Integer> classIdList, int currentEventId) {
+		HashMap<String, Object> conditions = new HashMap<String, Object>();
+		if (classIdList.size() > 0) {
+			conditions.put("classIdList", classIdList);
+		} else {
+			return null;
+		}
+		conditions.put("currentEventId", currentEventId);
+		return read("getPreviousEventForClass",conditions);
+	}
 	
 }

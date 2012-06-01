@@ -40,7 +40,7 @@ import doudou.vo.SchoolClass;
 import doudou.vo.Todo;
 import doudou.vo.model.EmailTask;
 import doudou.vo.model.EvtPublishTask;
-import doudou.vo.model.MessagePubTask;
+import doudou.vo.model.MsgPublishTask;
 import doudou.vo.model.PicPublishTask;
 import doudou.vo.model.APNSPushVO;
 import doudou.vo.type.TodoType;
@@ -54,33 +54,23 @@ public class DoudouBackendService {
 	private final DatabaseDao myDatabaseDao; 
 	
 	private final PictureDao pictureDao;
-	private final EventDao eventDao;
-	private final EventClassDao eventClassDao;
 	private final PictureUserDao pictureUserDao;
 	private final EventUserDao eventUserDao;
 	private final ChildDao childDao;
-	private final TodoDao todoDao;
-	private final MessageDao messageDao;
 	private final MessageUserDao messageUserDao;
 	private final UserDao userDao;
-	private final MessageClassDao messageClassDao;
 	private final ParentsDao parentsDao;
 	
 	
 	private DoudouBackendService() {
 		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
 		
-		eventDao = myDatabaseDao.getEntityDao(EventDao.class);
-		eventClassDao = myDatabaseDao.getEntityDao(EventClassDao.class);
 		pictureDao = myDatabaseDao.getEntityDao(PictureDao.class);
 		pictureUserDao = myDatabaseDao.getEntityDao(PictureUserDao.class);
 		eventUserDao = myDatabaseDao.getEntityDao(EventUserDao.class); 
 		childDao = myDatabaseDao.getEntityDao(ChildDao.class);
-		todoDao = myDatabaseDao.getEntityDao(TodoDao.class);
-		messageDao = myDatabaseDao.getEntityDao(MessageDao.class);
 		messageUserDao = myDatabaseDao.getEntityDao(MessageUserDao.class);
 		userDao = myDatabaseDao.getEntityDao(UserDao.class);
-		messageClassDao = myDatabaseDao.getEntityDao(MessageClassDao.class);
 		parentsDao = myDatabaseDao.getEntityDao(ParentsDao.class);
 	}
 	
@@ -89,7 +79,7 @@ public class DoudouBackendService {
 	}
 	
 	
-	public void publishTask(MessagePubTask task) {
+	public void publishTask(MsgPublishTask task) {
 		Message message = task.getMessage();
 		
 		APNSPushVO pushVO = new APNSPushVO();
@@ -190,56 +180,51 @@ public class DoudouBackendService {
 //		DoudouBackend.getInstance().addEmailTask(emailTask);
 //	}
 //	
-//	public void publishTask(EvtPublishTask task) {
-//		Event event = task.getEvent();
-//		
-//		APNSPushVO pushVO = new APNSPushVO();
-//		pushVO.setTodoType(TodoType.NewEvent);
-//		pushVO.setContentId(event.getId());
-//		Set<Integer> relatedIdSet = new HashSet<Integer>();
-//		Set<String> relatedEmailSet = new HashSet<String>();
-//		
-//		for (Entry<SchoolClass,List<Child>> entrySet : task.getTagedInfo().getClassChildMap().entrySet()) {
-//			SchoolClass sc = entrySet.getKey();
-//			//插入消息和班级的对应数据
-//			EventClass ec = new EventClass();
-//			ec.setEventId(event.getId());
-//			ec.setClassId(sc.getId());
-//			ec.setSchoolId(task.getSchoolId());
-//			logger.info(String.format("Message PublishTask....messageId : %d,classId : %d,schoolId:%d.", event.getId(),sc.getId(),task.getSchoolId()));
-//			eventClassDao.create(ec);
-//			
-//			for (Child child : entrySet.getValue()) {
-//				//插入班级和孩子对应信息
-//				EventUser mu = new EventUser();
-//				mu.setEventId(event.getId());
-//				mu.setToChildId(child.getId());
-//				eventUserDao.create(mu);
-//
-//				List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(child.getId());
-//				for (Parents parents : relatedParentsList) {
-//					//这里可以do more
-//					relatedIdSet.add(parents.getParentId());
-//					relatedEmailSet.add(parents.getPrivateEmail());
-//				}
-//			}
-//				
-//		}
-//		String fromUser = userDao.read(event.getUserId()).getFirstName();
-////		relatedIdSet.remove(message.getUserId()); 不刪除自己 TODO
-//		pushVO.setFromUser(fromUser);
-//		pushVO.setUserIdList(relatedIdSet);
-//		logger.info(String.format("publish event task, relatedIdSet = %s;fromUser :%s",
-//							relatedIdSet, fromUser));
-//		DoudouBackend.getInstance().addPushVO(pushVO);
-//			
-//		// Email
-//		EmailTask emailTask = new EmailTask();
-//		emailTask.setTodoType(TodoType.NewEvent);
-//		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
-//		emailTask.setFromUser(fromUser);
-//		emailTask.setContent(event);
-//		DoudouBackend.getInstance().addEmailTask(emailTask);
-//	}
+	public void publishTask(EvtPublishTask task) {
+		Event event = task.getEvent();
+		
+		APNSPushVO pushVO = new APNSPushVO();
+		pushVO.setTodoType(task.getTodoType());
+		pushVO.setContentId(event.getId());
+		Set<Integer> relatedIdSet = new HashSet<Integer>();
+		Set<String> relatedEmailSet = new HashSet<String>();
+		
+		for (Integer childId : task.getTargetChildIdList()) {
+			if (TodoType.isNewType(task.getTodoType())) {
+				//插入孩子对应信息
+				EventUser eu = new EventUser();
+				eu.setEventId(event.getId());
+				eu.setToChildId(childId);
+				eventUserDao.create(eu);
+			}
+			else if (TodoType.isDelType(task.getTodoType())) {
+				EventUser eu = new EventUser();
+				eu.setEventId(event.getId());
+				eu.setToChildId(childId);
+				eventUserDao.updateEUUnavailable(eu);
+			}
+			List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(childId);
+			for (Parents parents : relatedParentsList) {
+				//这里可以do more
+				relatedIdSet.add(parents.getParentId());
+				relatedEmailSet.add(parents.getPrivateEmail());
+			}
+		}
+		String fromUser = userDao.read(event.getUserId()).getFirstName();
+//		relatedIdSet.remove(message.getUserId()); 不刪除自己 TODO
+		pushVO.setFromUser(fromUser);
+		pushVO.setUserIdList(relatedIdSet);
+		logger.info(String.format("publish event task, relatedIdSet = %s;fromUser :%s",
+							relatedIdSet, fromUser));
+		DoudouBackend.getInstance().addPushVO(pushVO);
+			
+		// Email
+		EmailTask emailTask = new EmailTask();
+		emailTask.setTodoType(task.getTodoType());
+		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
+		emailTask.setFromUser(fromUser);
+		emailTask.setContent(event);
+		DoudouBackend.getInstance().addEmailTask(emailTask);
+	}
 	
 }

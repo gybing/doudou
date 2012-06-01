@@ -14,16 +14,16 @@ import doudou.dao.DoudouInfoTypeDao;
 import doudou.dao.MessageClassDao;
 import doudou.dao.MessageDao;
 import doudou.dao.MessageUserDao;
+import doudou.system.DoudouBackend;
 import doudou.util.DoudouUtil;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
 import doudou.vo.DoudouInfoType;
-import doudou.vo.Event;
 import doudou.vo.Message;
 import doudou.vo.MessageClass;
 import doudou.vo.MessageUser;
 import doudou.vo.SchoolClass;
-import doudou.vo.model.MessagePubTask;
+import doudou.vo.model.MsgPublishTask;
 import doudou.vo.model.SessionData;
 import doudou.vo.type.PublishLevel;
 import doudou.vo.type.TodoType;
@@ -89,7 +89,7 @@ public class MessageService {
 	}
 	
 	/**
-	 * 查看单一事件
+	 * 查看单一消息
 	 * 
 	 * */
 	public Message getMessageById(int id) {
@@ -101,7 +101,7 @@ public class MessageService {
 	}
 	
 	/**
-	 * 添加单一事件
+	 * 添加单一消息
 	 * 
 	 * */
 	public int addMessage(Message message, List<Integer> childIdList, List<Integer> classIdList, int schoolId) {
@@ -118,18 +118,19 @@ public class MessageService {
 				messageClass.setSchoolId(schoolId);
 				messageClassDao.create(messageClass);
 			}
-			MessagePubTask task = new MessagePubTask();
+			MsgPublishTask task = new MsgPublishTask();
 			task.setMessage(message);
 			task.setTargetChildIdList(childIdList);
 			task.setTodoType(TodoType.NewMessage);
-			DoudouBackendService.getInstance().publishTask(task);
+			//Attention not service
+			DoudouBackend.getInstance().publishTask(task);
 		} 
 		return result;
 		
 	}
 	
 	/**
-	 * 更新单一事件
+	 * 更新单一消息
 	 * @param newMessage 新消息
 	 * @param oldMessage 原消息
 	 * @param newChildIdList 新添加的孩子id列表
@@ -189,43 +190,43 @@ public class MessageService {
 		if (contentDiff && addedChildIdList.size()==0 && removedChildIdList.size() == 0) {
 			result = 0;
 		} else if (contentDiff) {//内容一样，孩子列表发生变化
-			MessagePubTask task = new MessagePubTask();
+			MsgPublishTask task = new MsgPublishTask();
 			task.setMessage(newMessage);
 			task.setTargetChildIdList(addedChildIdList);
 			task.setTodoType(TodoType.NewMessage);
-			DoudouBackendService.getInstance().publishTask(task);
+			DoudouBackend.getInstance().publishTask(task);
 			
-			MessagePubTask delTask = new MessagePubTask();
+			MsgPublishTask delTask = new MsgPublishTask();
 			delTask.setMessage(newMessage);
 			delTask.setTargetChildIdList(removedChildIdList);
 			delTask.setTodoType(TodoType.DelMessage);
-			DoudouBackendService.getInstance().publishTask(task);
+			DoudouBackend.getInstance().publishTask(task);
 			result = messageDao.update(newMessage);
 		} else if (addedChildIdList.size()==0 && removedChildIdList.size() == 0) {//内容变化，孩子列表没变
-			MessagePubTask task = new MessagePubTask();
+			MsgPublishTask task = new MsgPublishTask();
 			task.setMessage(newMessage);
 			task.setTargetChildIdList(oldChildIdList);
 			task.setTodoType(TodoType.ModMessage);
-			DoudouBackendService.getInstance().publishTask(task);
+			DoudouBackend.getInstance().publishTask(task);
 			result = messageDao.update(newMessage);
 		} else {//都变化
-			MessagePubTask task = new MessagePubTask();
+			MsgPublishTask task = new MsgPublishTask();
 			task.setMessage(newMessage);
 			task.setTargetChildIdList(addedChildIdList);
 			task.setTodoType(TodoType.NewMessage);
-			DoudouBackendService.getInstance().publishTask(task);
+			DoudouBackend.getInstance().publishTask(task);
 			
-			MessagePubTask delTask = new MessagePubTask();
+			MsgPublishTask delTask = new MsgPublishTask();
 			delTask.setMessage(newMessage);
 			delTask.setTargetChildIdList(removedChildIdList);
 			delTask.setTodoType(TodoType.DelMessage);
-			DoudouBackendService.getInstance().publishTask(task);
+			DoudouBackend.getInstance().publishTask(task);
 			
-			MessagePubTask modTask = new MessagePubTask();
+			MsgPublishTask modTask = new MsgPublishTask();
 			modTask.setMessage(newMessage);
 			modTask.setTargetChildIdList(unChangedChildIdList);
 			modTask.setTodoType(TodoType.ModMessage);
-			DoudouBackendService.getInstance().publishTask(task);
+			DoudouBackend.getInstance().publishTask(task);
 			
 			result = messageDao.update(newMessage);
 		}

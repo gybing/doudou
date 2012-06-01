@@ -17,5 +17,10 @@ public class EventClassDaoImpl extends BaseEntityDao<EventClass, Integer> implem
 		return "EventClass";
 	}
 
+	@Override
+	public void updateECUnavailable(EventClass eventClass) {
+		update("updateECUnavailable",eventClass);
+	}
+
 	
 }

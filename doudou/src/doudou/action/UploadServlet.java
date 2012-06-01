@@ -21,7 +21,7 @@ import doudou.vo.Message;
 import doudou.vo.Picture;
 import doudou.vo.User;
 import doudou.vo.model.EvtPublishTask;
-import doudou.vo.model.MessagePubTask;
+import doudou.vo.model.MsgPublishTask;
 import doudou.vo.model.PicPublishTask;
 import doudou.vo.model.SessionData;
 import net.sf.json.JSONObject;
@@ -151,7 +151,7 @@ public class UploadServlet extends BaseServlet{
 		//TODO
 		//noti.setTitle(title)
 		
-		MessagePubTask task = new MessagePubTask();
+		MsgPublishTask task = new MsgPublishTask();
 		
 		task.setMessage(noti);
 		

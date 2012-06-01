@@ -71,6 +71,7 @@
                 publishLevel = #publishLevel#
             </isNotNull>
         </dynamic>
+        order by publishTime desc
         limit #offset#, #count#
     </select>
     
@@ -82,6 +83,7 @@
 	        </iterate> 
     		group by eventId
     	) and beginTime &lt;= #date# and endTime &gt;= #date#
+    	order by e.publishTime desc
     </select>
     
     <select id="getClassAllEventList" parameterClass="Map" resultClass="Event">
@@ -91,7 +93,9 @@
 	            #classIdList[]#
 	        </iterate> 
     		group by eventId
-    	) limit #offset#, #count#
+    	) 
+    	order by e.publishTime desc
+    	limit #offset#, #count#
     </select>
     
     <select id="queryClassEventList" parameterClass="Map" resultClass="Event">
@@ -110,12 +114,48 @@
                 publishLevel = #publishLevel#
             </isNotNull>
         </dynamic>
+        order by e.publishTime desc
     	limit #offset#, #count#
     </select>
     
     
     <select id="getFoundRows" resultClass="int" >
 		SELECT FOUND_ROWS()
+	</select>
+	
+	<update id="updateUnavailable" parameterClass="int">
+		update Event set available = FALSE
+		where id = #eventId#
+	</update>
+	
+	<select id="getNextEventForClass" parameterClass="map" resultClass="Event">
+		select e.* from Event as e where e.id in ( 
+    		select eventId from EventClass 
+    		where classId in 
+	    	<iterate property="classIdList" open="(" close=")" conjunction=",  ">
+	            #classIdList[]#
+	        </iterate> 
+    		group by eventId
+    	) 
+    	and e.available = TRUE
+    	and e.id &lt;= #currentEventId#
+    	order by e.publishTime desc
+    	limit 1
+	</select>
+	
+	<select id="getPreviousEventForClass" parameterClass="map" resultClass="Event">
+		select e.* from Event as e where e.id in ( 
+    		select eventId from EventClass 
+    		where classId in 
+	    	<iterate property="classIdList" open="(" close=")" conjunction=",  ">
+	            #classIdList[]#
+	        </iterate> 
+    		group by eventId
+    	) 
+    	and e.available = TRUE
+    	and e.id &gt;= #currentEventId#
+    	order by e.publishTime asc
+    	limit 1
 	</select>
     
 </sqlMap>
