@@ -131,5 +131,54 @@ public class MessageServlet extends BaseServlet {
 			response.getWriter().print("-1");
 		}
 	}
+	@RequestMapping("/updateMessage")
+	public void updateMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
+		String title = getStringParameter(request, "title", "");
+		String content = getStringParameter(request, "content", "");
+		int messageTypeId = getIntParameter(request, "messageType" , 0);
+		String atChildList = getStringParameter(request, "atChildList", "");
+		
+		int messageId = getIntParameter(request, "messageId", 0);
+		
+		Message oldMessage = messageService.getMessageById(messageId);
+		int result = 0;
+		//PublishLevel publishLevel = sessionData.getCurrentPublishLevel();
+		
+		//检查是否是自己发布的消息
+		if (oldMessage.getUserId() != sessionData.getUser().getId()) {
+			result = -1;
+		} else {
+			Message newMessage = new Message();
+			newMessage.setAtChildList(atChildList);
+			newMessage.setTitle(title);
+			newMessage.setContent(content);
+			newMessage.setMessageTypeId(messageTypeId);
+			newMessage.setUserId(sessionData.getUser().getId());
+			
+			List<Integer> newChildIdList = doudouService.getChildIdListFromString(atChildList);
+			List<Integer> newClassIdList = doudouService.getClassIdListFromChildIdList(newChildIdList);
+			result = messageService.updateMessage(newMessage , oldMessage, newChildIdList, newClassIdList , sessionData.getSchoolId());
+		}
+		
+		response.getWriter().print(result);
+	}
 	
+	@RequestMapping("getNextMessage")
+	public void getNextMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int messageId = getIntParameter(request, "messageId", 0);
+		
+		Message message = messageService.getNextMessage(messageId);
+		List<MessageUser> messageUserList = messageService.getListByMessageId(message.getId());
+		JSONObject jsonObj = JSONObject.fromObject(message);
+		jsonObj.accumulate("messageUserList",messageUserList);
+		
+		response.setContentType("text/x-json;charset=UTF-8");
+		response.getWriter().print(jsonObj);
+	}
+	
+	@RequestMapping("getPreviousMessage")
+	public void getPreviousMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
 }

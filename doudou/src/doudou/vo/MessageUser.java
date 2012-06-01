@@ -13,6 +13,7 @@ public class MessageUser implements Serializable {
 	private String feedbackContent; 
 	private String feedbackUser;
 	private boolean feedbackStatus;
+	private boolean available;
 	
 	// not related in db
 	private String childName;
@@ -71,6 +72,12 @@ public class MessageUser implements Serializable {
 	}
 	public void setChildName(String childName) {
 		this.childName = childName;
+	}
+	public boolean isAvailable() {
+		return available;
+	}
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	
 }

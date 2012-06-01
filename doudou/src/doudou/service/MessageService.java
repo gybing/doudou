@@ -14,6 +14,7 @@ import doudou.dao.DoudouInfoTypeDao;
 import doudou.dao.MessageClassDao;
 import doudou.dao.MessageDao;
 import doudou.dao.MessageUserDao;
+import doudou.util.DoudouUtil;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.vo.ListResult;
 import doudou.vo.DoudouInfoType;
@@ -25,6 +26,8 @@ import doudou.vo.SchoolClass;
 import doudou.vo.model.MessagePubTask;
 import doudou.vo.model.SessionData;
 import doudou.vo.type.PublishLevel;
+import doudou.vo.type.TodoType;
+import edu.emory.mathcs.backport.java.util.Collections;
 
 
 @Service
@@ -117,7 +120,8 @@ public class MessageService {
 			}
 			MessagePubTask task = new MessagePubTask();
 			task.setMessage(message);
-			task.setNewChildIdList(childIdList);
+			task.setTargetChildIdList(childIdList);
+			task.setTodoType(TodoType.NewMessage);
 			DoudouBackendService.getInstance().publishTask(task);
 		} 
 		return result;
@@ -126,19 +130,107 @@ public class MessageService {
 	
 	/**
 	 * 更新单一事件
-	 * @param addedChildIdList 新添加的孩子id列表
-	 * @param deletedChildIdList 删除的孩子id列表
+	 * @param newMessage 新消息
+	 * @param oldMessage 原消息
+	 * @param newChildIdList 新添加的孩子id列表
+	 * @param newClassIdList 新添加的班级id列表
+	 * @param schoolId 学校Id
 	 * 
 	 * */
-	public boolean updateMessage(SessionData sessionData, Message message, List<Integer> addedChildIdList , List<Integer> deletedChildIdList) {
-		//检查是否有权限 (是否为自己发的事件)
-		if (sessionData.getUser().getId() == message.getUserId()) {
-			
-			
-			return messageDao.update(message) > 0;
-		} else {
-			return false;
+	public int updateMessage(Message newMessage, Message oldMessage, List<Integer> newChildIdList , List<Integer> newClassIdList, int schoolId) {
+		boolean contentDiff = newMessage.getTitle().equals(oldMessage.getTitle()) 
+						&& newMessage.getContent().equals(oldMessage.getContent()) 
+						&& newMessage.getMessageTypeId() == oldMessage.getMessageTypeId();
+		List<Integer> oldChildIdList = DoudouUtil.getInstance().getChildIdListFromString(oldMessage.getAtChildList());
+		List<Integer> oldClassIdList = DoudouUtil.getInstance().getClassIdListFromChildIdList(oldChildIdList);
+		//新添加的孩子
+		List<Integer> addedChildIdList = new ArrayList<Integer>(newChildIdList.size());
+		Collections.copy(addedChildIdList, newChildIdList);
+		addedChildIdList.removeAll(oldChildIdList);
+
+		//删除的孩子
+		List<Integer> removedChildIdList = new ArrayList<Integer>(oldChildIdList.size());
+		Collections.copy(removedChildIdList, oldChildIdList);
+		addedChildIdList.removeAll(newChildIdList);
+
+		//未变的孩子
+		List<Integer> unChangedChildIdList = new ArrayList<Integer>(newChildIdList.size());
+		Collections.copy(unChangedChildIdList, newChildIdList);
+		addedChildIdList.retainAll(oldChildIdList);
+		
+		//新添加的班级
+		List<Integer> addedClassIdList = new ArrayList<Integer>(newClassIdList.size());
+		Collections.copy(addedClassIdList, newClassIdList);
+		addedClassIdList.removeAll(oldClassIdList);
+		// 保证发布者能查看到新添加的事件
+		for (Integer classId : addedClassIdList) {
+			MessageClass messageClass = new MessageClass();
+			messageClass.setClassId(classId);
+			messageClass.setMessageId(newMessage.getId());
+			messageClass.setSchoolId(schoolId);
+			messageClassDao.create(messageClass);
 		}
+		//删除的班级
+		List<Integer> removedClassIdList = new ArrayList<Integer>(oldClassIdList.size());
+		Collections.copy(removedClassIdList, oldClassIdList);
+		removedClassIdList.removeAll(newClassIdList);
+		// 保证发布者能查看bu到更改过的事件
+		for (Integer classId : removedClassIdList) {
+			MessageClass messageClass = new MessageClass();
+			messageClass.setClassId(classId);
+			messageClass.setMessageId(newMessage.getId());
+			messageClass.setSchoolId(schoolId);
+			messageClassDao.updateMCUnavailable(messageClass);
+		}
+		
+		int result = 0;
+		
+		//内容一样，孩子列表一样
+		if (contentDiff && addedChildIdList.size()==0 && removedChildIdList.size() == 0) {
+			result = 0;
+		} else if (contentDiff) {//内容一样，孩子列表发生变化
+			MessagePubTask task = new MessagePubTask();
+			task.setMessage(newMessage);
+			task.setTargetChildIdList(addedChildIdList);
+			task.setTodoType(TodoType.NewMessage);
+			DoudouBackendService.getInstance().publishTask(task);
+			
+			MessagePubTask delTask = new MessagePubTask();
+			delTask.setMessage(newMessage);
+			delTask.setTargetChildIdList(removedChildIdList);
+			delTask.setTodoType(TodoType.DelMessage);
+			DoudouBackendService.getInstance().publishTask(task);
+			result = messageDao.update(newMessage);
+		} else if (addedChildIdList.size()==0 && removedChildIdList.size() == 0) {//内容变化，孩子列表没变
+			MessagePubTask task = new MessagePubTask();
+			task.setMessage(newMessage);
+			task.setTargetChildIdList(oldChildIdList);
+			task.setTodoType(TodoType.ModMessage);
+			DoudouBackendService.getInstance().publishTask(task);
+			result = messageDao.update(newMessage);
+		} else {//都变化
+			MessagePubTask task = new MessagePubTask();
+			task.setMessage(newMessage);
+			task.setTargetChildIdList(addedChildIdList);
+			task.setTodoType(TodoType.NewMessage);
+			DoudouBackendService.getInstance().publishTask(task);
+			
+			MessagePubTask delTask = new MessagePubTask();
+			delTask.setMessage(newMessage);
+			delTask.setTargetChildIdList(removedChildIdList);
+			delTask.setTodoType(TodoType.DelMessage);
+			DoudouBackendService.getInstance().publishTask(task);
+			
+			MessagePubTask modTask = new MessagePubTask();
+			modTask.setMessage(newMessage);
+			modTask.setTargetChildIdList(unChangedChildIdList);
+			modTask.setTodoType(TodoType.ModMessage);
+			DoudouBackendService.getInstance().publishTask(task);
+			
+			result = messageDao.update(newMessage);
+		}
+
+		return result;
 	}
 	public List<DoudouInfoType> getMessageTypeList(int schoolId) {
 		return doudouInfoTypeDao.getMessageTypeBySchoolId(schoolId);
@@ -155,6 +247,13 @@ public class MessageService {
 			}
 			
 		}
+	}
+	
+	public Message getNextMessage(int messageId) {
+		return messageDao.getNextMessage(messageId);
+	}
+	public Message getPreviousMessage(int messageId) {
+		return messageDao.getPreviousMessage(messageId);
 	}
 	
 }

@@ -1,12 +1,14 @@
 package doudou.vo.model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
 import doudou.vo.Child;
 import doudou.vo.SchoolClass;
 
-public class TagedInfo {
+@SuppressWarnings("serial")
+public class TagedInfo implements Serializable{
 	private HashMap<SchoolClass, List<Child>> classChildMap;
 
 	public TagedInfo() {

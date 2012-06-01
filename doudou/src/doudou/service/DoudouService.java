@@ -12,6 +12,7 @@ import doudou.dao.ChildDao;
 import doudou.dao.DaoFactory;
 import doudou.dao.TeacherClassDao;
 import doudou.util.Constants;
+import doudou.util.DoudouUtil;
 import doudou.util.dao.DatabaseDao;
 import doudou.util.tool.Base64;
 import doudou.vo.Child;
@@ -72,19 +73,11 @@ public class DoudouService {
 	}
 	
 	public List<Integer> getChildIdListFromString(String idString) {
-		logger.info("Parse idString : " + idString);
-		String[] idArray = idString.split(",");
-		List<Integer> result = new ArrayList<Integer>();
-		for (String idS : idArray) {
-			result.add(Integer.parseInt(idS));
-		}
-		return result;
+		return DoudouUtil.getInstance().getChildIdListFromString(idString);
 	}
 	
 	public List<Integer> getClassIdListFromChildIdList(List<Integer> childIdList) {
-		List<Integer> classIdList = childDao.getClassIdListByChildIdList(childIdList);
-		logger.info(String.format("Get child class Id : %s",classIdList));
-		return classIdList;
+		return DoudouUtil.getInstance().getClassIdListFromChildIdList(childIdList);
 	}
 	
 }

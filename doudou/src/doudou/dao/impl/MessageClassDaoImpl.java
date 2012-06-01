@@ -16,5 +16,10 @@ public class MessageClassDaoImpl extends BaseEntityDao<MessageClass, Integer> im
 	public String getNamespace() {
 		return "MessageClass";
 	}
+
+	@Override
+	public void updateMCUnavailable(MessageClass messageClass) {
+		update("updateMCUnavailable",messageClass);
+	}
 	
 }

@@ -93,17 +93,25 @@ public class DoudouBackendService {
 		Message message = task.getMessage();
 		
 		APNSPushVO pushVO = new APNSPushVO();
-		pushVO.setTodoType(TodoType.NewMessage);
+		pushVO.setTodoType(task.getTodoType());
 		pushVO.setContentId(message.getId());
 		Set<Integer> relatedIdSet = new HashSet<Integer>();
 		Set<String> relatedEmailSet = new HashSet<String>();
 		
-		for (Integer childId : task.getNewChildIdList()) {
-			//插入班级和孩子对应信息
-			MessageUser mu = new MessageUser();
-			mu.setMessageId(message.getId());
-			mu.setToChildId(childId);
-			messageUserDao.create(mu);
+		for (Integer childId : task.getTargetChildIdList()) {
+			if (TodoType.isNewType(task.getTodoType())) {
+				//插入孩子对应信息
+				MessageUser mu = new MessageUser();
+				mu.setMessageId(message.getId());
+				mu.setToChildId(childId);
+				messageUserDao.create(mu);
+			}
+			else if (TodoType.isDelType(task.getTodoType())) {
+				MessageUser mu = new MessageUser();
+				mu.setMessageId(message.getId());
+				mu.setToChildId(childId);
+				messageUserDao.updateMUUnavailable(mu);
+			}
 
 			List<Parents> relatedParentsList = parentsDao.getParentsListByChildId(childId);
 			for (Parents parents : relatedParentsList) {
@@ -122,7 +130,7 @@ public class DoudouBackendService {
 			
 		// Email
 		EmailTask emailTask = new EmailTask();
-		emailTask.setTodoType(TodoType.NewMessage);
+		emailTask.setTodoType(task.getTodoType());
 		emailTask.setTo(relatedEmailSet.toArray(new String[0]));
 		emailTask.setFromUser(fromUser);
 		emailTask.setContent(message);

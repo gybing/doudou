@@ -31,7 +31,14 @@
     	select m.*,c.firstName as childName from MessageUser as m, Child as c
     	where m.messageId = #messageId#
     	and m.toChildId = c.id 
+    	and m.available = TRUE
     </select>
     
+    <update id="updateMUUnavailable" parameterClass="MessageUser">
+    	update MessageUser set available = FALSE 
+    	where
+    	messageId = #messageId#
+    	and toChildId = #toChildId#
+    </update>
     
 </sqlMap>

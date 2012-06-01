@@ -104,5 +104,15 @@ public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements M
 		ListResult<Message> result = new ListResult<Message>(messageList, counts);
 		return result;
 	}
+
+	@Override
+	public Message getNextMessage(int messageId) {
+		return null;
+	}
+
+	@Override
+	public Message getPreviousMessage(int messageId) {
+		return null;
+	}
 	
 }

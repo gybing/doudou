@@ -26,7 +26,7 @@
     </select>
     
     <select id="selectTeacherType" parameterClass="int" resultClass="DoudouInfoType">
-    	select * from DoudouInfoType where id = #teacherTypeId# and available = TRUE
+    	select * from DoudouInfoType where id = #teacherTypeId# and available = TRUE and infoType = 'TeacherType' 
     </select>
     
 <!--    <select id="getClassListByTeacherId" parameterClass="Integer" resultClass="int">-->

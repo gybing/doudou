@@ -7,4 +7,6 @@ import doudou.vo.MessageUser;
 
 public interface MessageUserDao extends EntityDao<MessageUser, Integer>{
 	List<MessageUser> getListByMessageId(int messageId);
+	void updateMUUnavailable(MessageUser messageUser);
+	
 }

@@ -120,6 +120,7 @@ public class APNSManager implements Runnable{
 	}
 	
 	private void push(APNSPushVO pushVO, List<String> deviceTokenList) {
+		logger.info(String.format("Push VO , todoType : %s", pushVO.getTodoType()));
 		switch (pushVO.getTodoType()) {
 		case Comment:
 			pushComment(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
@@ -133,6 +134,7 @@ public class APNSManager implements Runnable{
 		case NewMessage:
 			pushAnnouncement(pushVO.getContentId(),deviceTokenList, pushVO.getFromUser());
 		}
+		//TODO
 	}
 
 	@Override

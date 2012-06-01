@@ -7,11 +7,7 @@ import doudou.vo.type.TodoType;
 
 public abstract class PublishTask {
 	
-	private List<Integer> newChildIdList;
-	private List<Integer> oldChildIdList;
-	
-//	private List<Integer> newClassIdList;
-//	private List<Integer> oldClassIdList;
+	private List<Integer> targetChildIdList;
 	
 	private int schoolId;
 	private TodoType todoType;
@@ -23,21 +19,13 @@ public abstract class PublishTask {
 	public void setSchoolId(int schoolId) {
 		this.schoolId = schoolId;
 	}
-
-	public List<Integer> getNewChildIdList() {
-		return newChildIdList;
+	
+	public List<Integer> getTargetChildIdList() {
+		return targetChildIdList;
 	}
 
-	public void setNewChildIdList(List<Integer> newChildIdList) {
-		this.newChildIdList = newChildIdList;
-	}
-
-	public List<Integer> getOldChildIdList() {
-		return oldChildIdList;
-	}
-
-	public void setOldChildIdList(List<Integer> oldChildIdList) {
-		this.oldChildIdList = oldChildIdList;
+	public void setTargetChildIdList(List<Integer> targetChildIdList) {
+		this.targetChildIdList = targetChildIdList;
 	}
 
 	public TodoType getTodoType() {

@@ -23,5 +23,10 @@ public class MessageUserDaoImpl extends BaseEntityDao<MessageUser, Integer> impl
 	public List<MessageUser> getListByMessageId(int messageId) {
 		return reads("getListByMessageId",messageId);
 	}
+
+	@Override
+	public void updateMUUnavailable(MessageUser messageUser) {
+		update("updateMUUnavailable", messageUser);
+	}
 	
 }

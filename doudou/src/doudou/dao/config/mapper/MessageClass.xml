@@ -29,4 +29,11 @@
 	        </selectKey>
     </insert>
     
+    <update id="updateMCUnavailable" parameterClass="MessageClass">
+    	update MessageClass set available = FALSE 
+    	where
+    	messageId = #messageId#
+    	and classId = #classId#
+    </update>
+    
 </sqlMap>

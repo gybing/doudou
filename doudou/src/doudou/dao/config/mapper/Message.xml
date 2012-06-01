@@ -25,7 +25,7 @@
     </select>
 	
 	<select id="selectMessageType" parameterClass="int" resultClass="DoudouInfoType">
-    	select * from DoudouInfoType where id = #messageTypeId# and available = TRUE
+    	select * from DoudouInfoType where id = #messageTypeId# and available = TRUE and infoType = 'MessageType'
     </select>
    
     <insert id="create" parameterClass="Message">

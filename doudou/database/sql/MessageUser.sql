@@ -10,6 +10,7 @@ CREATE TABLE MessageUser
 	feedbackContent		 VARCHAR(100) NOT NULL DEFAULT '',
 	feedbackUser		 VARCHAR(20) NOT NULL DEFAULT '',
 	feedbackStatus		 BOOLEAN NOT NULL DEFAULT FALSE,
+	available			 BOOLEAN NOT NULL DEFAULT TRUE,
 	
     PRIMARY KEY (id),
     index idx_mu_toChildId(toChildId)

@@ -13,4 +13,20 @@ public enum TodoType {
 			return false;
 		}
 	}
+	
+	public static boolean isModType(TodoType type) {
+		if (null != type && type.name().startsWith("Mod")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public static boolean isDelType(TodoType type) {
+		if (null != type && type.name().startsWith("Del")) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
