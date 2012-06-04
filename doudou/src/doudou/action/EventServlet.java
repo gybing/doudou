@@ -108,6 +108,14 @@ public class EventServlet extends BaseServlet{
 	public void deleteEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int eventId = getIntParameter(request, "eventId", 0);
 		eventService.deleteEvent(eventId);
+		
+		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
+		//获取下一条
+		Event event = eventService.getNextEvent(sessionData, eventId);
+		JSONObject jsonObj = JSONObject.fromObject(event);
+		
+		response.setContentType("text/x-json;charset=UTF-8");
+		response.getWriter().print(jsonObj);
 	}
 	
 	@RequestMapping("/updateEvent")
