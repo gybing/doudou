@@ -1,5 +1,6 @@
 package doudou.dao.impl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -28,9 +29,13 @@ public class ChildDaoImpl extends BaseEntityDao<Child, Integer> implements
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Integer> getClassIdListByChildIdList(List<Integer> childIdList) {
-		HashMap<String, Object> conditions = new HashMap<String, Object>();
-		conditions.put("childIdList", childIdList);
-		return readObjects("getClassIdListByChildIdList", conditions);
+		if (childIdList.size() > 0) {
+			HashMap<String, Object> conditions = new HashMap<String, Object>();
+			conditions.put("childIdList", childIdList);
+			return readObjects("getClassIdListByChildIdList", conditions);
+		} else {
+			return new ArrayList<Integer>();
+		}
 	}
 
 	

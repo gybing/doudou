@@ -15,11 +15,9 @@ public class MyDatabaseDao extends BaseDatabaseDao {
 	
 	public MyDatabaseDao(DatabaseClient client){
 		super(client);
-		entities.put(PictureDao.class, new PictureDaoImpl(this));
 		entities.put(UserDao.class, new UserDaoImpl(this));
 		entities.put(ChildDao.class, new ChildDaoImpl(this));
 		entities.put(EventDao.class, new EventDaoImpl(this));
-		entities.put(PictureUserDao.class, new PictureUserDaoImpl(this));
 		entities.put(ParentsDao.class, new ParentsDaoImpl(this));
 		entities.put(TodoDao.class, new TodoDaoImpl(this));
 		entities.put(DeviceTokenDao.class, new DeviceTokenDaoImpl(this));
@@ -34,6 +32,9 @@ public class MyDatabaseDao extends BaseDatabaseDao {
 		entities.put(MessageClassDao.class, new MessageClassDaoImpl(this));
 		entities.put(EventClassDao.class, new EventClassDaoImpl(this));
 		entities.put(MessageUserDao.class, new MessageUserDaoImpl(this));
+		entities.put(PictureDao.class, new PictureDaoImpl(this));
+		entities.put(PictureUserDao.class, new PictureUserDaoImpl(this));
+		entities.put(PictureClassDao.class, new PictureClassDaoImpl(this));
 	}
 
 	@SuppressWarnings("unchecked")

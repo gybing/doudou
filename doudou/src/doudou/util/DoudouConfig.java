@@ -36,7 +36,7 @@ public class DoudouConfig {
     }
     
     public String getUploadImgPath() {
-    	return cmnProp.getValueAsString("UploadImgPath");
+    	return getServerPath() + getUploadPath();
     }
     
     public String getICSFilePath() {
@@ -45,6 +45,14 @@ public class DoudouConfig {
     
     public boolean getEmailFuncSwitch() {
     	return cmnProp.getValueAsBool("EmailFuncSwitch");
+    }
+    
+    public String getServerPath() {
+    	return cmnProp.getValueAsString("ServerPath");
+    }
+    
+    public String getUploadPath() {
+    	return cmnProp.getValueAsString("UploadPath");
     }
    
 }

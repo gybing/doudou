@@ -30,8 +30,12 @@ public class DoudouUtil {
 	
 	public List<Integer> getChildIdListFromString(String idString) {
 		logger.info("Parse idString : " + idString);
+		if (null == idString || idString.isEmpty()) {
+			return new ArrayList<Integer>();
+		}
 		String[] idArray = idString.split(",");
 		List<Integer> result = new ArrayList<Integer>();
+		
 		for (String idS : idArray) {
 			result.add(Integer.parseInt(idS));
 		}

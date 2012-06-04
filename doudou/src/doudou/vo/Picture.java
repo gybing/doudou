@@ -3,7 +3,6 @@ package doudou.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-import doudou.util.tool.DateUtil;
 import doudou.vo.type.PublishLevel;
 
 @SuppressWarnings("serial")
@@ -17,11 +16,9 @@ public class Picture implements Serializable {
 	private String description;
 	private String atChildList;
 	private PublishLevel publishLevel;
+	
 	// not related column in db
 	private String userName;
-	private String pushType;
-	private String publishTimeString;
-	private String pictureSmallURL;
 	
 	public int getId() {
 		return id;
@@ -65,9 +62,6 @@ public class Picture implements Serializable {
 		return result.toString();
 	}
 	
-	public String getPublishTimeString() {
-		return DateUtil.getInstance().toFullString(publishTime);
-	}
 	public String getAtChildList() {
 		return atChildList;
 	}
@@ -80,8 +74,11 @@ public class Picture implements Serializable {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getPushType() {
-		return "PicTag";
+	public PublishLevel getPublishLevel() {
+		return publishLevel;
+	}
+	public void setPublishLevel(PublishLevel publishLevel) {
+		this.publishLevel = publishLevel;
 	}
 	
 }
