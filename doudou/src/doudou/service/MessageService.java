@@ -237,8 +237,8 @@ public class MessageService {
 	/**
 	 * 删除消息
 	 * */
-	public void deleteMessage(int messageId) {
-		messageDao.updateUnavailable(messageId);
+	public boolean deleteMessage(int messageId) {
+		return messageDao.updateUnavailable(messageId);
 	}
 	public List<DoudouInfoType> getMessageTypeList(int schoolId) {
 		return doudouInfoTypeDao.getMessageTypeBySchoolId(schoolId);

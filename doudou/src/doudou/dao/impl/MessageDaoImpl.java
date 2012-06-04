@@ -136,8 +136,8 @@ public class MessageDaoImpl extends BaseEntityDao<Message, Integer> implements M
 	}
 
 	@Override
-	public void updateUnavailable(int messageId) {
-		update("updateUnavailable",messageId);
+	public boolean updateUnavailable(int messageId) {
+		return update("updateUnavailable",messageId) > 0;
 	}
 	
 }

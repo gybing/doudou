@@ -22,7 +22,7 @@ public interface MessageDao extends EntityDao<Message, Integer>{
 	ListResult<Message> queryClassMessageList(List<Integer> classIdList, int offset, int count,
 			String title, PublishLevel publishLevel, Date beginTime, Date endTime, boolean mustFeedBack, int userId);
 
-	void updateUnavailable(int messageId);
+	boolean updateUnavailable(int messageId);
 	
 	Message getNextMessage(List<Integer> classIdList,int currentMessageId);
 	Message getPreviousMessage(List<Integer> classIdList,int currentMessageId);

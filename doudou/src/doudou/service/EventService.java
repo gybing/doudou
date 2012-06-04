@@ -137,8 +137,8 @@ public class EventService {
 	/**
 	 * 删除事件
 	 * */
-	public void deleteEvent(int eventId) {
-		eventDao.updateUnavailable(eventId);
+	public boolean deleteEvent(int eventId) {
+		return eventDao.updateUnavailable(eventId);
 	}
 	
 	/**

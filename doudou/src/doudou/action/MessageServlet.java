@@ -134,17 +134,21 @@ public class MessageServlet extends BaseServlet {
 	@RequestMapping("/deleteMessage")
 	public void deleteMessage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int messageId = getIntParameter(request, "messageId", 0);
-		messageService.deleteMessage(messageId);
 		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
+
+		if (messageService.deleteMessage(messageId)) {
+			//获取下一条消息
+			Message message = messageService.getNextMessage(sessionData, messageId);
+			List<MessageUser> messageUserList = messageService.getListByMessageId(message.getId());
+			JSONObject jsonObj = JSONObject.fromObject(message);
+			jsonObj.accumulate("messageUserList",messageUserList);
+			
+			response.setContentType("text/x-json;charset=UTF-8");
+			response.getWriter().print(jsonObj);			
+		} else {
+			response.getWriter().print("Failure");
+		}
 		
-		//获取下一条消息
-		Message message = messageService.getNextMessage(sessionData, messageId);
-		List<MessageUser> messageUserList = messageService.getListByMessageId(message.getId());
-		JSONObject jsonObj = JSONObject.fromObject(message);
-		jsonObj.accumulate("messageUserList",messageUserList);
-		
-		response.setContentType("text/x-json;charset=UTF-8");
-		response.getWriter().print(jsonObj);
 	}
 	
 	@RequestMapping("/updateMessage")

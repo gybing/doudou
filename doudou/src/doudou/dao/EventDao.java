@@ -16,7 +16,7 @@ public interface EventDao extends EntityDao<Event, Integer>{
 	
 	ListResult<Event> queryClassEventList(List<Integer> classIdList, String title, PublishLevel publishLevel, int offset, int count);
 	
-	void updateUnavailable(int eventId);
+	boolean updateUnavailable(int eventId);
 	
 	Event getNextEvent(List<Integer> classIdList,int currentEventId);
 	Event getPreviousEvent(List<Integer> classIdList,int currentEventId);

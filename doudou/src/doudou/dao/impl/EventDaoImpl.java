@@ -67,8 +67,8 @@ public class EventDaoImpl extends BaseEntityDao<Event, Integer> implements Event
 	}
 
 	@Override
-	public void updateUnavailable(int eventId) {
-		update("updateUnavailable",eventId);
+	public boolean updateUnavailable(int eventId) {
+		return update("updateUnavailable",eventId) > 0;
 	}
 	
 	/**
