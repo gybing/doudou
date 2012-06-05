@@ -22,4 +22,9 @@ i = i-1
 }
 }
 }
-window.attachEvent("onload", correctPNG);
+if(window.XMLHttpRequest){
+	window.addEventListener("onload", correctPNG);
+}
+else if(window.ActiveXObject){
+	window.attachEvent("onload", correctPNG);
+}

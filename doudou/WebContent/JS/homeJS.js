@@ -92,3 +92,6 @@ function start_onMouseMove(){
 function start_onMouseOut(){
 	document.getElementById("startBtnID").src = "img/startBtn.png";
 }
+function navAccount_onClick(){
+	document.getElementById("AccountSubmenu").style.display = "block";
+}
