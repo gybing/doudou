@@ -181,6 +181,17 @@ public class EventServlet extends BaseServlet{
 		response.setContentType("text/x-json;charset=UTF-8");
 		response.getWriter().print(jsonObj);
 	}
+	
+	@RequestMapping("getEventById")
+	public void getEventById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int eventId = getIntParameter(request, "eventId", 0);
+		
+		Event event = eventService.getEventById(eventId);
+		JSONObject jsonObj = JSONObject.fromObject(event);
+		
+		response.setContentType("text/x-json;charset=UTF-8");
+		response.getWriter().print(jsonObj);
+	}
 
 
 }

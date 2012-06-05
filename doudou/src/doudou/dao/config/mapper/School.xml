@@ -29,4 +29,8 @@
         limit 1
     </select>
     
+    <select id="getSchoolList" resultClass="School">
+    	select * from School
+    </select>
+    
 </sqlMap>

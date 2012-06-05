@@ -1,5 +1,7 @@
 package doudou.dao.impl;
 
+import java.util.List;
+
 import doudou.dao.SchoolDao;
 import doudou.util.dao.BaseEntityDao;
 import doudou.util.dao.DatabaseDao;
@@ -15,6 +17,11 @@ public class SchoolDaoImpl extends BaseEntityDao<School, Integer> implements Sch
 	@Override
 	public String getNamespace() {
 		return "School";
+	}
+
+	@Override
+	public List<School> getSchoolList() {
+		return reads("getSchoolList",null);
 	}
 
 }
