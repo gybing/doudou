@@ -127,7 +127,7 @@ month = month < 10 ? ("0" + month) : month;
 var day = now.getDate();
 day = day < 10 ? ("0" + day) : day;
 var today = year + "-" + month + "-" + day;
-var perPageCount = 10;   //分页每页数量
+var perPageCount = 5;   //分页每页数量
 
 Array.prototype.del=function(n) {
 	if(n<0)
@@ -150,6 +150,7 @@ function searchEventByTitle(){
 	          data:{title:title, publishLevel:publishLevel},
 			  dataType: "json",
 			  success: function(data) {
+				   $(".event-list").empty();
 				   var total = Math.ceil(data.size/perPageCount);//总页数
 				   
 				   PageClick = function (pageclickednumber) {
@@ -172,11 +173,15 @@ function searchEventByTitle(){
                             htmlStr += "</div></div></div>";
                             $(".event-list").append(htmlStr);
                     	}
-
                     }
                 });
                };
-			      PageClick(1);
+               if(total > 0){
+            	   PageClick(1);
+               }
+               else{
+            	   $("#pager").empty();
+               }
              }
 	});
 
@@ -215,6 +220,7 @@ function searchEventAll(){
 			  url: "../Event/getAllEvent.do",
 			  dataType: "json",
 			  success: function(data) {
+				  $(".event-list").empty();
 				  var total = Math.ceil(data.size/perPageCount);//总页数
 				   
 				   PageClick = function (pageclickednumber) {
@@ -222,7 +228,8 @@ function searchEventAll(){
                 $.ajax({
                     url: "../Event/getAllEvent.do",
                     type: "post",
-                    data: { pageindex: pageclickednumber, perPageCount:perPageCount },
+                    data: { pageIndex: pageclickednumber, perPageCount:perPageCount },
+                    dataType: "json",
                     success: function (data) {
                     	$(".event-list").empty();
                     	for(var i in data.entities){
@@ -239,7 +246,12 @@ function searchEventAll(){
                     }
                 });
                };
-			      PageClick(1);
+               if(total > 0){
+            	   PageClick(1);
+               }
+               else{
+            	   $("#pager").empty();
+               }
               }
 	});
 }

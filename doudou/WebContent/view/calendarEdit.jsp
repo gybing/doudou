@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -80,10 +81,13 @@
 						<li>
 						<input type="hidden" id="id_mod" name="eventId" />
 						<select id="atChildList_mod" multiple="multiple">
-						   <option value="1">option1</option>
-						   <option value="2">option2</option>
-						   <option value="3">option3</option>
-						   <option value="4">option4</option>
+						   <c:forEach var="entry" items="${SessionData.tagedInfoMap}" varStatus="theCount">
+							<c:forEach var="ccEntry" items="${entry.value.classChildMap}">
+							   <c:forEach var="child" items="${ccEntry.value}">
+							   		<option value="${child.id}">${child.firstName}</option>
+							   </c:forEach>
+							</c:forEach>
+						   </c:forEach>
 						</select>
 						<input type="hidden" id="atChildList" name="atChildList"/>
 						</li>
