@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -83,7 +84,7 @@ public class EventServlet extends BaseServlet{
 		Date date = DateUtil.getInstance().getDateFromString(dateString);
 		List<Event> result = eventService.getClassEventListByDate(sessionData, date);
 		
-		JSONObject jsonObj = JSONObject.fromObject(result);
+		JSONArray jsonObj = JSONArray.fromObject(result);
 		response.setContentType("text/x-json;charset=UTF-8");           
 		response.getWriter().print(jsonObj);
 	}
