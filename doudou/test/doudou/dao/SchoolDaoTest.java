@@ -17,8 +17,8 @@ public class SchoolDaoTest extends TestCase {
 		
 	public void testAddSchool() {
 		School s = new School();
-		s.setSchoolName("测试学校Doudou");
-		s.setSuffix("DoudouT");
+		s.setSchoolName("测试学校Mayaya");
+		s.setSuffix("Mayaya");
 		s.setCityId(1);
 		schoolDao.create(s);
 	}

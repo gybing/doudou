@@ -21,14 +21,13 @@ import doudou.util.BaseServlet;
 import doudou.util.tool.DateUtil;
 import doudou.util.vo.ListResult;
 import doudou.vo.Event;
-import doudou.vo.EventUser;
 import doudou.vo.model.SessionData;
 import doudou.vo.type.PublishLevel;
 
 @Controller
 @RequestMapping("/Event")
 public class EventServlet extends BaseServlet{
-	
+
 	@Autowired
 	EventService eventService;
 	@Autowired
@@ -72,7 +71,7 @@ public class EventServlet extends BaseServlet{
 		int offset = (pageIndex-1)*count;
 		ListResult<Event> result = eventService.getClassAllEventList(sessionData, offset, count);
 		
-		JSONObject jsonObj = JSONObject.fromObject(result);
+		JSONArray jsonObj = JSONArray.fromObject(result);
 		response.setContentType("text/x-json;charset=UTF-8");           
 		response.getWriter().print(jsonObj);
 	}
@@ -140,7 +139,7 @@ public class EventServlet extends BaseServlet{
 		int result = 0;
 		//PublishLevel publishLevel = sessionData.getCurrentPublishLevel();
 		
-		//����Ƿ����Լ�����������
+		//检查是否是自己发布的日历
 		if (oldEvent.getUserId() != sessionData.getUser().getId()) {
 			result = -1;
 		} else {
