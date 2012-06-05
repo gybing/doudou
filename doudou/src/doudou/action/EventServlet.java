@@ -27,7 +27,7 @@ import doudou.vo.type.PublishLevel;
 @Controller
 @RequestMapping("/Event")
 public class EventServlet extends BaseServlet{
-
+	
 	@Autowired
 	EventService eventService;
 	@Autowired
@@ -38,7 +38,7 @@ public class EventServlet extends BaseServlet{
 		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		String atChildList = getStringParameter(request, "atChildList", "");
         String title = getStringParameter(request, "title", "");
-        String location = getStringParameter(request, "location", "");
+        String location = getStringParameter(request, "locale", "");
         String beginTime = getStringParameter(request, "beginTime", "");
         String endTime = getStringParameter(request, "endTime", "");
         boolean allday = getBoolParameter(request, "allday", false);
@@ -127,7 +127,7 @@ public class EventServlet extends BaseServlet{
 		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		String atChildList = getStringParameter(request, "atChildList", "");
         String title = getStringParameter(request, "title", "");
-        String location = getStringParameter(request, "location", "");
+        String location = getStringParameter(request, "locale", "");
         String beginTime = getStringParameter(request, "beginTime", "");
         String endTime = getStringParameter(request, "endTime", "");
         boolean allday = getBoolParameter(request, "allday", false);
@@ -139,7 +139,7 @@ public class EventServlet extends BaseServlet{
 		int result = 0;
 		//PublishLevel publishLevel = sessionData.getCurrentPublishLevel();
 		
-		//检查是否是自己发布的日历
+		//����Ƿ����Լ�����������
 		if (oldEvent.getUserId() != sessionData.getUser().getId()) {
 			result = -1;
 		} else {
