@@ -32,7 +32,7 @@ $(document).ready(function(){
   $("#atChildList_add").bind("multiselectclick", function(event, ui){
 	  if(ui.checked){
 		  var htmlStr = "<li id='" +ui.value+ "'>"+ui.text+"</li>";
-		  $("#2").append(htmlStr);
+		  $("#childlist2").append(htmlStr);
 	  }
 	  else{
 		  $("li#"+ui.value).remove();
@@ -92,10 +92,11 @@ function delEventItem(){
 		url: "../Event/deleteEvent.do",
 		data: { eventId: id },
 		dataType: "json",
-		succcess: function(data){
+		success: function(data){
+			$("#event-item-id").val(data.id);
 			$("#event-item-title").text(data.title);
 			$("#event-item-location").text(data.location);
-			$("#event-item-time").text(data.beginTime+" - "+data.endTime);
+			$("#event-item-time").text(data.beginTimeString+" - "+data.endTimeString);
 			if(data.allday==true){
 				$("#event-item-allday").text("全天事件");
 			}
@@ -104,10 +105,10 @@ function delEventItem(){
 			}
 			$("#event-item-content").text(data.content);
 			if(data.publishLevel=="School"){
-				$("#event-item-allday").text("校日历");
+				$("#event-item-caltype").text("校日历");
 			}
 			else{
-				$("#event-item-allday").text("班日历");
+				$("#event-item-caltype").text("班日历");
 			}
 		}
 	});
@@ -120,10 +121,11 @@ function preEventItem(){
 		url: "../Event/getPreviousEvent.do",
 		data: { eventId: id },
 		dataType: "json",
-		succcess: function(data){
+		success: function(data){
+			$("#event-item-id").val(data.id);
 			$("#event-item-title").text(data.title);
 			$("#event-item-location").text(data.location);
-			$("#event-item-time").text(data.beginTime+" - "+data.endTime);
+			$("#event-item-time").text(data.beginTimeString+" -- "+data.endTimeString);
 			if(data.allday==true){
 				$("#event-item-allday").text("全天事件");
 			}
@@ -132,10 +134,10 @@ function preEventItem(){
 			}
 			$("#event-item-content").text(data.content);
 			if(data.publishLevel=="School"){
-				$("#event-item-allday").text("校日历");
+				$("#event-item-caltype").text("校日历");
 			}
 			else{
-				$("#event-item-allday").text("班日历");
+				$("#event-item-caltype").text("班日历");
 			}
 		}
 	});
@@ -148,10 +150,11 @@ function nextEventItem(){
 		url: "../Event/getNextEvent.do",
 		data: { eventId: id },
 		dataType: "json",
-		succcess: function(data){
+		success: function(data){
+			$("#event-item-id").val(data.id);
 			$("#event-item-title").text(data.title);
 			$("#event-item-location").text(data.location);
-			$("#event-item-time").text(data.beginTime+" - "+data.endTime);
+			$("#event-item-time").text(data.beginTimeString+" -- "+data.endTimeString);
 			if(data.allday==true){
 				$("#event-item-allday").text("全天事件");
 			}
@@ -160,10 +163,10 @@ function nextEventItem(){
 			}
 			$("#event-item-content").text(data.content);
 			if(data.publishLevel=="School"){
-				$("#event-item-allday").text("校日历");
+				$("#event-item-caltype").text("校日历");
 			}
 			else{
-				$("#event-item-allday").text("班日历");
+				$("#event-item-caltype").text("班日历");
 			}
 		}
 	});

@@ -42,12 +42,13 @@ $(document).ready(function(){
 					type: "POST", 
 					success: function(data, textStatus, jqXHR) {
 						if(data>0){
+							alert("提交成功");
 							$(".NewMesLightBox").css("display","none");
-							$("#datepicker").datepicker( "setDate" , beginTime.substr(0,10) );
-							searchEventByDate( beginTime.substr(0,10) );
+							$("#datepicker").datepicker( "setDate" , null );
+							searchEventAll();
 						}
 						else{
-							$("#error").text("提交失败，请重新提交");
+							$("#error").html("<label class='error'>提交失败，请重新提交</label>");
 						}
 	              },
 					resetForm: true
@@ -116,7 +117,7 @@ $(document).ready(function(){
   );
 
 //查询今天日历事件
-  //searchEventByDate(today);
+  searchEventByDate(today);
 
 });
 

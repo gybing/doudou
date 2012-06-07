@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="doudou.vo.Event" %>     
+<%@ page import="doudou.vo.Event" %>   
+<%@ page import="java.util.*" %>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -30,6 +31,8 @@
 </head>
 <%
 Event eventItem = (Event)request.getAttribute("eventItem");
+String[] childs = eventItem.getAtChildList().split(",");
+List<String> childList =  Arrays.asList(childs);
 %>
 <body>
 	<script type="text/javascript " src="../JS/png.js"></script>
@@ -87,7 +90,9 @@ Event eventItem = (Event)request.getAttribute("eventItem");
 						   <c:forEach var="entry" items="${SessionData.tagedInfoMap}" varStatus="theCount">
 							<c:forEach var="ccEntry" items="${entry.value.classChildMap}">
 							   <c:forEach var="child" items="${ccEntry.value}">
-							   		<option value="${child.id}">${child.firstName}</option>
+							        <c:set var="childId" scope="page" value="${child.id}"/>
+							        <%String childId = ((Integer)pageContext.getAttribute("childId")).toString();%>
+							   		<option value="${child.id}" <%if(childList.contains(childId)){out.print("selected");} %> >${child.firstName}</option>
 							   </c:forEach>
 							</c:forEach>
 						   </c:forEach>

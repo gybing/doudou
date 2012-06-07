@@ -35,7 +35,7 @@ $(document).ready(function(){
 		    },
 
 		    submitHandler:function(form){
-		    	//var beginTime = form.beginTime.value;
+		    	var eventId = form.eventId.value;
 		    	//alert($(form).find('[name=beginTime]').val());
 		    	$(form).ajaxSubmit({
 					url: "../Event/updateEvent.do",
@@ -43,9 +43,10 @@ $(document).ready(function(){
 					success: function(data, textStatus, jqXHR) {
 						if(data>0){
 							alert("修改成功");
+							window.location.href="../Event/getEventById.do?eventId="+eventId;
 						}
 						else{
-							$("#error").text("提交失败，请重新提交");
+							$("#error").html("<label class='error'>提交失败，请重新提交</label>");
 						}
 	              },
 					resetForm: true
@@ -78,20 +79,4 @@ $(document).ready(function(){
   });
 
 });
-
-function setEventModForm(){
-	var index = $("#event-item-detail").data("index");
-
-	$("#id_mod").val( idArray[index] );
-	$("#atChildList_mod").val(eventObject.atChildList);
-	$("#title_mod").val(eventObject.atChildList);
-	$("#location_mod").val(eventObject.locael);
-	$("#beginTime_mod").val(eventObject.beginTime);
-	$("#endTime_mod").val(eventObject.endTime);
-	$("input:radio[name='allday_mod']").val(eventObject.allday);
-	$("#content_mod").val(eventObject.content);
-
-	$("#event-item-detail").css("display","none");
-    $("#event-mod-detail").css("display","block");
-}
 

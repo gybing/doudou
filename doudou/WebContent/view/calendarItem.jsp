@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>  
 <%@ page import="doudou.vo.Event" %> 
+<%@ page import="java.util.*" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,6 +26,8 @@
 </head>
 <%
 Event eventItem = (Event)request.getAttribute("eventItem");
+String[] childs = eventItem.getAtChildList().split(",");
+List<String> childList =  Arrays.asList(childs);
 %>
 <body>
 	<script type="text/javascript " src="../JS/png.js"></script>
@@ -89,7 +93,7 @@ Event eventItem = (Event)request.getAttribute("eventItem");
 				  		<span><img src="../img/locationLabel.png" /></span><span id="event-item-location"><%=eventItem.getLocation() %></span>
 				  	</li>
 				  	<li id="time-div">
-				  		<span><img src="../img/dateLabel.png" /></span><span id="event-item-time"><%=eventItem.getBeginTimeString() %>--<%=eventItem.getEndTimeString() %></span>
+				  		<span><img src="../img/dateLabel.png" /></span><span id="event-item-time"><%=eventItem.getBeginTimeString() %> -- <%=eventItem.getEndTimeString() %></span>
 				  	</li>
 				  	<li id="allday-div">
 				  		<span><img src="../img/clockLabel.png" /></span>
@@ -124,22 +128,29 @@ Event eventItem = (Event)request.getAttribute("eventItem");
 
 		<div class="right">
 			<!--select kids-->
-			<div>谁收到了这个信息</div>
-			<div class="">
-			   <ul id="1">
-			     <li>1111</li>
-			     <li>2222</li>
-			     <li>3333</li>
+			<div style="color:black;">谁收到了这个信息</div>
+			<div class="childlistAdd">
+			   <ul id="childlist1">
+			         <%for(int i=0;i<childList.size();++i) {
+			        	 out.print("<li>"+childList.get(i)+"</li>");
+			         }%>
 			   </ul>
-			   <ul id="2">
+			   <ul id="childlist2">
 			   </ul>
 			</div>
 			<div>
 			<select id="atChildList_add" multiple="multiple">
-						   <option value="1">option1</option>
-						   <option value="2">option2</option>
-						   <option value="3">option3</option>
-						   <option value="4">option4</option>
+						   <c:forEach var="entry" items="${SessionData.tagedInfoMap}" varStatus="theCount">
+							<c:forEach var="ccEntry" items="${entry.value.classChildMap}">
+							   <c:forEach var="child" items="${ccEntry.value}">
+							        <c:set var="childId" scope="page" value="${child.id}"/>
+							        <%String childId = ((Integer)pageContext.getAttribute("childId")).toString();%>
+							        <%if(!childList.contains(childId)){ %>
+							   		<option value="${child.id}" >${child.firstName}</option>
+							   		<%} %>
+							   </c:forEach>
+							</c:forEach>
+						   </c:forEach>
 			</select>
 			</div>
 			
