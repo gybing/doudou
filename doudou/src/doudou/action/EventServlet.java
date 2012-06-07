@@ -71,7 +71,7 @@ public class EventServlet extends BaseServlet{
 		int offset = (pageIndex-1)*count;
 		ListResult<Event> result = eventService.getClassAllEventList(sessionData, offset, count);
 		
-		JSONArray jsonObj = JSONArray.fromObject(result);
+		JSONObject jsonObj = JSONObject.fromObject(result);
 		response.setContentType("text/x-json;charset=UTF-8");           
 		response.getWriter().print(jsonObj);
 	}
@@ -186,11 +186,25 @@ public class EventServlet extends BaseServlet{
 		int eventId = getIntParameter(request, "eventId", 0);
 		
 		Event event = eventService.getEventById(eventId);
-		JSONObject jsonObj = JSONObject.fromObject(event);
+		request.setAttribute("eventItem", event);
+		doForward(request,response,"../view/calendarItem.jsp");
+		//JSONObject jsonObj = JSONObject.fromObject(event);
 		
-		response.setContentType("text/x-json;charset=UTF-8");
-		response.getWriter().print(jsonObj);
+		//response.setContentType("text/x-json;charset=UTF-8");
+		//response.getWriter().print(jsonObj);
 	}
 
+	@RequestMapping("modEventById")
+	public void modEventById(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int eventId = getIntParameter(request, "eventId", 0);
+		
+		Event event = eventService.getEventById(eventId);
+		request.setAttribute("eventItem", event);
+		doForward(request,response,"../view/calendarEdit.jsp");
+		//JSONObject jsonObj = JSONObject.fromObject(event);
+		
+		//response.setContentType("text/x-json;charset=UTF-8");
+		//response.getWriter().print(jsonObj);
+	}
 
 }
