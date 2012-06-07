@@ -9,6 +9,7 @@ CREATE TABLE Picture
     description			 VARCHAR(255) NOT NULL DEFAULT '',
     publishLevel		 enum('School', 'Class') NOT NULL DEFAULT 'School',
     atChildList			 TEXT NOT NULL,
+    available			 BOOL NOT NULL DEFAULT FALSE,
     
     PRIMARY KEY (id),
     key idx_picture_query(publishTime,userId)
