@@ -16,6 +16,7 @@ public class Picture implements Serializable {
 	private String description;
 	private String atChildList;
 	private PublishLevel publishLevel;
+	private boolean available;
 	
 	// not related column in db
 	private String userName;
@@ -79,6 +80,13 @@ public class Picture implements Serializable {
 	}
 	public void setPublishLevel(PublishLevel publishLevel) {
 		this.publishLevel = publishLevel;
+	}
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	
 }

@@ -20,6 +20,7 @@ public class Event implements Serializable {
 	private Date publishTime;
 	private boolean allday;
 	private PublishLevel publishLevel;
+	private boolean available;
 	
 	// not related 
 	private String userName;
@@ -132,6 +133,14 @@ public class Event implements Serializable {
 
 	public void setPublishLevel(PublishLevel publishLevel) {
 		this.publishLevel = publishLevel;
+	}
+	
+	public boolean isAvailable() {
+		return available;
+	}
+
+	public void setAvailable(boolean available) {
+		this.available = available;
 	}
 	
 }
