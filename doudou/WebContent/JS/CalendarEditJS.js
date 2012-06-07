@@ -73,55 +73,11 @@ $(document).ready(function(){
   
   $("#cancelMod").bind({
 	  "click": function(){
-		  window.location.href="xxx.do?id="+$("#id_mod").val();
+		  window.location.href="../Event/getEventById.do?eventId="+$("#id_mod").val();
 	  }
   });
 
 });
-
-function showEventItem(event){
-	var index=event.data.index;
-	$("#event-item-detail").removeData();
-	$.ajax({
-		type: "POST",
-		url: "xxx.do",
-		data: { id: idArray[index]},
-		dataType: "json",
-		success: function(data){
-			eventObject = data;
-			$("#event-item-detail").data(event.data);
-			$("#event-item-title").text(data.title);
-			$("#event-item-location").text(data.locale);
-			$("#event-item-time").text(data.beginTime+" - "+data.endTime);
-			if(data.allday=="1"){
-				$("#event-item-allday").text("全天事件");
-			}
-			else{
-				$("#event-item-allday").text("非全天事件");
-			}
-			$("#event-item-content").text(data.content);
-			$("#event-item-caltype").text(data.caltype);
-			if(index > 0){
-				$("#preEvent").bind(
-			       "click",{index: index-1}, showEventItem
-			    );
-			}
-			else{
-				$("#preEvent").unbind("click");
-			}
-			if(index < idArray.length-1){
-				$("#nextEvent").bind(
-			       "click",{index: index+1}, showEventItem
-			    );
-			}
-			else{
-				$("#nextEvent").unbind("click");
-			}
-			$("#event-home-detail").css("display","none");
-			$("#event-item-detail").css("display","block");
-		}
-	});
-}
 
 function setEventModForm(){
 	var index = $("#event-item-detail").data("index");

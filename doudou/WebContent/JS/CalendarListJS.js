@@ -111,7 +111,7 @@ $(document).ready(function(){
   
   $("div.event-item").live(
 	  "click", function(){
-		  window.location.href="xxx.do?id="+$(this).attr("id");
+		  window.location.href="../Event/getEventById.do?eventId="+$(this).attr("id");
 	  }
   );
 
@@ -197,6 +197,7 @@ function searchEventByDate(date){
 			  dataType: "json",
 			  success: function(data) {
 				  $(".event-list").empty();
+				  $("#pager").empty();
 				  for(var i in data){
 					  var event = data[i];
                       var htmlStr = "<div id='" +event.id+ "' class='event-item'><div class='event-date'>";

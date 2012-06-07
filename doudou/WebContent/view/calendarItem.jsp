@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>  
+<%@ page import="doudou.vo.Event" %> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -21,7 +22,9 @@
 
 </script>
 </head>
-
+<%
+Event eventItem = (Event)request.getAttribute("eventItem");
+%>
 <body>
 	<script type="text/javascript " src="../JS/png.js"></script>
 	<div class="upbar">
@@ -79,25 +82,39 @@
 			 </div>
 
 			 <div id="event-item-body" class="eventitem_body">
-			      <input type="hidden" id="event-item-id" name="event-item-id" value=""/>
-				  <h3 id="event-item-title">2013开学</h3>
+			      <input type="hidden" id="event-item-id" name="event-item-id" value="<%=eventItem.getId() %>"/>
+				  <h3 id="event-item-title"><%=eventItem.getTitle() %></h3>
 				  <ul>
 				  	<li id="location-div">
-				  		<span><img src="../img/locationLabel.png" /></span><span id="event-item-location">北京市</span>
+				  		<span><img src="../img/locationLabel.png" /></span><span id="event-item-location"><%=eventItem.getLocation() %></span>
 				  	</li>
 				  	<li id="time-div">
-				  		<span><img src="../img/dateLabel.png" /></span><span id="event-item-time">2012-05-12</span>
+				  		<span><img src="../img/dateLabel.png" /></span><span id="event-item-time"><%=eventItem.getBeginTimeString() %>--<%=eventItem.getEndTimeString() %></span>
 				  	</li>
 				  	<li id="allday-div">
-				  		<span><img src="../img/clockLabel.png" /></span><span id="event-item-allday">全天事件</span>
+				  		<span><img src="../img/clockLabel.png" /></span>
+				  		<span id="event-item-allday">
+				  		<%if(eventItem.isAllday()){
+				  			out.print("全天事件");
+				  		} else{
+				  			out.print("非全天事件");
+				  		}%>
+				  		</span>
 				  	</li>
 				  	<li class="splitline"></li>
 				  	<li id="event-item-content">
-				  		游玩黑龙潭
+				  		<%=eventItem.getContent() %>
 				  	</li>
 				  	<li class="splitline"></li>
 				  	<li id="type-div">
-				  		<span><img src="../img/tagLabel.png" /></span><span id="event-item-caltype">校日历</span>
+				  		<span><img src="../img/tagLabel.png" /></span>
+				  		<span id="event-item-caltype">
+				  		<%if(eventItem.getPublishLevel().toString().equalsIgnoreCase("school")){
+				  			out.print("校日历");
+				  		} else{
+				  			out.print("班日历");
+				  		}%>
+				  		</span>
 				  	</li>
 				  </ul>
 			 </div>

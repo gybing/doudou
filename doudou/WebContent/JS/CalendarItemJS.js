@@ -14,13 +14,13 @@ $(document).ready(function(){
   
   $("#returnCal").bind({
 	  "click": function(){
-		  window.location.href="xxx.do";
+		  window.location.href="../view/calendarList.jsp";
 	  }
   });
   
   $("#modEvent").bind({
 	  "click": function(){
-		  window.location.href="xxx.do?id="+$("#event-item-id").val();
+		  window.location.href="../Event/modEventById.do?eventId="+$("#event-item-id").val();
 	  }
   });
   

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="doudou.vo.Event" %>     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -27,7 +28,9 @@
 
 </script>
 </head>
-
+<%
+Event eventItem = (Event)request.getAttribute("eventItem");
+%>
 <body>
 	<script type="text/javascript " src="../JS/png.js"></script>
 	<div class="upbar">
@@ -79,7 +82,7 @@
 					<ul>
 						<li>发送至学生</li>
 						<li>
-						<input type="hidden" id="id_mod" name="eventId" />
+						<input type="hidden" id="id_mod" name="eventId" value="<%=eventItem.getId() %>" />
 						<select id="atChildList_mod" multiple="multiple">
 						   <c:forEach var="entry" items="${SessionData.tagedInfoMap}" varStatus="theCount">
 							<c:forEach var="ccEntry" items="${entry.value.classChildMap}">
@@ -94,24 +97,24 @@
 						<li></li>
 
 						<li>标题</li>
-						<li><input class="text-input1" type="text" id="title_mod" name="title" /></li>
+						<li><input class="text-input1" type="text" id="title_mod" name="title" value="<%=eventItem.getTitle() %>" /></li>
 						<li></li>
 						<li>地点</li>
-						<li><input class="text-input1" type="text" id="location_mod" name="locale" /></li>
+						<li><input class="text-input1" type="text" id="location_mod" name="locale" value="<%=eventItem.getLocation() %>" /></li>
 						<li></li>
 						<li>
-							<span>开始时间</span><span><input class="beginTime" id="beginTime_mod" name="beginTime"/></span><span></span>
+							<span>开始时间</span><span><input class="beginTime" id="beginTime_mod" name="beginTime" value="<%=eventItem.getBeginTimeString() %>" /></span><span></span>
 						</li>
 						<li>
-							<span>结束时间</span><span><input class="endTime" id="endTime_mod" name="endTime"/></span><span></span>
+							<span>结束时间</span><span><input class="endTime" id="endTime_mod" name="endTime" value="<%=eventItem.getEndTimeString() %>" /></span><span></span>
 						</li>
 						<li>
-							<span>全天事件</span><span><input id="allday_mod1" class="allday_add1" name="allday" type="radio" value="true" /></span><span>是</span>
-					             <span><input id="allday_mod2" name="allday" class="allday_add2" type="radio" value="false" /></span><span>否</span>
+							<span>全天事件</span><span><input id="allday_mod1" class="allday_add1" name="allday" type="radio" value="true" <%if(eventItem.isAllday()) { out.print("checked");}%>/></span><span>是</span>
+					             <span><input id="allday_mod2" name="allday" class="allday_add2" type="radio" value="false" <%if(!eventItem.isAllday()) { out.print("checked");}%>/></span><span>否</span>
 					             <span></span>
 						</li>
 						<li style="margin-top:10px;">内容</li>
-						<li><textarea id="content_mod" name="content" rows="4" cols="60"></textarea></li>
+						<li><textarea id="content_mod" name="content" rows="4" cols="60"><%=eventItem.getContent() %></textarea></li>
 						<li id="error"></li>
 					</ul>
 				 </form>
