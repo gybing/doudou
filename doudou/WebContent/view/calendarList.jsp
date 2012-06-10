@@ -97,15 +97,15 @@
 			 </div>
 			 
 		     <div class="event-list">
-		        <div class="event-item">
-				     <div class="event-date">
-					 今天
-					 </div>
-					 <div class="event-content">
-						<div class="event-content-title">游玩黑龙潭</div>
-						<div class="event-content-time">9:00AM - 11:40AM</div>
-					 </div>
-				</div> 
+<!--		        <div class="event-item">-->
+<!--				     <div class="event-date">-->
+<!--					 今天-->
+<!--					 </div>-->
+<!--					 <div class="event-content">-->
+<!--						<div class="event-content-title">游玩黑龙潭</div>-->
+<!--						<div class="event-content-time">9:00AM - 11:40AM</div>-->
+<!--					 </div>-->
+<!--				</div> -->
 		     </div>	
 		     <div style="float:left;" id="pager"></div>		
 		   </div>

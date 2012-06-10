@@ -17,6 +17,7 @@
 <link type="text/css" rel="stylesheet" href="../JS/lib/jquery.multiselect.css"/> 
 <script type="text/javascript" src="../JS/homeJS.js"></script>
 <script type="text/javascript" src="../JS/lib/jquery.js"></script>
+<script type="text/javascript" src="../JS/lib/jquery.form.js"></script>	
 <script type="text/javascript" src="../JS/lib/jquery-ui-1.8.20.custom.min.js"></script>
 <script type="text/javascript" src="../JS/lib/jquery.multiselect.js"></script>
 <script type="text/javascript" src="../JS/CalendarItemJS.js"></script>
@@ -152,6 +153,24 @@ List<String> childList =  Arrays.asList(childs);
 							</c:forEach>
 						   </c:forEach>
 			</select>
+			</div>
+			<div>
+			   <input type="hidden" id="atChildList_before" value="<%=eventItem.getAtChildList() %>" />
+			   <form id="addChilds-form">
+			       <input type="hidden" name="eventId" value="<%=eventItem.getId() %>" />
+			       <input type="hidden" id="atChildList_after" name="atChildList" />
+			       <input type="hidden" name="title" value="<%=eventItem.getTitle() %>" />
+			       <input type="hidden" name="locale" value="<%=eventItem.getLocation() %>" />
+			       <input type="hidden" name="beginTime" value="<%=eventItem.getBeginTimeString() %>" />
+			       <input type="hidden" name="endTime" value="<%=eventItem.getEndTimeString() %>" />
+			       <%if(eventItem.isAllday()){ %>
+			       <input type="hidden" name="allday" value="true" />
+			       <%}else{ %>
+			       <input type="hidden" name="allday" value="false" />
+			       <%} %>
+			       <input type="hidden" name="content" value="<%=eventItem.getContent() %>" />
+			   </form>
+			   <div class="NewMsgSubmit" id="addChilds-form-sub">发 送</div>
 			</div>
 			
 		</div>
