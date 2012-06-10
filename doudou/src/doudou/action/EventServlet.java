@@ -33,6 +33,7 @@ public class EventServlet extends BaseServlet{
 	@Autowired
 	DoudouService doudouService;
 	
+	//添加事件后记录的userId都为0？？？导致无法更新成功
 	@RequestMapping("/addEvent")
     public void addEvent(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
@@ -63,6 +64,7 @@ public class EventServlet extends BaseServlet{
         response.getWriter().print(result);
 	}
 	
+	//不应该取出available=0的记录吧。。。
 	@RequestMapping("/getAllEvent")
 	public void getAllEvent(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		SessionData sessionData = (SessionData)request.getSession().getAttribute("SessionData");
@@ -109,12 +111,19 @@ public class EventServlet extends BaseServlet{
 		int eventId = getIntParameter(request, "eventId", 0);
 		if (eventService.deleteEvent(eventId)) {
 			SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
-			//获取下一条
+			//获取下一条  （如果已经到达最后一条，删除后没有下一条怎么办？）
 			Event event = eventService.getNextEvent(sessionData, eventId);
-			JSONObject jsonObj = JSONObject.fromObject(event);
+			if(event!=null){
+				request.setAttribute("eventItem", event);
+				doForward(request,response,"../view/calendarItem.jsp");
+			}
+			else{
+				doRedirect(response, "../view/calendarList.jsp");
+			}
+			//JSONObject jsonObj = JSONObject.fromObject(event);
 			
-			response.setContentType("text/x-json;charset=UTF-8");
-			response.getWriter().print(jsonObj);
+			//response.setContentType("text/x-json;charset=UTF-8");
+			//response.getWriter().print(jsonObj);
 		}
 		else {
 			response.getWriter().print("Failure");
@@ -163,10 +172,17 @@ public class EventServlet extends BaseServlet{
 		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		
 		Event event = eventService.getNextEvent(sessionData, eventId);
-		JSONObject jsonObj = JSONObject.fromObject(event);
+		if(event!=null){
+			request.setAttribute("eventItem", event);
+			doForward(request,response,"../view/calendarItem.jsp");
+		}
+		else{
+			response.getWriter().print("NoNext");
+		}
+		//JSONObject jsonObj = JSONObject.fromObject(event);
 		
-		response.setContentType("text/x-json;charset=UTF-8");
-		response.getWriter().print(jsonObj);
+		//response.setContentType("text/x-json;charset=UTF-8");
+		//response.getWriter().print(jsonObj);
 	}
 	
 	@RequestMapping("getPreviousEvent")
@@ -175,10 +191,17 @@ public class EventServlet extends BaseServlet{
 		SessionData sessionData = (SessionData) request.getSession().getAttribute("SessionData");
 		
 		Event event = eventService.getPreviousEvent(sessionData, eventId);
-		JSONObject jsonObj = JSONObject.fromObject(event);
+		if(event!=null){
+			request.setAttribute("eventItem", event);
+			doForward(request,response,"../view/calendarItem.jsp");
+		}
+		else{
+			response.getWriter().print("NoPrevious");
+		}
+		//JSONObject jsonObj = JSONObject.fromObject(event);
 		
-		response.setContentType("text/x-json;charset=UTF-8");
-		response.getWriter().print(jsonObj);
+		//response.setContentType("text/x-json;charset=UTF-8");
+		//response.getWriter().print(jsonObj);
 	}
 	
 	@RequestMapping("getEventById")
