@@ -108,7 +108,7 @@ public class DoudouHttpClient {
     
     public static String get(String url, NameValuePair... params) {
    	 try {
-   		 	String paramUrl = "?";
+   		 	String paramUrl = "&";
    		 	if (!"".equals(doudouTicket)) {
    		 		paramUrl += "doudouTicket=" + doudouTicket;
 			}

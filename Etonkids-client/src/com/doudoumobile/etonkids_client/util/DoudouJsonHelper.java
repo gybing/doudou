@@ -4,9 +4,9 @@ import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.List;
 
+import com.doudoumobile.etonkids_client.model.Curriculum;
 import com.doudoumobile.etonkids_client.model.User;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -14,6 +14,7 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
+import com.google.gson.reflect.TypeToken;
 
 public class DoudouJsonHelper {
 	private static GsonBuilder gsonb = new GsonBuilder();
@@ -37,6 +38,18 @@ public class DoudouJsonHelper {
 			return null;
 		}
 		return gson.fromJson(jsonString, User.class);
+	}
+	
+	public <T> T getObject(String jsonString, Class<T> className) {
+		if ("".equals(jsonString) || jsonString.equals("null")) {
+			return null;
+		}
+		return gson.fromJson(jsonString, className);
+	}
+	
+	public List<Curriculum> getCurriculumArray(String jsonString) {
+		Type type = new TypeToken<List<Curriculum>>(){}.getType();
+		return gson.fromJson(jsonString, type);
 	}
 	
 	class DateDeserializer implements JsonDeserializer<Date> {
