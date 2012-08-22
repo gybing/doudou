@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="remoteHost">http://localhost:8080/</string>
-    <string name="loginAction">loginAction</string>
+    <string name="loginAction">http://192.168.1.109:8080/Etonkids_Server/etonUser.do?action=login</string>
 </resources>

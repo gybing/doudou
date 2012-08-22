@@ -3,27 +3,30 @@ package com.doudoumobile.etonkids_client;
 import org.androidpn.client.Constants;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONObject;
 
-import com.doudoumobile.etonkids_client.model.User;
-import com.doudoumobile.etonkids_client.util.DoudouHttpClient;
-import com.doudoumobile.etonkids_client.util.DoudouJsonHelper;
-import com.doudoumobile.etonkids_client.util.MD5;
-
-import android.net.UrlQuerySanitizer.ParameterValuePair;
-import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
-import android.support.v4.app.NavUtils;
+
+import com.androidquery.AQuery;
+import com.androidquery.callback.AjaxCallback;
+import com.androidquery.callback.AjaxStatus;
+import com.doudoumobile.etonkids_client.model.User;
+import com.doudoumobile.etonkids_client.util.DoudouJsonHelper;
+import com.doudoumobile.etonkids_client.util.ErrorCodeHandler;
+import com.doudoumobile.etonkids_client.util.MD5;
+import com.doudoumobile.etonkids_client.util.UrlConstants;
 
 public class LoginActivity extends Activity {
 
+	AQuery aq;
 	String userName = "admin@etonkids.com";
 	String passWd = "admin";
 	
@@ -33,8 +36,9 @@ public class LoginActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        
+        aq = new AQuery(this);
         processLogin();
+       // asyncJson();
     }
 
     @Override
@@ -44,19 +48,70 @@ public class LoginActivity extends Activity {
     }
     
     private void processLogin() {
-    	passWd = new String(MD5.encode(passWd));
-    	NameValuePair loginType = new BasicNameValuePair("doudouTicket", "login");
+    	passWd = MD5.encode(passWd);
+    	UrlConstants.setDoudouTicket("login");
     	NameValuePair p1 = new BasicNameValuePair("userName", userName);
     	NameValuePair p2 = new BasicNameValuePair("passWd", passWd);
-    	//String jsonString = DoudouHttpClient.get(getString(R.string.loginAction), loginType, p1, p2);
-    	String jsonString = "{\"available\":true,\"email\":\"admin@etonkids.com\",\"id\":1,\"lastLoginTime\":\"2012-08-16 23:41:04\",\"online\":false,\"password\":\"888\",\"realName\":\"我是管理员\",\"role\":0,\"teacherTypeId\":0,\"username\":\"admin@etonkids.com\"}";
-    	User user = DoudouJsonHelper.getInstance().getUser(jsonString);
-    	if (null != user) {
-			loginSuccess(user);
-		} else {
-			loginFailure();
-		}
+    	String url = UrlConstants.getLoginUrl(p1,p2);
+    	aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
+            @Override
+            public void callback(String url, JSONObject json, AjaxStatus status) {
+                    if(json != null){
+                        //successful ajax call, show status code and json content
+                        Toast.makeText(aq.getContext(), status.getCode() + ":" + json.toString(), Toast.LENGTH_LONG).show();
+                        User user = DoudouJsonHelper.getInstance().getUser(json.toString());
+                    	if (null != user) {
+                			loginSuccess(user);
+                		} else {
+                			loginFailure();
+                		}
+                    }else{
+                    	ErrorCodeHandler.ajaxCodeHandler(aq.getContext(),status.getCode());
+                    }
+            }
+    	});
+    	
+    	
+//    	DoudouHttpClient.setDoudouTicket("login");
+//    	NameValuePair p1 = new BasicNameValuePair("userName", userName);
+//    	NameValuePair p2 = new BasicNameValuePair("passWd", passWd);
+//    	String jsonString = DoudouHttpClient.get(getString(R.string.loginAction), p1, p2);
+//    	System.out.println("jsonString = " + jsonString);
+    	//String jsonString = "{\"available\":true,\"email\":\"admin@etonkids.com\",\"id\":1,\"lastLoginTime\":\"2012-08-16 23:41:04\",\"online\":false,\"password\":\"888\",\"realName\":\"我是管理员\",\"role\":0,\"teacherTypeId\":0,\"username\":\"admin@etonkids.com\"}";
+//    	User user = DoudouJsonHelper.getInstance().getUser(jsonString);
+//    	if (null != user) {
+//			loginSuccess(user);
+//		} else {
+//			loginFailure();
+//		}
     }
+    
+    public void asyncJson(){
+        
+        //perform a Google search in just a few lines of code
+        
+        String url = "http://www.google.com/uds/GnewsSearch?q=Obama&v=1.0";
+        
+        aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
+
+                @Override
+                public void callback(String url, JSONObject json, AjaxStatus status) {
+                        
+                        
+                        if(json != null){
+                                
+                                //successful ajax call, show status code and json content
+                                Toast.makeText(aq.getContext(), status.getCode() + ":" + json.toString(), Toast.LENGTH_LONG).show();
+                        
+                        }else{
+                                
+                                //ajax error, show error code
+                                Toast.makeText(aq.getContext(), "Error:" + status.getCode(), Toast.LENGTH_LONG).show();
+                        }
+                }
+        });
+        
+}
     
     private void loginFailure() {
     	System.out.println("Failure");
@@ -74,14 +129,15 @@ public class LoginActivity extends Activity {
     	editor.putString(Constants.DOUDOU_TICKET, user.getTicket());
     	editor.putBoolean("isLogin", true);
     	editor.commit();
-    	Log.i(TAG,"Success: userName:" + userName + "passWd : " + passWd);
+    	Log.i(TAG,"Success: userName:" + userName + "passWd : " + passWd + "Ticket : " + user.getTicket());
     	
+    	UrlConstants.setDoudouTicket(user.getTicket());
     	// Go to IndexActivity
     	Toast.makeText(this, "登陆成功" , Toast.LENGTH_SHORT).show();
     	
     	Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setClass(this,IndexActivity.class);
-        //startActivity(intent);
+        startActivity(intent);
     }
 
     

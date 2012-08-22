@@ -38,18 +38,28 @@
             android:name=".IndexActivity"
             android:label="@string/title_activity_index" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <service android:enabled="true"
-			android:name="org.androidpn.client.NotificationService"
-			android:label="NotificationService">
-			<intent-filter>
-				<action android:name="org.androidpn.client.NotificationService" />
-			</intent-filter>
-		</service>
+
+        <service
+            android:name="org.androidpn.client.NotificationService"
+            android:enabled="true"
+            android:label="NotificationService" >
+            <intent-filter>
+                <action android:name="org.androidpn.client.NotificationService" />
+            </intent-filter>
+        </service>
+
+        <activity
+            android:name=".DownloadTestActivity"
+            android:label="@string/title_activity_download_test" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
     </application>
 
     <uses-sdk
