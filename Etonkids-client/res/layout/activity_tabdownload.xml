@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#00000000" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="44dp"
+        android:src="@drawable/tabtitle2" />
+
+    <ImageButton
+        android:id="@+id/btn_refresh2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="775dp"
+        android:layout_marginTop="11dp"
+        android:background="#00000000"
+        android:src="@drawable/btn_refresh_selector" />
+    
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:layout_below="@+id/btn_refresh2"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="100dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/downloadCurriList"
+            android:layout_width="850dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
+
+    
+
+</LinearLayout>

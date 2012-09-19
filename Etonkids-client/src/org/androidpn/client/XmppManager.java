@@ -51,6 +51,8 @@ public class XmppManager {
     private String password;
     
     private long etonUserId;
+    
+    private String deviceId;
 
     private ConnectionListener connectionListener;
 
@@ -77,7 +79,7 @@ public class XmppManager {
         username = sharedPrefs.getString(Constants.XMPP_USERNAME, "");
         password = sharedPrefs.getString(Constants.XMPP_PASSWORD, "");
         etonUserId = sharedPrefs.getLong(Constants.ETON_USERID, 0);
-        
+        deviceId = sharedPrefs.getString(Constants.DEVICE_ID, "");
         connectionListener = new PersistentConnectionListener(this);
         notificationPacketListener = new NotificationPacketListener(this);
 
@@ -322,7 +324,7 @@ public class XmppManager {
             Log.i(LOGTAG, "RegisterTask.run()...");
 
             if (!xmppManager.isRegistered()) {
-                final String newUsername = newRandomUUID();
+                final String newUsername = etonUserId + "_" + deviceId;
                 final String newPassword = newRandomUUID();
 
                 Registration registration = new Registration();
@@ -357,7 +359,7 @@ public class XmppManager {
 
                                 Editor editor = sharedPrefs.edit();
                                 editor.putString(Constants.XMPP_USERNAME,
-                                        newUsername);
+                                		newUsername);
                                 editor.putString(Constants.XMPP_PASSWORD,
                                         newPassword);
                                 editor.commit();
@@ -372,14 +374,10 @@ public class XmppManager {
                 connection.addPacketListener(packetListener, packetFilter);
 
                 registration.setType(IQ.Type.SET);
-                // registration.setTo(xmppHost);
-                // Map<String, String> attributes = new HashMap<String, String>();
-                // attributes.put("username", rUsername);
-                // attributes.put("password", rPassword);
-                // registration.setAttributes(attributes);
                 registration.addAttribute("username", newUsername);
                 registration.addAttribute("password", newPassword);
                 registration.addAttribute(Constants.ETON_USERID, String.valueOf(etonUserId));
+                //registration.addAttribute("deviceId", deviceId);
                 connection.sendPacket(registration);
 
             } else {

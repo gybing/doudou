@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" 
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mlistbg" />
+
+        <ImageView
+            android:id="@+id/bg_selected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mlistbg_select" 
+            android:layout_alignBottom="@+id/imageView1"
+            android:layout_marginBottom="1dp"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/listico"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icoplay"
+            android:layout_marginLeft="15dp" 
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/mname"
+            android:layout_width="400dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/listico"
+            android:text="Hello Song1" 
+            android:textSize="11pt"
+            android:textColor="#514851"/>
+
+        <TextView
+            android:id="@+id/mlength"
+            android:layout_width="140dp"
+            android:layout_height="30dp"
+            android:layout_alignRight="@+id/imageView1"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="45dp"
+            android:text="02:34 / 04:23" 
+            android:textSize="10pt"
+            android:textColor="#514851"/>
+
+    </RelativeLayout>
+
+</LinearLayout>

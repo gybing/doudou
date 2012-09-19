@@ -1,15 +1,97 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+<?xml version="1.0" encoding="utf-8"?> <!-- TabHost -->
+<TabHost xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@android:id/tabhost"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#00000000" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:padding="@dimen/padding_medium"
-        android:text="@string/hello_world"
-        tools:context=".IndexActivity" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/tabs_bg"
+        android:orientation="vertical" >
 
-</RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+            </TabWidget>
+
+            <RelativeLayout
+                android:id="@+id/RelativeLayout1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <RelativeLayout
+                    android:id="@+id/RelativeLayout1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@android:id/tabcontent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true" >
+
+                    <RadioGroup
+                        android:id="@+id/tab_group"                   
+                        android:layout_width="wrap_content"                       
+                        android:layout_height="wrap_content"                        
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="109dp" 
+                        android:layout_marginLeft="15dp" 
+                        >
+
+                        <RadioButton
+                            android:id="@+id/rad1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/tab1"
+                            android:checked="true"
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rad2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/tab2"
+                            android:layout_marginTop="45dp" 
+                            />
+
+                        <RadioButton
+                            android:id="@+id/rad3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            style="@style/tab3"
+                            android:layout_marginTop="45dp" 
+                             />
+                    </RadioGroup>
+                </RelativeLayout>
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/RelativeLayout1" >
+                </FrameLayout>
+
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:src="@drawable/logo"
+                android:layout_marginLeft="455dp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</TabHost>

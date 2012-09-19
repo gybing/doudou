@@ -16,6 +16,7 @@ import android.view.Menu;
 
 import com.doudoumobile.etonkids_client.util.DoudouHttpClient;
 import com.doudoumobile.etonkids_client.util.NetCheckReceiver;
+import com.doudoumobile.etonkids_client.util.UrlConstants;
 
 /**
  * This is the init activity, do the init work
@@ -26,7 +27,7 @@ import com.doudoumobile.etonkids_client.util.NetCheckReceiver;
  * */
 public class MainActivity extends Activity {
 
-	private NetCheckReceiver netCheckReceiver;
+	private NetCheckReceiver netCheckReceiver = new NetCheckReceiver();
 	private static String TAG = "MainActivity";
 	
     @Override
@@ -34,22 +35,34 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
         
-        init();
-		
+        //TODO
+        registerReceiver();
+        boolean exit = getIntent().getBooleanExtra("EXIT", false);
+        if (!exit) {
+        	System.out.println("Init....");
+        	init();
+		} else {
+			System.out.println("Exit...");
+			finish();
+		}
     }
     
     private void init() {
-    	registerReceiver();
-    	
-    	if (checkLogin()) {
+    	String lastLoginName = checkLoginName();
+    	if (!lastLoginName.equals("")) {
     		Log.i(TAG,"have login. Go to Index page");
-			// set ticket info
+    		// 读取用户的信息配置文件
+    		loadProperties(lastLoginName);
+    		
+    		// set ticket info
+    		
         	setTicketInfo();
         	
         	// load db data
         	
         	// go to index page
         	Intent intent = new Intent(Intent.ACTION_VIEW);
+        	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 	        intent.setClass(this,IndexActivity.class);
 	        startActivity(intent);
          	
@@ -62,39 +75,34 @@ public class MainActivity extends Activity {
 	        
 		}
     }
+    
+    private void loadProperties(String name) {
+    	Constants.Current_Preference_Name = name;
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-
     
-    
-    private void visitWeb() {
-    	NameValuePair param1 = new BasicNameValuePair("username", "张三");
-    	NameValuePair param2 = new BasicNameValuePair("password", "123456");
-    	String s = DoudouHttpClient.get("http://www.baidu.com");
-    	System.out.println(s);
-    }
-    
-    private boolean checkLogin() {
+    private String checkLoginName() {
     	SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME,Context.MODE_PRIVATE);
-    	boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
-    	return isLogin;
+    	String lastLoginName = sharedPreferences.getString("isLogin", "");
+    	return lastLoginName;
     }
     
     private void setTicketInfo() {
-    	SharedPreferences sharedPreferences = getSharedPreferences("doudou",Context.MODE_PRIVATE);
+    	SharedPreferences sharedPreferences = getSharedPreferences(Constants.Current_Preference_Name,Context.MODE_PRIVATE);
     	String doudouTicket = sharedPreferences.getString("Doudou","");
     	if (!"".equals(doudouTicket)) {
     		Log.i(TAG, doudouTicket);
-			DoudouHttpClient.setDoudouTicket(doudouTicket);
+			//DoudouHttpClient.setDoudouTicket(doudouTicket);
+    		UrlConstants.setDoudouTicket(doudouTicket);
 		}
     }
     
     private void registerReceiver() {
-    	netCheckReceiver = new NetCheckReceiver();
     	IntentFilter filter = new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION);
     	registerReceiver(netCheckReceiver,filter);
     }

@@ -12,7 +12,12 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -27,8 +32,9 @@ import com.doudoumobile.etonkids_client.util.UrlConstants;
 public class LoginActivity extends Activity {
 
 	AQuery aq;
-	String userName = "admin@etonkids.com";
-	String passWd = "admin";
+	EditText userNameET;
+	EditText passWdET;
+	ImageButton submit;
 	
 	private static String TAG = "LoginActivity";
 	
@@ -37,8 +43,23 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         aq = new AQuery(this);
-        processLogin();
-       // asyncJson();
+        
+        userNameET = (EditText)findViewById(R.id.username);
+        passWdET = (EditText)findViewById(R.id.password);
+        submit = (ImageButton)findViewById(R.id.imageButton1);
+        
+        submit.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				v.setEnabled(false);
+				Log.i(TAG,"Clicked");
+				String userName = userNameET.getText().toString();
+				String passWd = passWdET.getText().toString();
+				
+				processLogin(userName, passWd);
+			}
+		});
     }
 
     @Override
@@ -47,7 +68,7 @@ public class LoginActivity extends Activity {
         return true;
     }
     
-    private void processLogin() {
+    private void processLogin(String userName, String passWd) {
     	passWd = MD5.encode(passWd);
     	UrlConstants.setDoudouTicket("login");
     	NameValuePair p1 = new BasicNameValuePair("userName", userName);
@@ -56,6 +77,7 @@ public class LoginActivity extends Activity {
     	aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject json, AjaxStatus status) {
+            		submit.setEnabled(true);
                     if(json != null){
                         //successful ajax call, show status code and json content
                         Toast.makeText(aq.getContext(), status.getCode() + ":" + json.toString(), Toast.LENGTH_LONG).show();
@@ -70,48 +92,7 @@ public class LoginActivity extends Activity {
                     }
             }
     	});
-    	
-    	
-//    	DoudouHttpClient.setDoudouTicket("login");
-//    	NameValuePair p1 = new BasicNameValuePair("userName", userName);
-//    	NameValuePair p2 = new BasicNameValuePair("passWd", passWd);
-//    	String jsonString = DoudouHttpClient.get(getString(R.string.loginAction), p1, p2);
-//    	System.out.println("jsonString = " + jsonString);
-    	//String jsonString = "{\"available\":true,\"email\":\"admin@etonkids.com\",\"id\":1,\"lastLoginTime\":\"2012-08-16 23:41:04\",\"online\":false,\"password\":\"888\",\"realName\":\"我是管理员\",\"role\":0,\"teacherTypeId\":0,\"username\":\"admin@etonkids.com\"}";
-//    	User user = DoudouJsonHelper.getInstance().getUser(jsonString);
-//    	if (null != user) {
-//			loginSuccess(user);
-//		} else {
-//			loginFailure();
-//		}
     }
-    
-    public void asyncJson(){
-        
-        //perform a Google search in just a few lines of code
-        
-        String url = "http://www.google.com/uds/GnewsSearch?q=Obama&v=1.0";
-        
-        aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
-
-                @Override
-                public void callback(String url, JSONObject json, AjaxStatus status) {
-                        
-                        
-                        if(json != null){
-                                
-                                //successful ajax call, show status code and json content
-                                Toast.makeText(aq.getContext(), status.getCode() + ":" + json.toString(), Toast.LENGTH_LONG).show();
-                        
-                        }else{
-                                
-                                //ajax error, show error code
-                                Toast.makeText(aq.getContext(), "Error:" + status.getCode(), Toast.LENGTH_LONG).show();
-                        }
-                }
-        });
-        
-}
     
     private void loginFailure() {
     	System.out.println("Failure");
@@ -123,13 +104,22 @@ public class LoginActivity extends Activity {
     	// store
     	SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME,Context.MODE_PRIVATE);
     	Editor editor = sharedPreferences.edit();
-    	editor.putString(Constants.ETON_USERNAME, userName);
-    	editor.putString(Constants.ETON_PASSWD, passWd);
+    	editor.putString("isLogin", user.getUserName());
+    	editor.commit();
+    	
+    	Constants.Current_Preference_Name = user.getUserName();
+    	sharedPreferences = getSharedPreferences(Constants.Current_Preference_Name,Context.MODE_PRIVATE);
+    	editor = sharedPreferences.edit();
+    	editor.putString(Constants.ETON_USERNAME, user.getUserName());
+    	editor.putString(Constants.ETON_PASSWD, user.getPassWd());
     	editor.putLong(Constants.ETON_USERID, user.getId());
     	editor.putString(Constants.DOUDOU_TICKET, user.getTicket());
-    	editor.putBoolean("isLogin", true);
+    	editor.putString(Constants.ETON_CURRILIST, user.getCurriList());
+    	editor.putString(Constants.ETON_SCHOOLINFO, user.getSchoolInfo());
+    	editor.putString(Constants.ETON_REALNAME, user.getRealName());
     	editor.commit();
-    	Log.i(TAG,"Success: userName:" + userName + "passWd : " + passWd + "Ticket : " + user.getTicket());
+    	
+    	Log.i(TAG,"Success: userName:" + user.getUserName() + "passWd : " + user.getPassWd() + "Ticket : " + user.getTicket());
     	
     	UrlConstants.setDoudouTicket(user.getTicket());
     	// Go to IndexActivity
@@ -137,8 +127,10 @@ public class LoginActivity extends Activity {
     	
     	Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setClass(this,IndexActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
     }
+    
 
     
 }

@@ -1,8 +1,15 @@
 package org.androidpn.client;
 
+import android.os.Environment;
+
+
 public class Constants {
 
+	public static final String SD_PATH = Environment.getExternalStorageDirectory().toString() + "/etonkids";
+	
     public static final String SHARED_PREFERENCE_NAME = "doudou";
+    
+    public static String Current_Preference_Name = "";
     
     public static final String REMOTE_WIPE = "REMOTE_WIPE";
     
@@ -11,6 +18,12 @@ public class Constants {
     public static final String ETON_PASSWD = "ETON_PASSWD";
     
     public static final String ETON_USERID = "ETON_USERID";
+    
+    public static final String ETON_CURRILIST = "ETON_CURRILIST";
+    
+    public static final String ETON_SCHOOLINFO = "ETON_SCHOOLINFO";
+    
+    public static final String ETON_REALNAME = "ETON_REALNAME";
     
     public static final String DOUDOU_TICKET = "Doudou";
     // PREFERENCE KEYS
@@ -72,5 +85,5 @@ public class Constants {
     public static final String ACTION_NOTIFICATION_CLEARED = "org.androidpn.client.NOTIFICATION_CLEARED";
 
     public static XmppManager xmppManager = null;
-
+    
 }

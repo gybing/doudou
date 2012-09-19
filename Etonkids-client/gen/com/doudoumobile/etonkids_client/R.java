@@ -9,58 +9,656 @@ package com.doudoumobile.etonkids_client;
 
 public final class R {
     public static final class attr {
+        /**  Defines panel animation duration in ms. 
+         <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int animationDuration=0x7f010000;
+        /**  Defines closed handle (drawable/color). 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int closedHandle=0x7f010007;
+        /**  Identifier for the child that represents the panel's content. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int content=0x7f010003;
+        /**  Defines opened handle (drawable). 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int decreaseButton=0x7f01000d;
+        /**  Identifier for the child that represents the panel's handle. 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int handle=0x7f010002;
+        /**  Defines switcher idle timeout in ms. 
+         <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int idleTimeout=0x7f01000c;
+        /**  Defines opened handle (drawable). 
+         <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int increaseButton=0x7f01000e;
+        /**  Defines if flying gesture forces linear interpolator in animation. 
+         <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int linearFlying=0x7f010004;
+        /**  Defines opened handle (drawable/color). 
+         <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+         */
+        public static final int openedHandle=0x7f010006;
+        /**  Defines panel position on the screen. 
+         <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>top</code></td><td>0</td><td> Panel placed at top of the screen. </td></tr>
+<tr><td><code>bottom</code></td><td>1</td><td> Panel placed at bottom of the screen. </td></tr>
+<tr><td><code>left</code></td><td>2</td><td> Panel placed at left of the screen. </td></tr>
+<tr><td><code>right</code></td><td>3</td><td> Panel placed at right of the screen. </td></tr>
+</table>
+         */
+        public static final int position=0x7f010001;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int transitionDrawable=0x7f010008;
+        /** <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int transitionDrawableLength=0x7f010009;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int transitionTextColorDown=0x7f01000b;
+        /** <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int transitionTextColorUp=0x7f01000a;
+        /**  Defines size relative to parent (must be in form: nn%p). 
+         <p>Must be a fractional value, which is a floating point number appended with either % or %p, such as "<code>14.5%</code>".
+The % suffix always means a percentage of the base size; the optional %p suffix provides a size relative to
+some parent container.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int weight=0x7f010005;
     }
     public static final class dimen {
-        public static final int padding_large=0x7f050002;
-        public static final int padding_medium=0x7f050001;
-        public static final int padding_small=0x7f050000;
+        public static final int padding_large=0x7f060002;
+        public static final int padding_medium=0x7f060001;
+        public static final int padding_small=0x7f060000;
     }
     public static final class drawable {
         public static final int arrowup=0x7f020000;
-        public static final int center=0x7f020001;
-        public static final int ic_action_search=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int left=0x7f020004;
-        public static final int right=0x7f020005;
-        public static final int serifs=0x7f020006;
+        public static final int bg=0x7f020001;
+        public static final int bg2=0x7f020002;
+        public static final int btn_back_d=0x7f020003;
+        public static final int btn_back_n=0x7f020004;
+        public static final int btn_back_selector=0x7f020005;
+        public static final int btn_cel_d=0x7f020006;
+        public static final int btn_cel_n=0x7f020007;
+        public static final int btn_cel_selector=0x7f020008;
+        public static final int btn_celall_d=0x7f020009;
+        public static final int btn_celall_n=0x7f02000a;
+        public static final int btn_celall_selector=0x7f02000b;
+        public static final int btn_cfm_d=0x7f02000c;
+        public static final int btn_cfm_n=0x7f02000d;
+        public static final int btn_cfm_selector=0x7f02000e;
+        public static final int btn_dlall_d=0x7f02000f;
+        public static final int btn_dlall_n=0x7f020010;
+        public static final int btn_dlall_selector=0x7f020011;
+        public static final int btn_drawer_down=0x7f020012;
+        public static final int btn_drawer_down1=0x7f020013;
+        public static final int btn_drawer_up=0x7f020014;
+        public static final int btn_drawer_up1=0x7f020015;
+        public static final int btn_item1_d=0x7f020016;
+        public static final int btn_item1_n=0x7f020017;
+        public static final int btn_item1_selector=0x7f020018;
+        public static final int btn_item2_d=0x7f020019;
+        public static final int btn_item2_n=0x7f02001a;
+        public static final int btn_item2_selector=0x7f02001b;
+        public static final int btn_library_d=0x7f02001c;
+        public static final int btn_library_n=0x7f02001d;
+        public static final int btn_library_selector=0x7f02001e;
+        public static final int btn_login_d=0x7f02001f;
+        public static final int btn_login_n=0x7f020020;
+        public static final int btn_login_selector=0x7f020021;
+        public static final int btn_logout_d=0x7f020022;
+        public static final int btn_logout_n=0x7f020023;
+        public static final int btn_logout_selector=0x7f020024;
+        public static final int btn_next_d=0x7f020025;
+        public static final int btn_next_n=0x7f020026;
+        public static final int btn_next_selectot=0x7f020027;
+        public static final int btn_pause_d=0x7f020028;
+        public static final int btn_pause_n=0x7f020029;
+        public static final int btn_pause_selector=0x7f02002a;
+        public static final int btn_play_d=0x7f02002b;
+        public static final int btn_play_n=0x7f02002c;
+        public static final int btn_play_selector=0x7f02002d;
+        public static final int btn_pre_d=0x7f02002e;
+        public static final int btn_pre_n=0x7f02002f;
+        public static final int btn_pre_selectot=0x7f020030;
+        public static final int btn_refresh_d=0x7f020031;
+        public static final int btn_refresh_n=0x7f020032;
+        public static final int btn_refresh_selector=0x7f020033;
+        public static final int btn_tab1_d=0x7f020034;
+        public static final int btn_tab1_n=0x7f020035;
+        public static final int btn_tab2_d=0x7f020036;
+        public static final int btn_tab2_n=0x7f020037;
+        public static final int btn_tab3_d=0x7f020038;
+        public static final int btn_tab3_n=0x7f020039;
+        public static final int center=0x7f02003a;
+        public static final int cover01=0x7f02003b;
+        public static final int cover02=0x7f02003c;
+        public static final int cover03=0x7f02003d;
+        public static final int cover04=0x7f02003e;
+        public static final int cover05=0x7f02003f;
+        public static final int cover06=0x7f020040;
+        public static final int cover07=0x7f020041;
+        public static final int cover08=0x7f020042;
+        public static final int cover09=0x7f020043;
+        public static final int cover10=0x7f020044;
+        public static final int cover11=0x7f020045;
+        public static final int drawerbg=0x7f020046;
+        public static final int ic_action_search=0x7f020047;
+        public static final int ic_launcher=0x7f020048;
+        public static final int ico_dl=0x7f020049;
+        public static final int icomovie=0x7f02004a;
+        public static final int icomusic=0x7f02004b;
+        public static final int icopause=0x7f02004c;
+        public static final int icoplay=0x7f02004d;
+        public static final int itembg=0x7f02004e;
+        public static final int left=0x7f02004f;
+        public static final int lessontitle=0x7f020050;
+        public static final int librarytitle=0x7f020051;
+        public static final int listbg=0x7f020052;
+        public static final int login=0x7f020053;
+        public static final int logo=0x7f020054;
+        public static final int mediabg=0x7f020055;
+        public static final int mediatitle=0x7f020056;
+        public static final int mlistbg=0x7f020057;
+        public static final int mlistbg_select=0x7f020058;
+        public static final int picframe=0x7f020059;
+        public static final int pictitle=0x7f02005a;
+        public static final int right=0x7f02005b;
+        public static final int segline=0x7f02005c;
+        public static final int serifs=0x7f02005d;
+        public static final int setbg=0x7f02005e;
+        public static final int tab_bg_selector1=0x7f02005f;
+        public static final int tab_bg_selector2=0x7f020060;
+        public static final int tab_bg_selector3=0x7f020061;
+        public static final int tabs_bg=0x7f020062;
+        public static final int tabtitle1=0x7f020063;
+        public static final int tabtitle2=0x7f020064;
+        public static final int tabtitle3=0x7f020065;
+        public static final int ts6=0x7f020066;
+        public static final int ts7=0x7f020067;
+        public static final int tst1=0x7f020068;
+        public static final int tst2=0x7f020069;
+        public static final int tst3=0x7f02006a;
+        public static final int tst4=0x7f02006b;
+        public static final int tst5=0x7f02006c;
     }
     public static final class id {
-        public static final int button1=0x7f090001;
-        public static final int currentProgress=0x7f090003;
-        public static final int menu_settings=0x7f090004;
-        public static final int progressBar=0x7f090002;
-        public static final int textView1=0x7f090000;
+        public static final int LinearLayout1=0x7f05001f;
+        public static final int RelativeLayout1=0x7f050009;
+        public static final int bg_selected=0x7f05003b;
+        public static final int booklist=0x7f050034;
+        public static final int bookname=0x7f050038;
+        public static final int bottom=0x7f050001;
+        public static final int bottomPanel=0x7f050012;
+        public static final int btn_cancel=0x7f050029;
+        public static final int btn_confirm=0x7f050028;
+        public static final int btn_dlall=0x7f050035;
+        public static final int btn_item=0x7f050036;
+        public static final int btn_logout=0x7f050024;
+        public static final int btn_next=0x7f050042;
+        public static final int btn_play=0x7f050040;
+        public static final int btn_pre=0x7f050041;
+        public static final int btn_refresh1=0x7f050022;
+        public static final int btn_refresh2=0x7f050020;
+        public static final int button1=0x7f050005;
+        public static final int cover=0x7f050033;
+        public static final int currentProgress=0x7f050007;
+        public static final int curriculumList=0x7f050023;
+        public static final int curriculumtx=0x7f05002c;
+        public static final int downloadCurriList=0x7f050021;
+        public static final int horizontalScrollView1=0x7f050016;
+        public static final int ico_dl=0x7f05003a;
+        public static final int idtx=0x7f050030;
+        public static final int imageButton1=0x7f05000f;
+        public static final int imageButton2=0x7f050010;
+        public static final int imageView1=0x7f05000e;
+        public static final int imageView2=0x7f050019;
+        public static final int imageView3=0x7f05001b;
+        public static final int large_image =0x7f050031;
+        public static final int left=0x7f050002;
+        public static final int lessonLayout=0x7f050011;
+        public static final int listico=0x7f05003c;
+        public static final int mediaplayerSActivity1=0x7f050015;
+        public static final int mediaplyerActivity1=0x7f05001c;
+        public static final int menu_settings=0x7f050043;
+        public static final int mlength=0x7f05003e;
+        public static final int mlist=0x7f05003f;
+        public static final int mname=0x7f05003d;
+        public static final int nametx=0x7f05002a;
+        public static final int panelContent=0x7f050013;
+        public static final int panelHandle=0x7f050014;
+        public static final int password=0x7f05001e;
+        public static final int password_n=0x7f050026;
+        public static final int password_o=0x7f050025;
+        public static final int password_r=0x7f050027;
+        public static final int picgrid=0x7f05001a;
+        public static final int picview=0x7f050017;
+        public static final int progressBar=0x7f050006;
+        public static final int rad1=0x7f05000b;
+        public static final int rad2=0x7f05000c;
+        public static final int rad3=0x7f05000d;
+        public static final int relativeLayout1=0x7f050008;
+        public static final int right=0x7f050003;
+        public static final int schooltx=0x7f05002e;
+        public static final int scrollView1=0x7f050018;
+        public static final int segline=0x7f050032;
+        public static final int tab_group=0x7f05000a;
+        public static final int textView1=0x7f050004;
+        public static final int textView2=0x7f05002b;
+        public static final int textView3=0x7f05002d;
+        public static final int textView4=0x7f05002f;
+        public static final int top=0x7f050000;
+        public static final int tx2=0x7f050039;
+        public static final int txbtn=0x7f050037;
+        public static final int username=0x7f05001d;
     }
     public static final class layout {
         public static final int activity_download=0x7f030000;
         public static final int activity_download_test=0x7f030001;
         public static final int activity_index=0x7f030002;
-        public static final int activity_login=0x7f030003;
-        public static final int main=0x7f030004;
+        public static final int activity_lesson=0x7f030003;
+        public static final int activity_library=0x7f030004;
+        public static final int activity_login=0x7f030005;
+        public static final int activity_tabdownload=0x7f030006;
+        public static final int activity_tablesson=0x7f030007;
+        public static final int activity_tabset=0x7f030008;
+        public static final int dialog_picture=0x7f030009;
+        public static final int element_bookgroup=0x7f03000a;
+        public static final int element_bookitem=0x7f03000b;
+        public static final int element_mlist=0x7f03000c;
+        public static final int element_mlist_s=0x7f03000d;
+        public static final int element_mplayer=0x7f03000e;
+        public static final int element_mplayer_s=0x7f03000f;
+        public static final int element_picframe=0x7f030010;
+        public static final int main=0x7f030011;
     }
     public static final class menu {
-        public static final int activity_download=0x7f080000;
-        public static final int activity_download_test=0x7f080001;
-        public static final int activity_index=0x7f080002;
-        public static final int activity_login=0x7f080003;
-        public static final int main=0x7f080004;
+        public static final int activity_download=0x7f090000;
+        public static final int activity_download_test=0x7f090001;
+        public static final int activity_index=0x7f090002;
+        public static final int activity_login=0x7f090003;
+        public static final int main=0x7f090004;
     }
     public static final class raw {
         public static final int androidpn=0x7f040000;
     }
     public static final class string {
-        public static final int app_name=0x7f060000;
-        public static final int hello_world=0x7f060004;
-        public static final int loginAction=0x7f060009;
-        public static final int menu_settings=0x7f060001;
-        public static final int remoteHost=0x7f060008;
-        public static final int title_activity_download=0x7f060005;
-        public static final int title_activity_download_test=0x7f060007;
-        public static final int title_activity_index=0x7f060006;
-        public static final int title_activity_login=0x7f060003;
-        public static final int title_activity_main=0x7f060002;
+        public static final int app_name=0x7f070000;
+        public static final int hello_world=0x7f070004;
+        public static final int loginAction=0x7f070009;
+        public static final int menu_settings=0x7f070001;
+        public static final int remoteHost=0x7f070008;
+        public static final int title_activity_download=0x7f070005;
+        public static final int title_activity_download_test=0x7f070007;
+        public static final int title_activity_index=0x7f070006;
+        public static final int title_activity_login=0x7f070003;
+        public static final int title_activity_main=0x7f070002;
     }
     public static final class style {
-        public static final int AppTheme=0x7f070000;
+        public static final int AppTheme=0x7f080000;
+        public static final int tab1=0x7f080001;
+        public static final int tab2=0x7f080002;
+        public static final int tab3=0x7f080003;
     }
+    public static final class styleable {
+        /** Attributes that can be used with a Panel.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #Panel_animationDuration com.doudoumobile.etonkids_client:animationDuration}</code></td><td> Defines panel animation duration in ms.</td></tr>
+           <tr><td><code>{@link #Panel_closedHandle com.doudoumobile.etonkids_client:closedHandle}</code></td><td> Defines closed handle (drawable/color).</td></tr>
+           <tr><td><code>{@link #Panel_content com.doudoumobile.etonkids_client:content}</code></td><td> Identifier for the child that represents the panel's content.</td></tr>
+           <tr><td><code>{@link #Panel_handle com.doudoumobile.etonkids_client:handle}</code></td><td> Identifier for the child that represents the panel's handle.</td></tr>
+           <tr><td><code>{@link #Panel_linearFlying com.doudoumobile.etonkids_client:linearFlying}</code></td><td> Defines if flying gesture forces linear interpolator in animation.</td></tr>
+           <tr><td><code>{@link #Panel_openedHandle com.doudoumobile.etonkids_client:openedHandle}</code></td><td> Defines opened handle (drawable/color).</td></tr>
+           <tr><td><code>{@link #Panel_position com.doudoumobile.etonkids_client:position}</code></td><td> Defines panel position on the screen.</td></tr>
+           <tr><td><code>{@link #Panel_weight com.doudoumobile.etonkids_client:weight}</code></td><td> Defines size relative to parent (must be in form: nn%p).</td></tr>
+           </table>
+           @see #Panel_animationDuration
+           @see #Panel_closedHandle
+           @see #Panel_content
+           @see #Panel_handle
+           @see #Panel_linearFlying
+           @see #Panel_openedHandle
+           @see #Panel_position
+           @see #Panel_weight
+         */
+        public static final int[] Panel = {
+            0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
+            0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007
+        };
+        /**
+          <p>
+          @attr description
+           Defines panel animation duration in ms. 
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name android:animationDuration
+        */
+        public static final int Panel_animationDuration = 0;
+        /**
+          <p>
+          @attr description
+           Defines closed handle (drawable/color). 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name android:closedHandle
+        */
+        public static final int Panel_closedHandle = 7;
+        /**
+          <p>
+          @attr description
+           Identifier for the child that represents the panel's content. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name android:content
+        */
+        public static final int Panel_content = 3;
+        /**
+          <p>
+          @attr description
+           Identifier for the child that represents the panel's handle. 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name android:handle
+        */
+        public static final int Panel_handle = 2;
+        /**
+          <p>
+          @attr description
+           Defines if flying gesture forces linear interpolator in animation. 
+
+
+          <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name android:linearFlying
+        */
+        public static final int Panel_linearFlying = 4;
+        /**
+          <p>
+          @attr description
+           Defines opened handle (drawable/color). 
+
+
+          <p>May be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+<p>May be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+          <p>This is a private symbol.
+          @attr name android:openedHandle
+        */
+        public static final int Panel_openedHandle = 6;
+        /**
+          <p>
+          @attr description
+           Defines panel position on the screen. 
+
+
+          <p>Must be one of the following constant values.</p>
+<table>
+<colgroup align="left" />
+<colgroup align="left" />
+<colgroup align="left" />
+<tr><th>Constant</th><th>Value</th><th>Description</th></tr>
+<tr><td><code>top</code></td><td>0</td><td> Panel placed at top of the screen. </td></tr>
+<tr><td><code>bottom</code></td><td>1</td><td> Panel placed at bottom of the screen. </td></tr>
+<tr><td><code>left</code></td><td>2</td><td> Panel placed at left of the screen. </td></tr>
+<tr><td><code>right</code></td><td>3</td><td> Panel placed at right of the screen. </td></tr>
+</table>
+          <p>This is a private symbol.
+          @attr name android:position
+        */
+        public static final int Panel_position = 1;
+        /**
+          <p>
+          @attr description
+           Defines size relative to parent (must be in form: nn%p). 
+
+
+          <p>Must be a fractional value, which is a floating point number appended with either % or %p, such as "<code>14.5%</code>".
+The % suffix always means a percentage of the base size; the optional %p suffix provides a size relative to
+some parent container.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name android:weight
+        */
+        public static final int Panel_weight = 5;
+        /** Attributes that can be used with a SmoothButton.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SmoothButton_transitionDrawable com.doudoumobile.etonkids_client:transitionDrawable}</code></td><td></td></tr>
+           <tr><td><code>{@link #SmoothButton_transitionDrawableLength com.doudoumobile.etonkids_client:transitionDrawableLength}</code></td><td></td></tr>
+           <tr><td><code>{@link #SmoothButton_transitionTextColorDown com.doudoumobile.etonkids_client:transitionTextColorDown}</code></td><td></td></tr>
+           <tr><td><code>{@link #SmoothButton_transitionTextColorUp com.doudoumobile.etonkids_client:transitionTextColorUp}</code></td><td></td></tr>
+           </table>
+           @see #SmoothButton_transitionDrawable
+           @see #SmoothButton_transitionDrawableLength
+           @see #SmoothButton_transitionTextColorDown
+           @see #SmoothButton_transitionTextColorUp
+         */
+        public static final int[] SmoothButton = {
+            0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.doudoumobile.etonkids_client.R.attr#transitionDrawable}
+          attribute's value can be found in the {@link #SmoothButton} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name android:transitionDrawable
+        */
+        public static final int SmoothButton_transitionDrawable = 0;
+        /**
+          <p>This symbol is the offset where the {@link com.doudoumobile.etonkids_client.R.attr#transitionDrawableLength}
+          attribute's value can be found in the {@link #SmoothButton} array.
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:transitionDrawableLength
+        */
+        public static final int SmoothButton_transitionDrawableLength = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.doudoumobile.etonkids_client.R.attr#transitionTextColorDown}
+          attribute's value can be found in the {@link #SmoothButton} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:transitionTextColorDown
+        */
+        public static final int SmoothButton_transitionTextColorDown = 3;
+        /**
+          <p>This symbol is the offset where the {@link com.doudoumobile.etonkids_client.R.attr#transitionTextColorUp}
+          attribute's value can be found in the {@link #SmoothButton} array.
+
+
+          <p>Must be a color value, in the form of "<code>#<i>rgb</i></code>", "<code>#<i>argb</i></code>",
+"<code>#<i>rrggbb</i></code>", or "<code>#<i>aarrggbb</i></code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name android:transitionTextColorUp
+        */
+        public static final int SmoothButton_transitionTextColorUp = 2;
+        /** Attributes that can be used with a Switcher.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #Switcher_animationDuration com.doudoumobile.etonkids_client:animationDuration}</code></td><td> Defines switcher animation duration in ms.</td></tr>
+           <tr><td><code>{@link #Switcher_decreaseButton com.doudoumobile.etonkids_client:decreaseButton}</code></td><td> Defines opened handle (drawable).</td></tr>
+           <tr><td><code>{@link #Switcher_idleTimeout com.doudoumobile.etonkids_client:idleTimeout}</code></td><td> Defines switcher idle timeout in ms.</td></tr>
+           <tr><td><code>{@link #Switcher_increaseButton com.doudoumobile.etonkids_client:increaseButton}</code></td><td> Defines opened handle (drawable).</td></tr>
+           </table>
+           @see #Switcher_animationDuration
+           @see #Switcher_decreaseButton
+           @see #Switcher_idleTimeout
+           @see #Switcher_increaseButton
+         */
+        public static final int[] Switcher = {
+            0x7f010000, 0x7f01000c, 0x7f01000d, 0x7f01000e
+        };
+        /**
+          <p>
+          @attr description
+           Defines switcher animation duration in ms. 
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name android:animationDuration
+        */
+        public static final int Switcher_animationDuration = 0;
+        /**
+          <p>
+          @attr description
+           Defines opened handle (drawable). 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name android:decreaseButton
+        */
+        public static final int Switcher_decreaseButton = 2;
+        /**
+          <p>
+          @attr description
+           Defines switcher idle timeout in ms. 
+
+
+          <p>Must be an integer value, such as "<code>100</code>".
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          <p>This is a private symbol.
+          @attr name android:idleTimeout
+        */
+        public static final int Switcher_idleTimeout = 1;
+        /**
+          <p>
+          @attr description
+           Defines opened handle (drawable). 
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          <p>This is a private symbol.
+          @attr name android:increaseButton
+        */
+        public static final int Switcher_increaseButton = 3;
+    };
 }

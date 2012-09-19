@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" 
+    android:paddingBottom="10dp">
+
+   <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/itembg" />
+
+        <ImageButton
+            android:id="@+id/btn_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView1"
+            android:layout_marginLeft="510dp"
+            android:layout_alignBottom="@+id/imageView1"
+            android:layout_marginBottom="4dp"
+            android:background="#00000000"
+            android:src="@drawable/btn_item1_selector" />
+
+        <TextView
+            android:id="@+id/txbtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/btn_item"
+            android:layout_alignBottom="@+id/btn_item"
+            android:layout_marginLeft="0dp"
+            android:layout_marginBottom="8dp"
+            android:textSize="10pt"
+            android:text="Read"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/bookname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/imageView1"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="45dp"
+            android:textSize="11.5pt"
+            android:text="Lesson 2, book 8"
+            android:textColor="#ffffff" />
+
+        <TextView
+            android:id="@+id/tx2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"            
+            android:layout_marginRight="60dp"
+            android:layout_alignRight="@+id/imageView1"
+            android:layout_centerVertical="true"
+            android:textSize="9pt"
+            android:textColor="#ffffff" />
+
+        <ImageView
+            android:id="@+id/ico_dl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="17dp"
+            android:src="@drawable/ico_dl" />
+
+    </RelativeLayout>
+
+</LinearLayout>

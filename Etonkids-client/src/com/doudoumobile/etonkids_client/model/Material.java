@@ -1,7 +1,14 @@
 package com.doudoumobile.etonkids_client.model;
 
-public class Material {
+import java.io.Serializable;
+
+public class Material implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8057685236028257626L;
+
 	private int id;
 	
 	private String path;

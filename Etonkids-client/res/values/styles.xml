@@ -2,4 +2,19 @@
 
     <style name="AppTheme" parent="android:Theme.Light" />
 
+    <style name="tab1">
+    	<item name="android:button">@null</item> 
+    	<item name="android:background">@drawable/tab_bg_selector1</item>
+    		<item name="android:gravity">center_vertical</item> 
+    </style>
+    <style name="tab2">
+    	<item name="android:button">@null</item> 
+    	<item name="android:background">@drawable/tab_bg_selector2</item>
+       	<item name="android:gravity">center_vertical</item> 
+    </style>
+     <style name="tab3">
+    	<item name="android:button">@null</item> 
+    	<item name="android:background">@drawable/tab_bg_selector3</item>
+       	<item name="android:gravity">center_vertical</item> 
+    </style>
 </resources>

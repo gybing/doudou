@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="15dp" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/segline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/segline" 
+            android:layout_marginLeft="7dp"
+            />
+                
+        <ImageView
+            android:id="@+id/cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/cover01" 
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/segline"
+            android:layout_marginTop="10dp"
+            />
+
+        <LinearLayout
+            android:id="@+id/booklist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" 
+            android:layout_toRightOf="@+id/cover"
+            android:layout_marginLeft="18dp"
+            android:layout_alignTop="@+id/cover"
+            android:layout_marginTop="15dp"
+            >
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btn_dlall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/cover"
+            android:layout_below="@+id/cover"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/btn_dlall_selector"
+            android:background="#00000000" />
+
+    </RelativeLayout>
+
+</LinearLayout>

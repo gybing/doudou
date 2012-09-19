@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/LinearLayout1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#00000000" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="110dp"
+        android:layout_marginLeft="44dp"
+        android:src="@drawable/tabtitle3" />
+
+    <ImageButton
+        android:id="@+id/btn_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="775dp"
+        android:layout_marginTop="11dp"
+        android:background="#00000000"
+        android:src="@drawable/btn_logout_selector" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/imageView1"
+        android:layout_marginTop="60dp"
+        android:layout_marginLeft="35dp"
+        android:src="@drawable/setbg" />
+    
+     <EditText
+     android:id="@+id/password_o"
+     android:layout_width="260dp"
+     android:layout_height="43dp"
+     android:ems="10"
+     android:layout_alignParentLeft="true"
+     android:layout_alignParentTop="true"
+     android:layout_marginLeft="580dp"
+     android:layout_marginTop="235dp"
+     android:background="#00000000" 
+     android:inputType="textPassword">
+     <requestFocus />
+     </EditText>
+     
+     <EditText
+     android:id="@+id/password_n"
+     android:layout_width="260dp"
+     android:layout_height="43dp"
+     android:ems="10"
+     android:layout_alignLeft="@+id/password_o"
+     android:layout_alignTop="@+id/password_o"
+     android:layout_marginTop="70dp"
+     android:background="#00000000" 
+     android:inputType="textPassword">
+     </EditText>
+     
+     <EditText
+     android:id="@+id/password_r"
+     android:layout_width="260dp"
+     android:layout_height="43dp"
+     android:ems="10"
+     android:layout_alignLeft="@+id/password_o"
+     android:layout_alignTop="@+id/password_n"
+     android:layout_marginTop="70dp"
+     android:background="#00000000"
+     android:inputType="textPassword" >
+     </EditText>
+
+     <ImageButton
+         android:id="@+id/btn_confirm"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignRight="@+id/password_r"
+         android:layout_below="@+id/password_r"
+         android:layout_marginRight="195dp"
+         android:layout_marginTop="37dp"
+         android:background="#00000000"
+         android:src="@drawable/btn_cfm_selector" />
+
+     <ImageButton
+         android:id="@+id/btn_cancel"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignRight="@+id/password_r"
+         android:layout_alignTop="@+id/btn_confirm"
+         android:layout_marginRight="57dp"
+         android:background="#00000000"
+         android:src="@drawable/btn_cel_selector" />
+
+     <TextView
+         android:id="@+id/textView1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/imageView2"
+         android:layout_alignTop="@+id/imageView2"
+         android:layout_marginLeft="42dp"
+         android:layout_marginTop="90dp"
+         android:text="NAME" 
+         android:textColor="#fcaf21"
+         android:textSize="12pt"/>
+
+     <TextView
+         android:id="@+id/nametx"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView1"
+         android:layout_below="@+id/textView1"
+         android:textSize="10pt"
+         android:textColor="#ffffff" />
+     
+     <TextView
+         android:id="@+id/textView2"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView1"
+         android:layout_below="@+id/nametx"
+         android:layout_marginTop="7dp"
+         android:text="CURRICULUM" 
+         android:textColor="#fcaf21"
+         android:textSize="12pt"/>
+
+     <TextView
+         android:id="@+id/curriculumtx"
+         android:layout_width="300dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView2"
+         android:layout_below="@+id/textView2"
+         android:textSize="10pt"
+         android:textColor="#ffffff" />
+     
+     <TextView
+         android:id="@+id/textView3"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView1"
+         android:layout_below="@+id/curriculumtx"
+         android:layout_marginTop="7dp"
+         android:text="SCHOOL" 
+         android:textColor="#fcaf21"
+         android:textSize="12pt"/>
+
+     <TextView
+         android:id="@+id/schooltx"
+         android:layout_width="300dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView3"
+         android:layout_below="@+id/textView3"
+         android:textSize="10pt"
+         android:textColor="#ffffff" />
+     
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView1"
+         android:layout_below="@+id/schooltx"
+         android:layout_marginTop="7dp"
+         android:text="DEVICE ID" 
+         android:textColor="#fcaf21"
+         android:textSize="12pt"/>
+
+     <TextView
+         android:id="@+id/idtx"
+         android:layout_width="300dp"
+         android:layout_height="wrap_content"
+         android:layout_alignLeft="@+id/textView4"
+         android:layout_below="@+id/textView4"
+         android:textSize="10pt"
+         android:textColor="#ffffff" />
+
+</RelativeLayout>
+
+    
+
+</LinearLayout>

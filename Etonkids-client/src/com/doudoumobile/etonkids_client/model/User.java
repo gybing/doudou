@@ -6,9 +6,9 @@ public class User {
 
 	private Long id;
 
-	private String username;
+	private String userName;
 
-	private String password;
+	private String passWd;
 
 	private String email;
 
@@ -23,6 +23,10 @@ public class User {
 	private String ticket;
 
 	private int role;
+
+	private String curriList;
+	
+	private String schoolInfo;
 	
 	public String getTicket() {
 		return ticket;
@@ -32,7 +36,6 @@ public class User {
 		this.ticket = ticket;
 	}
 
-
 	public Long getId() {
 		return id;
 	}
@@ -41,20 +44,20 @@ public class User {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getPassWd() {
+		return passWd;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setPassword(String passWd) {
+		this.passWd = passWd;
 	}
 
 	public String getEmail() {
@@ -103,6 +106,22 @@ public class User {
 
 	public void setRole(int role) {
 		this.role = role;
+	}
+
+	public String getCurriList() {
+		return curriList;
+	}
+
+	public void setCurriList(String curriList) {
+		this.curriList = curriList;
+	}
+
+	public String getSchoolInfo() {
+		return schoolInfo;
+	}
+
+	public void setSchoolInfo(String schoolInfo) {
+		this.schoolInfo = schoolInfo;
 	}
 	
 	

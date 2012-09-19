@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="30dp"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mlistbg" />
+
+        <ImageView
+            android:id="@+id/bg_selected"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@+id/imageView1"
+            android:layout_marginBottom="1dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/mlistbg_select"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/mname"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/mlength"
+            android:textColor="#514851"
+            android:textSize="9pt" />
+
+        <TextView
+            android:id="@+id/mlength"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignBottom="@+id/mname"
+            android:layout_alignParentRight="true"
+            android:text="00:00/00:00"
+            android:textColor="#514851"
+            android:textSize="6pt" />
+
+    </RelativeLayout>
+
+</LinearLayout>

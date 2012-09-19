@@ -64,7 +64,7 @@ public class NotificationService extends Service {
         // wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
         // connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
-        sharedPrefs = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME,
+        sharedPrefs = getSharedPreferences(Constants.Current_Preference_Name,
                 Context.MODE_PRIVATE);
 
         // Get deviceId

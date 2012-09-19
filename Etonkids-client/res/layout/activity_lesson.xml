@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg2"
+    xmlns:app="http://schemas.android.com/apk/res/com.doudoumobile.etonkids_client">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" 
+		>
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lessontitle" />
+
+        <ImageButton
+            android:id="@+id/imageButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignBottom="@+id/imageView1"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="30dp"
+            android:src="@drawable/btn_back_selector" 
+            android:background="#00000000"/>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignBottom="@+id/imageView1"
+            android:layout_marginBottom="20dp"
+            android:layout_marginRight="30dp"
+            android:src="@drawable/btn_library_selector" 
+            android:background="#00000000"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/imageView1"
+            android:orientation="vertical" 
+            android:id="@+id/lessonLayout">
+        </LinearLayout>
+
+    </RelativeLayout>
+    <com.doudoumobile.etonkids_client.Panel android:layout_width="fill_parent" 
+		    android:layout_height="wrap_content" 
+		    android:id="@+id/bottomPanel"
+		    android:layout_gravity="bottom"
+		    app:content="@+id/panelContent"
+		    app:handle="@+id/panelHandle"
+		    app:position="bottom"
+		    app:animationDuration="1000"
+		    app:linearFlying="true"
+		    >
+		    
+			<Button
+				android:id="@+id/panelHandle" 
+			    android:layout_width="wrap_content" 
+			    android:layout_height="wrap_content"
+			    android:background="@drawable/btn_drawer_up"
+			/>
+			<LinearLayout 
+                android:id="@+id/panelContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/drawerbg" >
+
+               <com.doudoumobile.etonkids_client.MediaplayerSActivity
+                   android:id="@+id/mediaplayerSActivity1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:layout_marginLeft="15dp"
+                   android:layout_marginTop="15dp">
+               </com.doudoumobile.etonkids_client.MediaplayerSActivity>
+
+               <HorizontalScrollView
+                   android:id="@+id/horizontalScrollView1"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent" 
+                   android:layout_marginLeft="15dp"
+                   android:layout_marginTop="15dp"
+                   android:layout_marginBottom="10dp"
+                   android:fadeScrollbars="true"
+                   >
+
+                   <LinearLayout
+                       android:id="@+id/picview"
+                       android:layout_height="match_parent"
+                       android:layout_width="match_parent"
+                       android:orientation="horizontal">
+
+                   </LinearLayout>
+               </HorizontalScrollView>
+             </LinearLayout> 
+     </com.doudoumobile.etonkids_client.Panel>
+</FrameLayout>
