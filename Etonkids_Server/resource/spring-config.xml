@@ -87,6 +87,7 @@
 	<bean id="etonService" class="com.doudoumobile.service.impl.EtonServiceImpl">
 		<property name="etonUserDao" ref="etonUserDao" />
 		<property name="materialDao" ref="materialDao" />
+		<property name="curriculumDao" ref="curriculumDao"></property>
 	</bean>
 
 	<bean id="userService" class="com.doudoumobile.service.impl.UserServiceImpl">

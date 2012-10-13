@@ -7,4 +7,6 @@ public interface EtonUserDao {
 	void modifyPwd(long userId , String passWd);
 	
 	EtonUser getUserById(long userId);
+	
+	EtonUser addUser(EtonUser user);
 }

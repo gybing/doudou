@@ -45,6 +45,15 @@ public class EtonUser implements Serializable {
     @Column(name = "role")
     private int role;
 
+    @Column(name = "notes", length = 128)
+    private String notes;
+    
+    @Column(name = "createdBy", length = 64)
+    private String createdBy;
+    
+    @Column(name = "schoolId")
+    private int schoolId;
+    
     public EtonUser () {
     	available = true;
     }
@@ -111,6 +120,30 @@ public class EtonUser implements Serializable {
 
 	public void setRole(int role) {
 		this.role = role;
+	}
+
+	public String getNotes() {
+		return notes;
+	}
+
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public int getSchoolId() {
+		return schoolId;
+	}
+
+	public void setSchoolId(int schoolId) {
+		this.schoolId = schoolId;
 	}
     
     

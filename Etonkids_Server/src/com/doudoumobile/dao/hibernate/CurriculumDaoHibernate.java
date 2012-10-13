@@ -21,4 +21,11 @@ public class CurriculumDaoHibernate extends HibernateDaoSupport implements Curri
         return (List<Curriculum>) (result);
 	}
 
+	@Override
+	public Curriculum addCurriculum(Curriculum c) {
+		getHibernateTemplate().saveOrUpdate(c);
+		getHibernateTemplate().flush();
+		return c;
+	}
+
 }

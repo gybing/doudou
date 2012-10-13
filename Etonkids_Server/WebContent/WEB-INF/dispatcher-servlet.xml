@@ -15,6 +15,7 @@
 				/lesson.do=lessonController	
 				/download.do=downloadController	
 				/etonUser.do=etonUserController
+				/setting.do=settingController
 			</value>
 		</property>
 		<property name="order" value="1" />
@@ -22,7 +23,11 @@
 
 	<bean id="filenameController"
 		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
-
+		
+	<bean id="settingController" class="com.doudoumobile.controller.SettingController">
+		<property name="methodNameResolver" ref="paramResolver" />
+	</bean>
+	
 	<bean id="downloadController" class="com.doudoumobile.controller.DownloadController">
 		<property name="methodNameResolver" ref="paramResolver" />
 		<property name="downloadRootPath" value="D:/etonkids" />

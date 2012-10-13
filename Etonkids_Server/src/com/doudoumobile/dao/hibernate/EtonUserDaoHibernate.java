@@ -37,6 +37,13 @@ public class EtonUserDaoHibernate extends HibernateDaoSupport implements EtonUse
 	public EtonUser getUserById(long userId) {
 	    return (EtonUser) getHibernateTemplate().get(EtonUser.class, userId);
 	}
+
+	@Override
+	public EtonUser addUser(EtonUser user) {
+		getHibernateTemplate().saveOrUpdate(user);
+		getHibernateTemplate().flush();
+		return user;
+	}
 	
 	
 }
