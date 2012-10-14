@@ -1,5 +1,7 @@
 package com.doudoumobile.dao;
 
+import java.util.List;
+
 import com.doudoumobile.model.EtonUser;
 
 public interface EtonUserDao {
@@ -9,4 +11,8 @@ public interface EtonUserDao {
 	EtonUser getUserById(long userId);
 	
 	EtonUser addUser(EtonUser user);
+	
+	List<EtonUser> getAllUser();
+	
+	void updateUser(EtonUser user);
 }

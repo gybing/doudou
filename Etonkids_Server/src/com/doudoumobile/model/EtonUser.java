@@ -36,8 +36,8 @@ public class EtonUser implements Serializable {
     @Column(name = "realName", length = 64)
     private String realName;
         
-    @Column(name = "teacherTypeId")
-    private Long teacherTypeId;
+//    @Column(name = "teacherTypeId")
+//    private Long teacherTypeId;
 
     @Column(name = "available")
     private boolean available;
@@ -98,13 +98,13 @@ public class EtonUser implements Serializable {
 		this.realName = realName;
 	}
 
-	public Long getTeacherTypeId() {
-		return teacherTypeId;
-	}
-
-	public void setTeacherTypeId(Long teacherTypeId) {
-		this.teacherTypeId = teacherTypeId;
-	}
+//	public Long getTeacherTypeId() {
+//		return teacherTypeId;
+//	}
+//
+//	public void setTeacherTypeId(Long teacherTypeId) {
+//		this.teacherTypeId = teacherTypeId;
+//	}
 
 	public boolean isAvailable() {
 		return available;

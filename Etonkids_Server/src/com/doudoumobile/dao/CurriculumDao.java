@@ -8,4 +8,8 @@ public interface CurriculumDao {
 	List<Curriculum> getRelatedCurriculums(long userId);
 	
 	Curriculum addCurriculum(Curriculum c);
+	
+	List<Curriculum> getAllCurriculumList();
+	
+	void updateCurriculum(Curriculum c);
 }

@@ -45,6 +45,7 @@
 		<mapping class="com.doudoumobile.model.Material" />
 		<mapping class="com.doudoumobile.model.EtonUser" />
 		<mapping class="com.doudoumobile.model.School" />
+		<mapping class="com.doudoumobile.model.SchoolType" />
 	</session-factory>
 </hibernate-configuration>
 

@@ -44,6 +44,20 @@ public class EtonUserDaoHibernate extends HibernateDaoSupport implements EtonUse
 		getHibernateTemplate().flush();
 		return user;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<EtonUser> getAllUser() {
+		return getHibernateTemplate().find(
+        "from EtonUser eu order by id desc");
+	}
+
+	@Override
+	public void updateUser(EtonUser user) {
+		getHibernateTemplate().update(user);
+		getHibernateTemplate().flush();
+		
+	}
 	
 	
 }

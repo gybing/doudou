@@ -80,6 +80,10 @@
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>
 	
+	<bean id="schoolDao" class="com.doudoumobile.dao.hibernate.SchoolDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
 	<!-- =============================================================== -->
 	<!-- Services                                                        -->
 	<!-- =============================================================== -->
@@ -87,7 +91,8 @@
 	<bean id="etonService" class="com.doudoumobile.service.impl.EtonServiceImpl">
 		<property name="etonUserDao" ref="etonUserDao" />
 		<property name="materialDao" ref="materialDao" />
-		<property name="curriculumDao" ref="curriculumDao"></property>
+		<property name="curriculumDao" ref="curriculumDao" />
+		<property name="schoolDao" ref="schoolDao" />
 	</bean>
 
 	<bean id="userService" class="com.doudoumobile.service.impl.UserServiceImpl">

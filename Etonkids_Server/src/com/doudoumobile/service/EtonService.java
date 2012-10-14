@@ -6,6 +6,7 @@ import com.doudoumobile.model.Curriculum;
 import com.doudoumobile.model.EtonUser;
 import com.doudoumobile.model.Material;
 import com.doudoumobile.model.School;
+import com.doudoumobile.model.SchoolType;
 
 public interface EtonService {
 	public EtonUser verifyEtonUser(String userName, String passWd);
@@ -22,7 +23,22 @@ public interface EtonService {
 	
 	public void addCurri(Curriculum c);
 	
+	public List<Curriculum> getAllCurriculumList();
+	
+	public void updateCurriculum(Curriculum c);
+
 	public void addEtonUser(EtonUser eu);
 	
+	public List<EtonUser> getAllEtonUserList();
+	
+	public void updateEtonUser(EtonUser eu);
+	
 	public void addSchool(School s);
+	
+	public List<School> getAllSchool();
+	
+	public void updateSchool(School s);
+	
+	public List<SchoolType> getSchoolTypeList();
+	
 }
