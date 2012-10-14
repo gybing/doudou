@@ -122,7 +122,45 @@ public class EtonServiceImpl implements EtonService{
 	public Curriculum getCurriculumById(long id) {
 		return curriculumDao.getCurriculumById(id);
 	}
-	
-	
 
+	@Override
+	public School getSchoolById(long id) {
+		return schoolDao.getSchoolById(id);
+	}
+
+	@Override
+	public void deleteUser(long id) {
+		etonUserDao.delete(id);
+	}
+
+	@Override
+	public void deleteCurriculum(long id) {
+		curriculumDao.delete(id);
+	}
+
+	@Override
+	public void deleteSchool(long id) {
+		schoolDao.delete(id);
+	}
+
+	@Override
+	public void deleteSchoolType(long id) {
+		schoolDao.deleteSchoolType(id);
+	}
+
+	@Override
+	public void addSchoolType(SchoolType schoolType) {
+		schoolDao.addSchoolType(schoolType);
+		
+	}
+
+	@Override
+	public SchoolType getSchoolTypeById(long id) {
+		return schoolDao.getSchoolTypeById(id);
+	}
+
+	@Override
+	public void updateSchoolType(SchoolType st) {
+		schoolDao.updateSchoolType(st);
+	}
 }

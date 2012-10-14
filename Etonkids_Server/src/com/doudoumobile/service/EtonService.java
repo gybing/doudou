@@ -45,4 +45,14 @@ public interface EtonService {
 	
 	public Curriculum getCurriculumById(long id);
 	
+	public School getSchoolById(long id);
+	
+	public void deleteUser(long id);
+	public void deleteCurriculum(long id);
+	public void deleteSchool(long id);
+	public void deleteSchoolType(long id);
+	public void addSchoolType(SchoolType schoolType);
+	public SchoolType getSchoolTypeById(long id);
+	public void updateSchoolType(SchoolType st);
+	
 }

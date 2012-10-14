@@ -55,4 +55,9 @@ public class CurriculumDaoHibernate extends HibernateDaoSupport implements Curri
 		return c;
 	}
 
+	@Override
+	public void delete(long id) {
+		getHibernateTemplate().delete(getCurriculumById(id));
+	}
+
 }

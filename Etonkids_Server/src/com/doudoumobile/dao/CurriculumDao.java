@@ -16,4 +16,6 @@ public interface CurriculumDao {
 	List<Curriculum> getFirstClassCurriculumList();
 	
 	Curriculum getCurriculumById(long id);
+	
+	void delete(long id);
 }

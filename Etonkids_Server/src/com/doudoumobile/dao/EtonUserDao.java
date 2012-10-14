@@ -15,4 +15,6 @@ public interface EtonUserDao {
 	List<EtonUser> getAllUser();
 	
 	void updateUser(EtonUser user);
+	
+	void delete(long id);
 }

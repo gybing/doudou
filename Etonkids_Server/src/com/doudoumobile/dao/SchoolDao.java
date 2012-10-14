@@ -11,4 +11,16 @@ public interface SchoolDao {
 	public void updateSchool(School s);
 	
 	public List<SchoolType> getAllSchoolType();
+	
+	public School getSchoolById(long id);
+	
+	public SchoolType getSchoolTypeById(long id);
+	
+	public void delete(long id);
+	
+	public void deleteSchoolType(long id);
+	
+	public void addSchoolType(SchoolType st);
+	
+	public void updateSchoolType(SchoolType st);
 }

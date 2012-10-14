@@ -8,7 +8,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.doudoumobile.dao.EtonUserDao;
 import com.doudoumobile.model.EtonUser;
-import com.doudoumobile.model.User;
 
 public class EtonUserDaoHibernate extends HibernateDaoSupport implements EtonUserDao {
 
@@ -56,6 +55,12 @@ public class EtonUserDaoHibernate extends HibernateDaoSupport implements EtonUse
 	public void updateUser(EtonUser user) {
 		getHibernateTemplate().update(user);
 		getHibernateTemplate().flush();
+		
+	}
+
+	@Override
+	public void delete(long id) {
+		getHibernateTemplate().delete(getUserById(id));
 		
 	}
 	

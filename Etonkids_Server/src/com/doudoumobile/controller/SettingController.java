@@ -67,9 +67,10 @@ public class SettingController extends MultiActionController{
 	public void updateCurriculum(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String curriculumName = ServletRequestUtils.getStringParameter(request,"curriculumName","");
 		long parentCid =  ServletRequestUtils.getLongParameter(request, "parentCurriculumId", 0);
+		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
 		
 		Curriculum curriculum = new Curriculum();
-		
+		curriculum.setId(id);
 		curriculum.setCreatedTime(new Date());
 		curriculum.setParentCurriculumId(parentCid);
 		curriculum.setCurriculumName(curriculumName);
@@ -120,9 +121,11 @@ public class SettingController extends MultiActionController{
 		String realName = ServletRequestUtils.getStringParameter(request,"realName","");
 		int role = ServletRequestUtils.getIntParameter(request,"role",0);
 		String userName = ServletRequestUtils.getStringParameter(request,"userName","");
+		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
 		
 		EtonUser etonUser = new EtonUser();
 		SessionData sd = (SessionData)request.getAttribute("sessionData");
+		etonUser.setId(id);
 		etonUser.setAvailable(true);
 		etonUser.setCreatedBy(sd.getEtonUser().getRealName());
 		etonUser.setEmail(email);
@@ -164,8 +167,9 @@ public class SettingController extends MultiActionController{
 	public void updateSchool(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String address = ServletRequestUtils.getStringParameter(request,"address","");
 		String schoolType =  ServletRequestUtils.getStringParameter(request, "schoolType", "");
+		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
 		School school = new School();
-		
+		school.setId(id);
 		school.setAddress(address);
 		school.setSchoolType(schoolType);
 		etonService.updateSchool(school);
@@ -193,5 +197,90 @@ public class SettingController extends MultiActionController{
         System.out.println(object.toString());
     	writer.print(object);
 	}
+	
+	public void getSchoolById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"schoolId",0);
+		
+		School c = etonService.getSchoolById(id);
+		response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        JSONObject object = JsonHelper.getInstance().getJson(c);
+        System.out.println(object.toString());
+    	writer.print(object);
+	}
+	
+	public void getEtonUserById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"userId",0);
+		
+		EtonUser c = etonService.getUser(id);
+		response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        JSONObject object = JsonHelper.getInstance().getJson(c);
+        System.out.println(object.toString());
+    	writer.print(object);
+	}
+	
+	public void deleteEtonUserById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"userId",0);
+		
+		etonService.deleteUser(id);
+		
+	}
+	
+	public void deleteCurriculumById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"curriId",0);
+		
+		etonService.deleteCurriculum(id);
+		
+	}
+	
+	public void deleteSchoolById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"schoolId",0);
+		
+		etonService.deleteSchool(id);
+		
+	}
+	
+	public void deleteSchoolTypeById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"schoolTypeId",0);
+		
+		etonService.deleteSchoolType(id);
+		
+	}
+	
+	public void addSchoolType(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String typeName =  ServletRequestUtils.getStringParameter(request, "typeName", "");
+		SchoolType schoolType = new SchoolType();
+		
+		schoolType.setTypeName(typeName);
+		etonService.addSchoolType(schoolType);
+		
+		System.out.println(schoolType.getId());
+	}
+	
+	public void updateSchoolType(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		String typeName =  ServletRequestUtils.getStringParameter(request, "typeName", "");
+		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
+		SchoolType schoolType = new SchoolType();
+		
+		schoolType.setTypeName(typeName);
+		schoolType.setId(id);
+		etonService.updateSchoolType(schoolType);
+		
+		System.out.println(schoolType.getId());
+	}
+	
+	public void getSchoolTypeById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"id",0);
+		
+		SchoolType c = etonService.getSchoolTypeById(id);
+		response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        JSONObject object = JsonHelper.getInstance().getJson(c);
+        System.out.println(object.toString());
+    	writer.print(object);
+	}
+	
+	
 	
 }
