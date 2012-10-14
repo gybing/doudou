@@ -112,6 +112,16 @@ public class EtonServiceImpl implements EtonService{
 	public List<SchoolType> getSchoolTypeList() {
 		return schoolDao.getAllSchoolType();
 	}
+
+	@Override
+	public List<Curriculum> getFirstClassCurriculumList() {
+		return curriculumDao.getFirstClassCurriculumList();
+	}
+
+	@Override
+	public Curriculum getCurriculumById(long id) {
+		return curriculumDao.getCurriculumById(id);
+	}
 	
 	
 

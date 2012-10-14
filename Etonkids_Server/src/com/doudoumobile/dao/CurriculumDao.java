@@ -12,4 +12,8 @@ public interface CurriculumDao {
 	List<Curriculum> getAllCurriculumList();
 	
 	void updateCurriculum(Curriculum c);
+	
+	List<Curriculum> getFirstClassCurriculumList();
+	
+	Curriculum getCurriculumById(long id);
 }

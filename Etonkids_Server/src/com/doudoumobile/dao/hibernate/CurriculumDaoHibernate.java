@@ -34,13 +34,25 @@ public class CurriculumDaoHibernate extends HibernateDaoSupport implements Curri
 	@SuppressWarnings("unchecked")
 	public List<Curriculum> getAllCurriculumList() {
 		return getHibernateTemplate().find(
-        "from Curriculum c order by id desc");
+				"FROM Curriculum c where parentCurriculumId > 0 order by id desc");
 	}
 
 	@Override
 	public void updateCurriculum(Curriculum c) {
 		getHibernateTemplate().update(c);
 		getHibernateTemplate().flush();
+	}
+
+	@Override
+	public List<Curriculum> getFirstClassCurriculumList() {
+		return getHibernateTemplate().find(
+        "from Curriculum c where parentCurriculumId = 0");
+	}
+
+	@Override
+	public Curriculum getCurriculumById(long id) {
+		Curriculum c = (Curriculum) getHibernateTemplate().get(Curriculum.class, id);
+		return c;
 	}
 
 }

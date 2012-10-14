@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -45,6 +46,16 @@ public class SettingController extends MultiActionController{
 	
 	public void getCurriculumList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		List<Curriculum> cList = etonService.getAllCurriculumList();
+		
+		response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        JSONArray object = JsonHelper.getInstance().getJsonArray(cList);
+        System.out.println(object.toString());
+    	writer.print(object);
+	}
+	
+	public void getFirstClassCurriList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		List<Curriculum> cList = etonService.getFirstClassCurriculumList();
 		
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
@@ -168,6 +179,17 @@ public class SettingController extends MultiActionController{
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
         JSONArray object = JsonHelper.getInstance().getJsonArray(cList);
+        System.out.println(object.toString());
+    	writer.print(object);
+	}
+	
+	public void getCurriculumById(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long id = ServletRequestUtils.getLongParameter(request,"curriId",0);
+		
+		Curriculum c = etonService.getCurriculumById(id);
+		response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        JSONObject object = JsonHelper.getInstance().getJson(c);
         System.out.println(object.toString());
     	writer.print(object);
 	}

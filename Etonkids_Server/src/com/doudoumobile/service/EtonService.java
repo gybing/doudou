@@ -41,4 +41,8 @@ public interface EtonService {
 	
 	public List<SchoolType> getSchoolTypeList();
 	
+	public List<Curriculum> getFirstClassCurriculumList();
+	
+	public Curriculum getCurriculumById(long id);
+	
 }

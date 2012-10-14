@@ -35,6 +35,9 @@ public class Curriculum implements Serializable {
     @Column(name = "imgPath", length = 128)
     private String imgPath;
     
+    @Column(name = "parentCurriName", length = 64)
+    private String parentCurriName;
+    
     @Transient
     private List<Lesson> lessonList;
     
@@ -114,6 +117,13 @@ public class Curriculum implements Serializable {
 	public List<Lesson> getLessonList() {
 		return lessonList;
 	}
-	
+
+	public String getParentCurriName() {
+		return parentCurriName;
+	}
+
+	public void setParentCurriName(String parentCurriName) {
+		this.parentCurriName = parentCurriName;
+	}
 	
 }
