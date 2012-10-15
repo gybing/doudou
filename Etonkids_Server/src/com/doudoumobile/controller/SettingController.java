@@ -33,12 +33,14 @@ public class SettingController extends MultiActionController{
 	public void addCurriculum(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String curriculumName = ServletRequestUtils.getStringParameter(request,"curriculumName","");
 		long parentCid =  ServletRequestUtils.getLongParameter(request, "parentCurriculumId", 0);
+		String parentCurriName = ServletRequestUtils.getStringParameter(request,"parentCurriName","");
 		Curriculum curriculum = new Curriculum();
 		
 		curriculum.setCreatedTime(new Date());
 		curriculum.setParentCurriculumId(parentCid);
 		curriculum.setCurriculumName(curriculumName);
 		curriculum.setImgPath("");
+		curriculum.setParentCurriName(parentCurriName);
 		etonService.addCurri(curriculum);
 		
 		System.out.println(curriculum.getId());

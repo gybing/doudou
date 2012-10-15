@@ -136,6 +136,7 @@ public class EtonServiceImpl implements EtonService{
 	@Override
 	public void deleteCurriculum(long id) {
 		curriculumDao.delete(id);
+		curriculumDao.deleteChildCurriculumByParentId(id);
 	}
 
 	@Override
