@@ -176,4 +176,9 @@ public class EtonServiceImpl implements EtonService{
 		curriculumDao.addCurriculumToUser(ctu);
 	}
 
+	@Override
+	public void deleteCurriculumToUserByUserId(long userId) {
+		curriculumDao.deleteCurriculumToUserByUserId(userId);
+	}
+
 }

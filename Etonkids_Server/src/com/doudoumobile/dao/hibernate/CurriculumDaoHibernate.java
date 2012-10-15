@@ -78,7 +78,17 @@ public class CurriculumDaoHibernate extends HibernateDaoSupport implements Curri
 		getHibernateTemplate().saveOrUpdate(ctu);
 		getHibernateTemplate().flush();
 	}
+
+	@Override
+	public void deleteCurriculumToUserByUserId(long userId) {
+		List<CurriculumToUser> result = getCurriculumToUserByUserId(userId);
+		getHibernateTemplate().deleteAll(result);
+	}
 	
-	
+	@Override
+	public List<CurriculumToUser> getCurriculumToUserByUserId(long userId) {
+		return getHibernateTemplate().find(
+		        "from CurriculumToUser ctu where userId = " + userId);
+	}
 
 }

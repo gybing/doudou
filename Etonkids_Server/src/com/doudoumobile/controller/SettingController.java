@@ -153,16 +153,18 @@ public class SettingController extends MultiActionController{
 	}
 	
 	public void updateEtonUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
 		String email = ServletRequestUtils.getStringParameter(request,"email","");
 		String notes = ServletRequestUtils.getStringParameter(request,"notes","");
 		String realName = ServletRequestUtils.getStringParameter(request,"realName","");
 		int role = ServletRequestUtils.getIntParameter(request,"role",0);
 		String userName = ServletRequestUtils.getStringParameter(request,"userName","");
-		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
+		String curriIdList = ServletRequestUtils.getStringParameter(request,"curriculumsId","");
+		long schoolId = ServletRequestUtils.getLongParameter(request, "schoolId", 0);
 		
 		EtonUser etonUser = new EtonUser();
-		SessionData sd = (SessionData)request.getAttribute("sessionData");
 		etonUser.setId(id);
+		SessionData sd = (SessionData)request.getAttribute("sessionData");
 		etonUser.setAvailable(true);
 		etonUser.setCreatedBy(sd.getEtonUser().getRealName());
 		etonUser.setEmail(email);
@@ -171,10 +173,20 @@ public class SettingController extends MultiActionController{
 		etonUser.setRealName(realName);
 		etonUser.setRole(role);
 		etonUser.setUserName(userName);
-		//
-		etonUser.setSchoolId(1);
+		etonUser.setSchoolId(schoolId);
 		
 		etonService.updateEtonUser(etonUser);
+
+		etonService.deleteCurriculumToUserByUserId(id);
+		String[] ids = curriIdList.split(",");
+		for (String cId : ids) {
+			CurriculumToUser ctu = new CurriculumToUser();
+			ctu.setCurriculumId(Long.parseLong(cId));
+			ctu.setAvailable(true);
+			ctu.setCreatedTime(new Date());
+			ctu.setUserId(etonUser.getId());
+			etonService.addCurriToEtonUser(ctu);
+		}
 		
 		System.out.println(etonUser.getId());
 	}

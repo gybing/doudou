@@ -60,4 +60,6 @@ public interface EtonService {
 	
 	public void addCurriToEtonUser(CurriculumToUser ctu);
 	
+	public void deleteCurriculumToUserByUserId(long userId);
+	
 }

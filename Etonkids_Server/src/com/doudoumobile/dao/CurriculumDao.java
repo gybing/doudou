@@ -25,4 +25,8 @@ public interface CurriculumDao {
 	List<Curriculum> getCurriculumsByParentId(long parentId);
 	
 	void addCurriculumToUser(CurriculumToUser ctu);
+	
+	void deleteCurriculumToUserByUserId(long userId);
+	
+	List<CurriculumToUser> getCurriculumToUserByUserId(long userId);
 }
