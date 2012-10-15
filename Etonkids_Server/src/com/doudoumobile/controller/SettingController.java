@@ -251,11 +251,27 @@ public class SettingController extends MultiActionController{
 	
 	public void getEtonUserById(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		long id = ServletRequestUtils.getLongParameter(request,"userId",0);
+		EtonUser etonUser = etonService.getUser(id);
 		
-		EtonUser c = etonService.getUser(id);
+		if (etonUser.getRole() == EtonUser.Teacher) {
+			// Curri info
+			StringBuffer curriculumString = new StringBuffer();
+			List<Curriculum> currList = lessonService.getRelatedCurriculums(etonUser.getId());
+			if(null != currList && currList.size() > 0) {
+				for (Curriculum curriculum : currList) {
+					curriculumString.append(curriculum.getCurriculumName() + ",");
+				}	
+				curriculumString.deleteCharAt(curriculumString.length()-1);
+			}
+			etonUser.setCurriList(curriculumString.toString());
+			
+			// school info
+			etonUser.setSchoolInfo(etonService.getSchoolById(etonUser.getSchoolId()));
+		}
+		
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
-        JSONObject object = JsonHelper.getInstance().getJson(c);
+        JSONObject object = JsonHelper.getInstance().getJson(etonUser);
         System.out.println(object.toString());
     	writer.print(object);
 	}
