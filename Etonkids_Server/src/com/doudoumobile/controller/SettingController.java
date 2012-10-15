@@ -93,7 +93,7 @@ public class SettingController extends MultiActionController{
 		String notes = ServletRequestUtils.getStringParameter(request,"notes","");
 		String realName = ServletRequestUtils.getStringParameter(request,"realName","");
 		int role = ServletRequestUtils.getIntParameter(request,"role",0);
-		String userName = ServletRequestUtils.getStringParameter(request,"userName","");
+		String userName = email;
 		String curriIdList = ServletRequestUtils.getStringParameter(request,"curriculumsId","");
 		long schoolId = ServletRequestUtils.getLongParameter(request, "schoolId", 0);
 		
@@ -158,7 +158,7 @@ public class SettingController extends MultiActionController{
 		String notes = ServletRequestUtils.getStringParameter(request,"notes","");
 		String realName = ServletRequestUtils.getStringParameter(request,"realName","");
 		int role = ServletRequestUtils.getIntParameter(request,"role",0);
-		String userName = ServletRequestUtils.getStringParameter(request,"userName","");
+		String userName = email;
 		String curriIdList = ServletRequestUtils.getStringParameter(request,"curriculumsId","");
 		long schoolId = ServletRequestUtils.getLongParameter(request, "schoolId", 0);
 		
