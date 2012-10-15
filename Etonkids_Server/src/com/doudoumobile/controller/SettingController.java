@@ -264,7 +264,7 @@ public class SettingController extends MultiActionController{
 					curriIdString.append(curriculum.getId()+",");
 				}	
 				curriculumString.deleteCharAt(curriculumString.length()-1);
-				curriIdString.deleteCharAt(curriculumString.length()-1);
+				curriIdString.deleteCharAt(curriIdString.length()-1);
 			}
 			etonUser.setCurriList(curriculumString.toString());
 			etonUser.setCurriIdList(curriIdString.toString());
