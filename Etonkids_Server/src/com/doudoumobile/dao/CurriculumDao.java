@@ -3,6 +3,7 @@ package com.doudoumobile.dao;
 import java.util.List;
 
 import com.doudoumobile.model.Curriculum;
+import com.doudoumobile.model.CurriculumToUser;
 
 public interface CurriculumDao {
 	List<Curriculum> getRelatedCurriculums(long userId);
@@ -22,4 +23,6 @@ public interface CurriculumDao {
 	void deleteChildCurriculumByParentId(long parentId);
 	
 	List<Curriculum> getCurriculumsByParentId(long parentId);
+	
+	void addCurriculumToUser(CurriculumToUser ctu);
 }

@@ -8,6 +8,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.doudoumobile.dao.CurriculumDao;
 import com.doudoumobile.model.Curriculum;
+import com.doudoumobile.model.CurriculumToUser;
 
 public class CurriculumDaoHibernate extends HibernateDaoSupport implements CurriculumDao {
 
@@ -70,6 +71,12 @@ public class CurriculumDaoHibernate extends HibernateDaoSupport implements Curri
 	public List<Curriculum> getCurriculumsByParentId(long parentId) {
 		return getHibernateTemplate().find(
         "from Curriculum c where parentCurriculumId = " + parentId);
+	}
+
+	@Override
+	public void addCurriculumToUser(CurriculumToUser ctu) {
+		getHibernateTemplate().saveOrUpdate(ctu);
+		getHibernateTemplate().flush();
 	}
 	
 	

@@ -7,6 +7,7 @@ import com.doudoumobile.dao.EtonUserDao;
 import com.doudoumobile.dao.MaterialDao;
 import com.doudoumobile.dao.SchoolDao;
 import com.doudoumobile.model.Curriculum;
+import com.doudoumobile.model.CurriculumToUser;
 import com.doudoumobile.model.EtonUser;
 import com.doudoumobile.model.Material;
 import com.doudoumobile.model.School;
@@ -69,8 +70,8 @@ public class EtonServiceImpl implements EtonService{
 	}
 
 	@Override
-	public void addEtonUser(EtonUser eu) {
-		etonUserDao.addUser(eu);
+	public EtonUser addEtonUser(EtonUser eu) {
+		return etonUserDao.addUser(eu);
 	}
 
 	@Override
@@ -169,4 +170,10 @@ public class EtonServiceImpl implements EtonService{
 	public List<School> getSchoolByTypeId(long typeId) {
 		return schoolDao.getSchoolByTypeId(typeId);
 	}
+
+	@Override
+	public void addCurriToEtonUser(CurriculumToUser ctu) {
+		curriculumDao.addCurriculumToUser(ctu);
+	}
+
 }

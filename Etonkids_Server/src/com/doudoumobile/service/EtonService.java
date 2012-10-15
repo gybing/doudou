@@ -3,6 +3,7 @@ package com.doudoumobile.service;
 import java.util.List;
 
 import com.doudoumobile.model.Curriculum;
+import com.doudoumobile.model.CurriculumToUser;
 import com.doudoumobile.model.EtonUser;
 import com.doudoumobile.model.Material;
 import com.doudoumobile.model.School;
@@ -27,7 +28,7 @@ public interface EtonService {
 	
 	public void updateCurriculum(Curriculum c);
 
-	public void addEtonUser(EtonUser eu);
+	public EtonUser addEtonUser(EtonUser eu);
 	
 	public List<EtonUser> getAllEtonUserList();
 	
@@ -56,5 +57,7 @@ public interface EtonService {
 	public void updateSchoolType(SchoolType st);
 	
 	public List<School> getSchoolByTypeId(long typeId);
+	
+	public void addCurriToEtonUser(CurriculumToUser ctu);
 	
 }

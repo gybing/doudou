@@ -14,6 +14,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.doudoumobile.model.Curriculum;
+import com.doudoumobile.model.CurriculumToUser;
 import com.doudoumobile.model.EtonUser;
 import com.doudoumobile.model.School;
 import com.doudoumobile.model.SchoolType;
@@ -93,6 +94,8 @@ public class SettingController extends MultiActionController{
 		String realName = ServletRequestUtils.getStringParameter(request,"realName","");
 		int role = ServletRequestUtils.getIntParameter(request,"role",0);
 		String userName = ServletRequestUtils.getStringParameter(request,"userName","");
+		String curriIdList = ServletRequestUtils.getStringParameter(request,"curriculumsId","");
+		long schoolId = ServletRequestUtils.getLongParameter(request, "schoolId", 0);
 		
 		EtonUser etonUser = new EtonUser();
 		SessionData sd = (SessionData)request.getAttribute("sessionData");
@@ -104,10 +107,19 @@ public class SettingController extends MultiActionController{
 		etonUser.setRealName(realName);
 		etonUser.setRole(role);
 		etonUser.setUserName(userName);
-		//
-		etonUser.setSchoolId(1);
+		etonUser.setSchoolId(schoolId);
 		
 		etonService.addEtonUser(etonUser);
+
+		String[] ids = curriIdList.split(",");
+		for (String cId : ids) {
+			CurriculumToUser ctu = new CurriculumToUser();
+			ctu.setCurriculumId(Long.parseLong(cId));
+			ctu.setAvailable(true);
+			ctu.setCreatedTime(new Date());
+			ctu.setUserId(etonUser.getId());
+			etonService.addCurriToEtonUser(ctu);
+		}
 		
 		System.out.println(etonUser.getId());
 	}
@@ -319,7 +331,5 @@ public class SettingController extends MultiActionController{
         System.out.println(object.toString());
     	writer.print(object);
 	}
-	
-	
 	
 }
