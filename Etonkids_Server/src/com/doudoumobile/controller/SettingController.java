@@ -315,7 +315,7 @@ public class SettingController extends MultiActionController{
 		List<School> c = etonService.getSchoolByTypeId(typeId);
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
-        JSONObject object = JsonHelper.getInstance().getJson(c);
+        JSONArray object = JsonHelper.getInstance().getJsonArray(c);
         System.out.println(object.toString());
     	writer.print(object);
 	}
