@@ -110,17 +110,18 @@ public class SettingController extends MultiActionController{
 		etonUser.setSchoolId(schoolId);
 		
 		etonService.addEtonUser(etonUser);
-
-		String[] ids = curriIdList.split(",");
-		for (String cId : ids) {
-			CurriculumToUser ctu = new CurriculumToUser();
-			ctu.setCurriculumId(Long.parseLong(cId));
-			ctu.setAvailable(true);
-			ctu.setCreatedTime(new Date());
-			ctu.setUserId(etonUser.getId());
-			etonService.addCurriToEtonUser(ctu);
-		}
 		
+		if(!curriIdList.isEmpty()) {
+			String[] ids = curriIdList.split(",");
+			for (String cId : ids) {
+				CurriculumToUser ctu = new CurriculumToUser();
+				ctu.setCurriculumId(Long.parseLong(cId));
+				ctu.setAvailable(true);
+				ctu.setCreatedTime(new Date());
+				ctu.setUserId(etonUser.getId());
+				etonService.addCurriToEtonUser(ctu);
+			}
+		}
 		System.out.println(etonUser.getId());
 	}
 	
@@ -178,16 +179,17 @@ public class SettingController extends MultiActionController{
 		etonService.updateEtonUser(etonUser);
 
 		etonService.deleteCurriculumToUserByUserId(id);
-		String[] ids = curriIdList.split(",");
-		for (String cId : ids) {
-			CurriculumToUser ctu = new CurriculumToUser();
-			ctu.setCurriculumId(Long.parseLong(cId));
-			ctu.setAvailable(true);
-			ctu.setCreatedTime(new Date());
-			ctu.setUserId(etonUser.getId());
-			etonService.addCurriToEtonUser(ctu);
+		if(!curriIdList.isEmpty()) {
+			String[] ids = curriIdList.split(",");
+			for (String cId : ids) {
+				CurriculumToUser ctu = new CurriculumToUser();
+				ctu.setCurriculumId(Long.parseLong(cId));
+				ctu.setAvailable(true);
+				ctu.setCreatedTime(new Date());
+				ctu.setUserId(etonUser.getId());
+				etonService.addCurriToEtonUser(ctu);
+			}
 		}
-		
 		System.out.println(etonUser.getId());
 	}
 	
