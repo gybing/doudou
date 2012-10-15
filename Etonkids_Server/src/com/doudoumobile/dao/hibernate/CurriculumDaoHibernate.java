@@ -62,11 +62,16 @@ public class CurriculumDaoHibernate extends HibernateDaoSupport implements Curri
 
 	@Override
 	public void deleteChildCurriculumByParentId(long parentId) {
-		String hql = "delete FROM Curriculum where parentCurriculumId = " + parentId;
-		Session session = getSession();
-		SQLQuery query = session.createSQLQuery(hql.toString());
-		query.list();
-		session.close();
+		List<Curriculum> result = getCurriculumsByParentId(parentId);
+		getHibernateTemplate().deleteAll(result);
 	}
+
+	@Override
+	public List<Curriculum> getCurriculumsByParentId(long parentId) {
+		return getHibernateTemplate().find(
+        "from Curriculum c where parentCurriculumId = " + parentId);
+	}
+	
+	
 
 }

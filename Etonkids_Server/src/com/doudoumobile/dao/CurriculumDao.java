@@ -20,4 +20,6 @@ public interface CurriculumDao {
 	void delete(long id);
 	
 	void deleteChildCurriculumByParentId(long parentId);
+	
+	List<Curriculum> getCurriculumsByParentId(long parentId);
 }
