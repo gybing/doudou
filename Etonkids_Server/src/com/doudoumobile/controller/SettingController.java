@@ -70,6 +70,7 @@ public class SettingController extends MultiActionController{
 		String curriculumName = ServletRequestUtils.getStringParameter(request,"curriculumName","");
 		long parentCid =  ServletRequestUtils.getLongParameter(request, "parentCurriculumId", 0);
 		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
+		String parentCurriName = ServletRequestUtils.getStringParameter(request,"parentCurriName","");
 		
 		Curriculum curriculum = new Curriculum();
 		curriculum.setId(id);
@@ -77,6 +78,7 @@ public class SettingController extends MultiActionController{
 		curriculum.setParentCurriculumId(parentCid);
 		curriculum.setCurriculumName(curriculumName);
 		curriculum.setImgPath("");
+		curriculum.setParentCurriName(parentCurriName);
 		etonService.updateCurriculum(curriculum);
 		
 		System.out.println(curriculum.getId());
