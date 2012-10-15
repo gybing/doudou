@@ -60,6 +60,9 @@ public class EtonUser implements Serializable {
     private String curriList;
     
     @Transient
+    private String curriIdList;
+    
+    @Transient
     private School schoolInfo;
     
     public EtonUser () {
@@ -168,6 +171,14 @@ public class EtonUser implements Serializable {
 
 	public void setSchoolInfo(School schoolInfo) {
 		this.schoolInfo = schoolInfo;
+	}
+
+	public String getCurriIdList() {
+		return curriIdList;
+	}
+
+	public void setCurriIdList(String curriIdList) {
+		this.curriIdList = curriIdList;
 	}
 	
 }

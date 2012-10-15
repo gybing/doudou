@@ -256,15 +256,18 @@ public class SettingController extends MultiActionController{
 		if (etonUser.getRole() == EtonUser.Teacher) {
 			// Curri info
 			StringBuffer curriculumString = new StringBuffer();
+			StringBuffer curriIdString = new StringBuffer();
 			List<Curriculum> currList = lessonService.getRelatedCurriculums(etonUser.getId());
 			if(null != currList && currList.size() > 0) {
 				for (Curriculum curriculum : currList) {
 					curriculumString.append(curriculum.getCurriculumName() + ",");
+					curriIdString.append(curriculum.getId()+",");
 				}	
 				curriculumString.deleteCharAt(curriculumString.length()-1);
+				curriIdString.deleteCharAt(curriculumString.length()-1);
 			}
 			etonUser.setCurriList(curriculumString.toString());
-			
+			etonUser.setCurriIdList(curriIdString.toString());
 			// school info
 			etonUser.setSchoolInfo(etonService.getSchoolById(etonUser.getSchoolId()));
 		}
