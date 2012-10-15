@@ -55,4 +55,6 @@ public interface EtonService {
 	public SchoolType getSchoolTypeById(long id);
 	public void updateSchoolType(SchoolType st);
 	
+	public List<School> getSchoolByTypeId(long typeId);
+	
 }

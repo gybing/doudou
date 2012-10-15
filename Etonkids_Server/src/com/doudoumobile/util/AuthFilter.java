@@ -10,6 +10,7 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.bind.ServletRequestUtils;
 
+import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.EtonService;
 import com.doudoumobile.service.ServiceLocator;
 import com.doudoumobile.service.UserService;
@@ -102,38 +104,38 @@ public class AuthFilter implements Filter {
 	
 	//如果没有cookie那么查找url是否有相应的Doudou_ticket参数
 	private void setSessionData(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
-//		String ticket = null;
-//		Cookie[] cookies = req.getCookies();
-//	    if (null != cookies && cookies.length > 0) {
-//	        for (Cookie cookie : cookies) {
-//	            if (cookie.getName().equals(Constants.DOUDOU_TICKET)) {
-//	                ticket = cookie.getValue();
-//	                break;
-//	            }
-//	        }
-//	    }
+		String ticket = null;
+		Cookie[] cookies = req.getCookies();
+	    if (null != cookies && cookies.length > 0) {
+	        for (Cookie cookie : cookies) {
+	            if (cookie.getName().equals("EtonKids_ITeach_Ticket")) {
+	                ticket = cookie.getValue();
+	                break;
+	            }
+	        }
+	    }
 //	    //查找url
 //	    //再判断1.判断内存map里是否有这个ticket,有那就直接通过获取用户id
 //	    //2.如果没有再到数据库里去查找，获得用户
-//	    if (ticket != null) {
-//	    	int veriCode = DoudouBackend.getInstance().getUserByCookie(ticket);
-//	    	if (veriCode != -1) {
-//	    		SessionData sessionData = new SessionData();
-//	    		sessionData.setUser(userDao.read(veriCode));
-//	    		
-//	        	req.getSession(true).setAttribute("sessionData", sessionData);
-//				log.info("Filter cookie verified Success! userId = " + veriCode);
-//				chain.doFilter(req, resp);
-//			} else {
-//				resp.sendRedirect(NOT_AUTHED_PAGE);
-//				log.info("Filter cookie verified Error! token = " + ticket);
-//			}
-//			
-//		} else {
-//			// login 
-//			//request.getRequestDispatcher("login.jsp");
-//			resp.sendRedirect(req.getContextPath() + LOGIN_PAGE);
-//		}
+	    if (ticket != null) {
+	    	long userId = processTicket(ticket);
+	    	if (userId != -1) {
+	    		SessionData sessionData = new SessionData();
+	    		sessionData.setEtonUser(etonService.getUser(userId));
+	    		
+	        	req.getSession(true).setAttribute("sessionData", sessionData);
+				log.info("Filter cookie verified Success! userId = " + userId);
+				chain.doFilter(req, resp);
+			} else {
+				resp.sendRedirect(NOT_AUTHED_PAGE);
+				log.info("Filter cookie verified Error! token = " + ticket);
+			}
+			
+		} else {
+			// login 
+			//request.getRequestDispatcher("login.jsp");
+			resp.sendRedirect(req.getContextPath() + LOGIN_PAGE);
+		}
 	}
 	
 	private long processTicket(String str) {

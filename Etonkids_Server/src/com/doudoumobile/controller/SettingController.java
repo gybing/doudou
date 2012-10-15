@@ -19,15 +19,18 @@ import com.doudoumobile.model.School;
 import com.doudoumobile.model.SchoolType;
 import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.EtonService;
+import com.doudoumobile.service.LessonService;
 import com.doudoumobile.service.ServiceLocator;
 import com.doudoumobile.util.JsonHelper;
 import com.doudoumobile.util.MD5;
 
 public class SettingController extends MultiActionController{
 	EtonService etonService;
-
+	LessonService lessonService;
+	
 	private SettingController() {
 		etonService = (EtonService)ServiceLocator.getService("etonService");
+		lessonService = (LessonService)ServiceLocator.getService("lessonService");
 	}
 	
 	public void addCurriculum(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -111,6 +114,24 @@ public class SettingController extends MultiActionController{
 	
 	public void getEtonUserList(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		List<EtonUser> cList = etonService.getAllEtonUserList();
+		for (EtonUser etonUser : cList) {
+			
+			if (etonUser.getRole() == EtonUser.Teacher) {
+				// Curri info
+				StringBuffer curriculumString = new StringBuffer();
+				List<Curriculum> currList = lessonService.getRelatedCurriculums(etonUser.getId());
+				if(null != currList && currList.size() > 0) {
+					for (Curriculum curriculum : currList) {
+						curriculumString.append(curriculum.getCurriculumName() + ",");
+					}	
+					curriculumString.deleteCharAt(curriculumString.length()-1);
+				}
+				etonUser.setCurriList(curriculumString.toString());
+				
+				// school info
+				etonUser.setSchoolInfo(etonService.getSchoolById(etonUser.getSchoolId()));
+			}
+		}
 		
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
@@ -149,8 +170,9 @@ public class SettingController extends MultiActionController{
 	public void addSchool(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String address = ServletRequestUtils.getStringParameter(request,"address","");
 		String schoolType =  ServletRequestUtils.getStringParameter(request, "schoolType", "");
+		long typeId = ServletRequestUtils.getLongParameter(request, "typeId", 0);
 		School school = new School();
-		
+		school.setTypeId(typeId);
 		school.setAddress(address);
 		school.setSchoolType(schoolType);
 		etonService.addSchool(school);
@@ -171,9 +193,11 @@ public class SettingController extends MultiActionController{
 	public void updateSchool(HttpServletRequest request, HttpServletResponse response) throws Exception{
 		String address = ServletRequestUtils.getStringParameter(request,"address","");
 		String schoolType =  ServletRequestUtils.getStringParameter(request, "schoolType", "");
+		long typeId = ServletRequestUtils.getLongParameter(request, "typeId", 0);
 		long id = ServletRequestUtils.getLongParameter(request, "id", 0);
 		School school = new School();
 		school.setId(id);
+		school.setTypeId(typeId);
 		school.setAddress(address);
 		school.setSchoolType(schoolType);
 		etonService.updateSchool(school);
@@ -278,6 +302,17 @@ public class SettingController extends MultiActionController{
 		long id = ServletRequestUtils.getLongParameter(request,"id",0);
 		
 		SchoolType c = etonService.getSchoolTypeById(id);
+		response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        JSONObject object = JsonHelper.getInstance().getJson(c);
+        System.out.println(object.toString());
+    	writer.print(object);
+	}
+	
+	public void getSchoolByTypeId(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		long typeId = ServletRequestUtils.getLongParameter(request,"typeId",0);
+		
+		List<School> c = etonService.getSchoolByTypeId(typeId);
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
         JSONObject object = JsonHelper.getInstance().getJson(c);

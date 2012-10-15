@@ -25,6 +25,9 @@ public class School implements Serializable{
 	@Column(name = "address", nullable = false, length = 256)
     private String address;
 	
+	@Column(name = "typeId")
+	private Long typeId;
+	
 	@Column(name = "schoolType", length = 30 , nullable = false)
 	private String schoolType;
 
@@ -52,4 +55,12 @@ public class School implements Serializable{
 		this.schoolType = schoolType;
 	}
 
+	public Long getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(Long typeId) {
+		this.typeId = typeId;
+	}
+	
 }

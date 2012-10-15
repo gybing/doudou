@@ -3,6 +3,7 @@ package com.doudoumobile.controller;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.doudoumobile.model.Curriculum;
 import com.doudoumobile.model.EtonUser;
+import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.EtonService;
 import com.doudoumobile.service.LessonService;
 import com.doudoumobile.service.ServiceLocator;
@@ -40,11 +42,7 @@ public class EtonUserController extends MultiActionController {
         	writer.print("null");
         	return;
         }
-        JSONObject object = JsonHelper.getInstance().getJson(user);
-        String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "doudouTicket";
-        String encodedS = Base64.encode(doudouTicket.getBytes());
-        System.out.println("encoded : " + encodedS);
-        object.put("ticket", encodedS);
+        
     	
     	if (user.getRole() == EtonUser.Teacher) {
     		// Curri info
@@ -56,16 +54,21 @@ public class EtonUserController extends MultiActionController {
     			}	
     			curriculumString.deleteCharAt(curriculumString.length()-1);
     		}
-    		object.put("curriList", curriculumString.toString());
+    		user.setCurriList(curriculumString.toString());
     		
     		// school info
+    		user.setSchoolInfo(etonService.getSchoolById(user.getSchoolId()));
 		}
+    	JSONObject object = JsonHelper.getInstance().getJson(user);
+        String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "doudouTicket";
+        String encodedS = Base64.encode(doudouTicket.getBytes());
+        System.out.println("encoded : " + encodedS);
+        object.put("ticket", encodedS);
     	
     	writer.print(object);
 
     }
     
-    @RequestMapping("/modifyPwd")
     public void modifyPwd(HttpServletRequest request, HttpServletResponse response) throws Exception{
     	long userId = (Long)request.getAttribute("userId");
     	String oldPwd = ServletRequestUtils.getStringParameter(request, "oldPwd", "");
@@ -74,5 +77,37 @@ public class EtonUserController extends MultiActionController {
     	int result = etonService.modifyPwd(userId, oldPwd, newPwd);
     	response.setContentType("text/x-json;charset=UTF-8"); 
     	response.getWriter().print(result);
+    }
+    
+    public void loginForWeb(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	String userName = ServletRequestUtils.getStringParameter(request, "userName", "");
+    	String passWd = ServletRequestUtils.getStringParameter(request, "passWd", "");
+    	EtonUser user = etonService.verifyEtonUser(userName, passWd);
+    	response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        if (user == null) {
+        	writer.print("null");
+        	return;
+        }
+        
+    	if (null != user) {
+    		if (user.getRole() == EtonUser.Admin) {
+    			String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "doudouTicket";
+    			String encodedS = Base64.encode(doudouTicket.getBytes());
+    			Cookie cookie = new Cookie("EtonKids_ITeach_Ticket",encodedS);
+    			cookie.setMaxAge(3600);
+    			cookie.setPath("/");
+    			response.addCookie(cookie);
+    			
+    			SessionData sessionData = new SessionData();
+    			sessionData.setEtonUser(user);
+    			
+    			request.getSession().setAttribute("SessionData", sessionData);		
+    			writer.print("LoginSuccess");
+			} else {
+				writer.print("NotOpenYetForOtherRole");
+				return;
+			}
+		} 
     }
 }

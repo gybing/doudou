@@ -1,6 +1,7 @@
 package com.doudoumobile.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "EtonUser")
@@ -52,7 +54,13 @@ public class EtonUser implements Serializable {
     private String createdBy;
     
     @Column(name = "schoolId")
-    private int schoolId;
+    private long schoolId;
+    
+    @Transient
+    private String curriList;
+    
+    @Transient
+    private School schoolInfo;
     
     public EtonUser () {
     	available = true;
@@ -138,13 +146,28 @@ public class EtonUser implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public int getSchoolId() {
+	public long getSchoolId() {
 		return schoolId;
 	}
 
-	public void setSchoolId(int schoolId) {
+	public void setSchoolId(long schoolId) {
 		this.schoolId = schoolId;
 	}
-    
-    
+
+	public String getCurriList() {
+		return curriList;
+	}
+
+	public void setCurriList(String curriList) {
+		this.curriList = curriList;
+	}
+
+	public School getSchoolInfo() {
+		return schoolInfo;
+	}
+
+	public void setSchoolInfo(School schoolInfo) {
+		this.schoolInfo = schoolInfo;
+	}
+	
 }

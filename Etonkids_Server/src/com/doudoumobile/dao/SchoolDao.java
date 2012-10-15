@@ -23,4 +23,6 @@ public interface SchoolDao {
 	public void addSchoolType(SchoolType st);
 	
 	public void updateSchoolType(SchoolType st);
+	
+	public List<School> getSchoolByTypeId(long typeId);
 }

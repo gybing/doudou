@@ -164,4 +164,9 @@ public class EtonServiceImpl implements EtonService{
 	public void updateSchoolType(SchoolType st) {
 		schoolDao.updateSchoolType(st);
 	}
+
+	@Override
+	public List<School> getSchoolByTypeId(long typeId) {
+		return schoolDao.getSchoolByTypeId(typeId);
+	}
 }

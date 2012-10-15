@@ -67,5 +67,11 @@ public class SchoolDaoHibernate extends HibernateDaoSupport implements SchoolDao
 		getHibernateTemplate().update(st);
 		getHibernateTemplate().flush();
 	}
+
+	@Override
+	public List<School> getSchoolByTypeId(long typeId) {
+		return getHibernateTemplate().find(
+        "from School s where typeId = " + typeId);
+	}
 	
 }
