@@ -49,12 +49,14 @@ public class LessonController extends MultiActionController{
 		long userId = (Long)request.getAttribute("userId");
 		List<Curriculum> relatedCurriculums = lessonService.getRelatedCurriculums(userId);
 		for (Curriculum curriculum : relatedCurriculums) {
-			List<Lesson> lessonList = lessonService.getRelatedLessonByCurrId(curriculum.getId());
-			for (Lesson lesson : lessonList) {
-				List<Material> materialList = etonService.getMaterialListByLessonId(lesson.getId());
-				lesson.setMaterialList(materialList);
+			if (null != curriculum) {
+				List<Lesson> lessonList = lessonService.getRelatedLessonByCurrId(curriculum.getId());
+				for (Lesson lesson : lessonList) {
+					List<Material> materialList = etonService.getMaterialListByLessonId(lesson.getId());
+					lesson.setMaterialList(materialList);
+				}
+				curriculum.setLessonList(lessonList);
 			}
-			curriculum.setLessonList(lessonList);
 		}
 		
 		response.setContentType("text/x-json;charset=UTF-8");           

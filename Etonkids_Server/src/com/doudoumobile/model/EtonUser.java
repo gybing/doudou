@@ -132,6 +132,21 @@ public class EtonUser implements Serializable {
 	public void setRole(int role) {
 		this.role = role;
 	}
+	
+	public String getRoleName() {
+		switch(role) {
+		case 0:
+			return "Admin";
+		case 1:
+			return "RD";
+		case 2:
+			return "ED";
+		case 3:
+			return "Teacher";
+		default:
+			return "";
+		}
+	}
 
 	public String getNotes() {
 		return notes;
