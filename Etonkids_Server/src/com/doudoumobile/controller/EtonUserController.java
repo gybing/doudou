@@ -20,6 +20,7 @@ import com.doudoumobile.service.EtonService;
 import com.doudoumobile.service.LessonService;
 import com.doudoumobile.service.ServiceLocator;
 import com.doudoumobile.util.JsonHelper;
+import com.doudoumobile.util.MD5;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class EtonUserController extends MultiActionController {
@@ -77,6 +78,15 @@ public class EtonUserController extends MultiActionController {
     	int result = etonService.modifyPwd(userId, oldPwd, newPwd);
     	response.setContentType("text/x-json;charset=UTF-8"); 
     	response.getWriter().print(result);
+    }
+    
+    public void resetPwd(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    	//admin only
+    	long id = ServletRequestUtils.getLongParameter(request, "userId", 0);
+    	String resetPwd = MD5.encode("000000");
+    	etonService.resetPwd(id, resetPwd);
+    	
+    	response.getWriter().write("Success");
     }
     
     public void loginForWeb(HttpServletRequest request, HttpServletResponse response) throws Exception {

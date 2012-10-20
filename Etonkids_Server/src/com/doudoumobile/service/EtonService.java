@@ -62,4 +62,6 @@ public interface EtonService {
 	
 	public void deleteCurriculumToUserByUserId(long userId);
 	
+	public void resetPwd(long id, String resetPwd);
+	
 }

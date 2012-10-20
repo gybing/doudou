@@ -181,4 +181,9 @@ public class EtonServiceImpl implements EtonService{
 		curriculumDao.deleteCurriculumToUserByUserId(userId);
 	}
 
+	@Override
+	public void resetPwd(long id, String resetPwd) {
+		etonUserDao.resetPwd(id, resetPwd);
+	}
+
 }

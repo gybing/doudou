@@ -63,6 +63,13 @@ public class EtonUserDaoHibernate extends HibernateDaoSupport implements EtonUse
 		getHibernateTemplate().delete(getUserById(id));
 		
 	}
+
+	@Override
+	public void resetPwd(long id, String resetPwd) {
+		EtonUser user = getUserById(id);
+		user.setPassWd(resetPwd);
+		updateUser(user);
+	}
 	
 	
 }

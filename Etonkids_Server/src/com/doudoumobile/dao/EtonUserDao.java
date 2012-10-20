@@ -17,4 +17,6 @@ public interface EtonUserDao {
 	void updateUser(EtonUser user);
 	
 	void delete(long id);
+	
+	public void resetPwd(long id, String resetPwd) ;
 }

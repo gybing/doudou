@@ -55,8 +55,14 @@ public class AuthFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("Auth Filterd");
+		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
+		String url = req.getRequestURL().toString();
+		if (url.endsWith(LOGIN_PAGE)) {
+			chain.doFilter(request, response);
+			return;
+		}
 		String ticket = ServletRequestUtils.getStringParameter(req, "doudouTicket","");
 		// ticket的可能情况：1.app端的身份识别 2.登陆Action的标示 
 		if (!ticket.isEmpty()) {
