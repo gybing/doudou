@@ -15,8 +15,8 @@ return record_start4 + 1 + rowIndex;
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'Campus Address',dataIndex:'address',width:100},
-{header:'School',dataIndex:'schoolType',width:100}, 
+{header:'Campus Address',dataIndex:'address',width:300},
+{header:'School',dataIndex:'schoolType',width:200}, 
 {header:'Created by',dataIndex:'creator',width:100}
 ]); 
 var ds4 = new Ext.data.Store({ 
@@ -42,6 +42,7 @@ var grid4 = new Ext.grid.GridPanel({
 	height:400, 
 	cm:cm4,
 	store: ds4,
+	sortable: true,
 	loadMask: { msg: "Loading..." }, 
 	viewConfig: {   
 	                            forceFit:true   

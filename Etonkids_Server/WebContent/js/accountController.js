@@ -89,6 +89,7 @@ var grid2 = new Ext.grid.GridPanel({
 	height: 500,
 	cm:cm2,
 	store: ds2,
+	sortable: true,
 	loadMask: { msg: "Loading..." }, 
 	viewConfig: {   
 	                            forceFit:true   
@@ -211,6 +212,29 @@ width:160
   
 }]},{ layout : "form",
     items : [{
+   	 xtype: 'textfield',
+   	 vtype: "email", //email格式验证  
+        vtypeText: "invalid email format", //错误提示信息,默认值我就不说了 
+   	 id: 'email', 
+   	 name: 'email', 
+   	 fieldLabel: 'Email', 
+   	 emptyText: 'Required', 
+   	 blankText: 'Please enter email', 
+   	 allowBlank: false,  
+   	 anchor: '96%' 
+   	 }]},{ layout : "form",
+            items : [{
+           	 xtype: 'textarea',
+           	 id: 'notes', 
+           	 name: 'notes',  
+           	 fieldLabel:'Notes',
+           	 //maxLength:100,
+           	 //maxLengthText:'最多只允许输入100个汉字',
+           	 height:100,
+           	 anchor: '96%' 
+           	 }]},
+{ layout : "form",
+    items : [{
     	xtype: 'combo', 
     	id : "school_Id",
     	       store :schoolStore,
@@ -218,8 +242,7 @@ width:160
     	       valueField : 'id',
     	       displayField : 'typeName',
     	       emptyText : 'Choose a school...',
-    	       allowBlank : false,
-    	       blankText:'Please choose a school',
+    	       allowBlank : true,
     	       editable: false,
     	       typeAhead : true,
     	       width: 160,
@@ -250,8 +273,7 @@ width:160
     	    	       valueField : 'id',
     	    	       displayField : 'address',
     	    	       emptyText : 'Choose a campus...',
-    	    	       allowBlank : false,
-    	    	       blankText:'Please choose a campus',
+    	    	       allowBlank : true,
     	    	       editable: false,
     	    	       typeAhead : true,
     	    	       anchor: '96%',
@@ -273,8 +295,7 @@ width:160
     		hiddenName: 'curriculumsId',
     		triggerAction: 'all',
     		emptyText : 'Choose related curriculums...',
-    		allowBlank : false,
- 	       	blankText:'Please choose related curriculums',
+    		allowBlank : true,
     	    editable: false,
     	    typeAhead : true,
     	    selectOnFocus : true,
@@ -282,29 +303,7 @@ width:160
     		height: 200,
     		mode: 'remote'
    
- }]},{ layout : "form",
-     items : [{
-    	 xtype: 'textfield',
-    	 vtype: "email", //email格式验证  
-         vtypeText: "invalid email format", //错误提示信息,默认值我就不说了 
-    	 id: 'email', 
-    	 name: 'email', 
-    	 fieldLabel: 'Email', 
-    	 emptyText: 'Required', 
-    	 blankText: 'Please enter email', 
-    	 allowBlank: false,  
-    	 anchor: '96%' 
-    	 }]},{ layout : "form",
-             items : [{
-            	 xtype: 'textarea',
-            	 id: 'notes', 
-            	 name: 'notes',  
-            	 fieldLabel:'Notes',
-            	 //maxLength:100,
-            	 //maxLengthText:'最多只允许输入100个汉字',
-            	 height:100,
-            	 anchor: '96%' 
-            	 }]},
+ }]},
 { layout : "form",
            items : [{
 xtype: 'hidden', 
@@ -472,7 +471,8 @@ campusStore.load(); //加载下拉框的store
   	Ext.getCmp("accountid").setValue(addJSON.id);
 	Ext.getCmp("realName").setValue(addJSON.realName);
   	Ext.getCmp("roleId").setValue(addJSON.role);
-	Ext.getCmp("school_Id").setValue(addJSON.schoolInfo.typeId);
+  	if(addJSON.schoolInfo)
+  		Ext.getCmp("school_Id").setValue(addJSON.schoolInfo.typeId);
    	Ext.getCmp("campus_Id").setValue(addJSON.schoolId);
 	Ext.getCmp("curriculumsId").setValue(addJSON.curriIdList);
 	Ext.getCmp("email").setValue(addJSON.email);

@@ -15,8 +15,8 @@ return record_start3 + 1 + rowIndex;
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'School',dataIndex:'typeName',width:100},
-{header:'Created by',dataIndex:'creator',width:100}
+{header:'School',dataIndex:'typeName',width:200},
+{header:'Created by',dataIndex:'creator',width:200}
 ]); 
 var ds3 = new Ext.data.Store({ 
 proxy:new Ext.data.HttpProxy({
@@ -40,6 +40,7 @@ var grid3 = new Ext.grid.GridPanel({
 	height:200, 
 	cm:cm3,
 	store: ds3,
+	sortable: true,
 	loadMask: { msg: "Loading..." }, 
 	viewConfig: {   
 	                            forceFit:true   

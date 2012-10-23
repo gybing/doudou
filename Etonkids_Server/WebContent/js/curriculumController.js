@@ -15,7 +15,7 @@ return record_start + 1 + rowIndex;
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'Curriculum',dataIndex:'curriculumName',width:100},
+{header:'Curriculum',dataIndex:'curriculumName',width:200},
 {header:'Created by',dataIndex:'creator',width:100}
 ]); 
 var ds = new Ext.data.Store({ 
@@ -39,6 +39,7 @@ var grid=new Ext.grid.GridPanel({
 	height:300, 
 	cm:cm,
 	store: ds,
+	sortable: true,
 	loadMask: { msg: "Loading..." }, 
 	viewConfig: {   
 	                            forceFit:true   
