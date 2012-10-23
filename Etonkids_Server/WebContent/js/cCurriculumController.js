@@ -15,10 +15,10 @@ return record_start1 + 1 + rowIndex;
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'Name',dataIndex:'curriculumName',width:160},
+{header:'Name',dataIndex:'curriculumName',width:160,sortable: true},
 {header:'Cover',dataIndex:'imgPath',width:160}, 
-{header:'Curriculum',dataIndex:'parentCurriName',width:160},
-{header:'Created by',dataIndex:'creator',width:100}
+{header:'Curriculum',dataIndex:'parentCurriName',width:160,sortable: true},
+{header:'Created by',dataIndex:'creator',width:100,sortable: true}
 ]); 
 var ds1 = new Ext.data.Store({ 
 proxy:new Ext.data.HttpProxy({
@@ -43,7 +43,6 @@ var grid1 = new Ext.grid.GridPanel({
 	height:500, 
 	cm:cm1,
 	store: ds1,
-	sortable: true,
 	loadMask: { msg: "Loading..." }, 
 	viewConfig: {   
 	                            forceFit:true   
