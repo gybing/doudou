@@ -24,6 +24,9 @@ public class SchoolType implements Serializable{
 	
 	@Column(name = "typeName", nullable = false, length = 64)
     private String typeName;
+	
+	@Column(name = "createdBy", length = 64)
+    private String createdBy;
 
 	public Long getId() {
 		return id;
@@ -39,6 +42,14 @@ public class SchoolType implements Serializable{
 
 	public void setTypeName(String typeName) {
 		this.typeName = typeName;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 	

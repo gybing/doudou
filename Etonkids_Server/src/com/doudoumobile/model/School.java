@@ -30,6 +30,9 @@ public class School implements Serializable{
 	
 	@Column(name = "schoolType", length = 30 , nullable = false)
 	private String schoolType;
+	
+	@Column(name = "createdBy", length = 64)
+    private String createdBy;
 
 	public Long getId() {
 		return id;
@@ -62,5 +65,14 @@ public class School implements Serializable{
 	public void setTypeId(Long typeId) {
 		this.typeId = typeId;
 	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	
 	
 }

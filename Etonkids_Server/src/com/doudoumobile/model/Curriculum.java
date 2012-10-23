@@ -38,6 +38,9 @@ public class Curriculum implements Serializable {
     @Column(name = "parentCurriName", length = 64)
     private String parentCurriName;
     
+    @Column(name = "createdBy", length = 64)
+    private String createdBy;
+    
     @Transient
     private List<Lesson> lessonList;
     
@@ -124,6 +127,14 @@ public class Curriculum implements Serializable {
 
 	public void setParentCurriName(String parentCurriName) {
 		this.parentCurriName = parentCurriName;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
 	}
 	
 }

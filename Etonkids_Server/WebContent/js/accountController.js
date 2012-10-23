@@ -221,17 +221,7 @@ width:160
    	 blankText: 'Please enter email', 
    	 allowBlank: false,  
    	 anchor: '96%' 
-   	 }]},{ layout : "form",
-            items : [{
-           	 xtype: 'textarea',
-           	 id: 'notes', 
-           	 name: 'notes',  
-           	 fieldLabel:'Notes',
-           	 //maxLength:100,
-           	 //maxLengthText:'最多只允许输入100个汉字',
-           	 height:100,
-           	 anchor: '96%' 
-           	 }]},
+   	 }]},
 { layout : "form",
     items : [{
     	xtype: 'combo', 
@@ -302,7 +292,17 @@ width:160
     		height: 200,
     		mode: 'remote'
    
- }]},
+ }]},{ layout : "form",
+     items : [{
+       	 xtype: 'textarea',
+       	 id: 'notes', 
+       	 name: 'notes',  
+       	 fieldLabel:'Notes',
+       	 //maxLength:100,
+       	 //maxLengthText:'最多只允许输入100个汉字',
+       	 height:100,
+       	 anchor: '96%' 
+       	 }]},
 { layout : "form",
            items : [{
 xtype: 'hidden', 
@@ -460,19 +460,21 @@ method:'POST',
  // alert(response.responseText);
  var addJSON = Ext.util.JSON.decode(response.responseText);
  
- 
+if(addJSON.schoolInfo){
  campusStore.proxy = new Ext.data.HttpProxy({
 		url:'../setting.do?action=getSchoolByTypeId&typeId='+addJSON.schoolInfo.typeId,
 		method:'GET'
 });
 campusStore.load(); //加载下拉框的store  
+}
 
   	Ext.getCmp("accountid").setValue(addJSON.id);
 	Ext.getCmp("realName").setValue(addJSON.realName);
   	Ext.getCmp("roleId").setValue(addJSON.role);
-  	if(addJSON.schoolInfo)
+  	if(addJSON.schoolInfo){
   		Ext.getCmp("school_Id").setValue(addJSON.schoolInfo.typeId);
-   	Ext.getCmp("campus_Id").setValue(addJSON.schoolId);
+  		Ext.getCmp("campus_Id").setValue(addJSON.schoolId);
+  	}
 	Ext.getCmp("curriculumsId").setValue(addJSON.curriIdList);
 	Ext.getCmp("email").setValue(addJSON.email);
   	Ext.getCmp("notes").setValue(addJSON.notes);

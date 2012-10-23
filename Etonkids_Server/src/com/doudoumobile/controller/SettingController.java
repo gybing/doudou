@@ -45,6 +45,8 @@ public class SettingController extends MultiActionController{
 		curriculum.setCurriculumName(curriculumName);
 		curriculum.setImgPath("");
 		curriculum.setParentCurriName(parentCurriName);
+		SessionData sd = (SessionData)request.getSession().getAttribute("sessionData");
+		curriculum.setCreatedBy(sd.getEtonUser().getRealName());
 		etonService.addCurri(curriculum);
 		
 		System.out.println(curriculum.getId());
@@ -212,6 +214,8 @@ public class SettingController extends MultiActionController{
 		school.setTypeId(typeId);
 		school.setAddress(address);
 		school.setSchoolType(schoolType);
+		SessionData sd = (SessionData)request.getSession().getAttribute("sessionData");
+		school.setCreatedBy(sd.getEtonUser().getRealName());
 		etonService.addSchool(school);
 		
 		System.out.println(school.getId());
@@ -348,6 +352,8 @@ public class SettingController extends MultiActionController{
 		String typeName =  ServletRequestUtils.getStringParameter(request, "typeName", "");
 		SchoolType schoolType = new SchoolType();
 		
+		SessionData sd = (SessionData)request.getSession().getAttribute("sessionData");
+		schoolType.setCreatedBy(sd.getEtonUser().getRealName());
 		schoolType.setTypeName(typeName);
 		etonService.addSchoolType(schoolType);
 		
