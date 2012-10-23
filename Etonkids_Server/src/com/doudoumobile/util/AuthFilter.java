@@ -27,7 +27,7 @@ import com.doudoumobile.service.UserService;
 public class AuthFilter implements Filter {
 	FilterConfig fConfig;
 	private static String ERROR_PAGE = "/error.jsp";
-	private static String LOGIN_PAGE = "/login.jsp";
+	private static String LOGIN_PAGE = "/Login.jsp";
 	private static String NOT_AUTHED_PAGE = "/403.jsp";
 
 	private static HashMap<String , Long> ticketMap = new HashMap<String , Long>();
@@ -58,8 +58,9 @@ public class AuthFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest)request;
 		HttpServletResponse resp = (HttpServletResponse)response;
-		String url = req.getRequestURL().toString();
-		if (url.endsWith(LOGIN_PAGE)) {
+		String url = req.getQueryString();
+		System.out.println(url);
+		if (null != url && url.endsWith("loginForWeb")) {
 			chain.doFilter(request, response);
 			return;
 		}

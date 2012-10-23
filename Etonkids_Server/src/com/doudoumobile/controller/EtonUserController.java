@@ -51,9 +51,13 @@ public class EtonUserController extends MultiActionController {
     		List<Curriculum> currList = lessonService.getRelatedCurriculums(user.getId());
     		if(null != currList && currList.size() > 0) {
     			for (Curriculum curriculum : currList) {
-    				curriculumString.append(curriculum.getCurriculumName() + ",");
+    				if (null != curriculum) {
+    					curriculumString.append(curriculum.getCurriculumName() + ",");
+					}
     			}	
-    			curriculumString.deleteCharAt(curriculumString.length()-1);
+    			if (curriculumString.length() > 0) {
+    				curriculumString.deleteCharAt(curriculumString.length()-1);
+				}
     		}
     		user.setCurriList(curriculumString.toString());
     		
@@ -113,7 +117,7 @@ public class EtonUserController extends MultiActionController {
     			sessionData.setEtonUser(user);
     			
     			request.getSession().setAttribute("SessionData", sessionData);		
-    			writer.print("LoginSuccess");
+    			writer.print(1);
 			} else {
 				writer.print("NotOpenYetForOtherRole");
 				return;

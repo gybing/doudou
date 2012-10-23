@@ -98,7 +98,7 @@ public class SettingController extends MultiActionController{
 		long schoolId = ServletRequestUtils.getLongParameter(request, "schoolId", 0);
 		
 		EtonUser etonUser = new EtonUser();
-		SessionData sd = (SessionData)request.getAttribute("sessionData");
+		SessionData sd = (SessionData)request.getSession().getAttribute("sessionData");
 		etonUser.setAvailable(true);
 		etonUser.setCreatedBy(sd.getEtonUser().getRealName());
 		etonUser.setEmail(email);
@@ -169,7 +169,7 @@ public class SettingController extends MultiActionController{
 		
 		EtonUser etonUser = new EtonUser();
 		etonUser.setId(id);
-		SessionData sd = (SessionData)request.getAttribute("sessionData");
+		SessionData sd = (SessionData)request.getSession().getAttribute("sessionData");
 		etonUser.setAvailable(true);
 		etonUser.setCreatedBy(sd.getEtonUser().getRealName());
 		etonUser.setEmail(email);
