@@ -48,6 +48,7 @@ public class SettingController extends MultiActionController{
 		etonService.addCurri(curriculum);
 		
 		System.out.println(curriculum.getId());
+		response.getWriter().print("{success:true}");
 	}
 	
 	public void getCurriculumList(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -86,6 +87,8 @@ public class SettingController extends MultiActionController{
 		etonService.updateCurriculum(curriculum);
 		
 		System.out.println(curriculum.getId());
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void addEtonUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -123,6 +126,8 @@ public class SettingController extends MultiActionController{
 			}
 		}
 		System.out.println(etonUser.getId());
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void getEtonUserList(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -195,6 +200,8 @@ public class SettingController extends MultiActionController{
 			}
 		}
 		System.out.println(etonUser.getId());
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void addSchool(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -208,6 +215,8 @@ public class SettingController extends MultiActionController{
 		etonService.addSchool(school);
 		
 		System.out.println(school.getId());
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void getSchoolList(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -233,6 +242,8 @@ public class SettingController extends MultiActionController{
 		etonService.updateSchool(school);
 		
 		System.out.println(school.getId());
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void getSchoolTypes(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -305,28 +316,32 @@ public class SettingController extends MultiActionController{
 		long id = ServletRequestUtils.getLongParameter(request,"userId",0);
 		
 		etonService.deleteUser(id);
-		
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void deleteCurriculumById(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		long id = ServletRequestUtils.getLongParameter(request,"curriId",0);
 		
 		etonService.deleteCurriculum(id);
-		
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void deleteSchoolById(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		long id = ServletRequestUtils.getLongParameter(request,"schoolId",0);
 		
 		etonService.deleteSchool(id);
-		
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void deleteSchoolTypeById(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		long id = ServletRequestUtils.getLongParameter(request,"schoolTypeId",0);
 		
 		etonService.deleteSchoolType(id);
-		
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void addSchoolType(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -337,6 +352,8 @@ public class SettingController extends MultiActionController{
 		etonService.addSchoolType(schoolType);
 		
 		System.out.println(schoolType.getId());
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void updateSchoolType(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -349,6 +366,8 @@ public class SettingController extends MultiActionController{
 		etonService.updateSchoolType(schoolType);
 		
 		System.out.println(schoolType.getId());
+		response.getWriter().print("{success:true}");
+
 	}
 	
 	public void getSchoolTypeById(HttpServletRequest request, HttpServletResponse response) throws Exception {
