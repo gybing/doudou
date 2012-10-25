@@ -16,7 +16,7 @@ return record_start3 + 1 + rowIndex;
 }),
 {header:'ID',dataIndex:'id',hidden:true},
 {header:'School',dataIndex:'typeName',width:200,sortable: true},
-{header:'Created by',dataIndex:'creator',width:200,sortable: true}
+{header:'Created by',dataIndex:'createdBy',width:200,sortable: true}
 ]); 
 var ds3 = new Ext.data.Store({ 
 proxy:new Ext.data.HttpProxy({
@@ -26,7 +26,7 @@ method:'POST'
 reader:new Ext.data.JsonReader({ },[
 {name:'id'}, 
 {name:'typeName'},
-{name:'creator'}
+{name:'createdBy'}
 ]) 
 }); 
 

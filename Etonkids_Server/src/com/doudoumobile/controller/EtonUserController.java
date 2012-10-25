@@ -40,7 +40,9 @@ public class EtonUserController extends MultiActionController {
     	response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
         if (user == null) {
-        	writer.print("null");
+        	JSONObject object = JsonHelper.getInstance().getJson(null);
+        	System.out.println(object);
+        	writer.print(object);
         	return;
         }
         

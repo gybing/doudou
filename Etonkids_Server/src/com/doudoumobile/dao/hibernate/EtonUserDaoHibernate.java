@@ -27,7 +27,7 @@ public class EtonUserDaoHibernate extends HibernateDaoSupport implements EtonUse
 	public void modifyPwd(long userId, String passWd) {
 		Session session = getSessionFactory().getCurrentSession();  
 		session.beginTransaction();  
-		Query query = session.createQuery("update EtonUser eu set eu.password = '"+ passWd + "' where id = " + userId);  
+		Query query = session.createQuery("update EtonUser set password = '"+ passWd + "' where id = " + userId);  
 		query.executeUpdate();  
 		session.getTransaction().commit();  
 	}

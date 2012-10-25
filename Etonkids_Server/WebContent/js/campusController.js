@@ -17,7 +17,7 @@ return record_start4 + 1 + rowIndex;
 {header:'ID',dataIndex:'id',hidden:true},
 {header:'Campus Address',dataIndex:'address',width:300,sortable: true},
 {header:'School',dataIndex:'schoolType',width:200,sortable: true}, 
-{header:'Created by',dataIndex:'creator',width:100,sortable: true}
+{header:'Created by',dataIndex:'createdBy',width:100,sortable: true}
 ]); 
 var ds4 = new Ext.data.Store({ 
 proxy:new Ext.data.HttpProxy({
@@ -28,7 +28,7 @@ reader:new Ext.data.JsonReader({ },[
 {name:'id'}, 
 {name:'address'},
 {name:'schoolType'},  
-{name:'creator'}
+{name:'createdBy'}
 ]) 
 }); 
 

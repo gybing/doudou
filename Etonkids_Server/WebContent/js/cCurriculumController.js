@@ -18,7 +18,7 @@ return record_start1 + 1 + rowIndex;
 {header:'Name',dataIndex:'curriculumName',width:160,sortable: true},
 {header:'Cover',dataIndex:'imgPath',width:160}, 
 {header:'Curriculum',dataIndex:'parentCurriName',width:160,sortable: true},
-{header:'Created by',dataIndex:'creator',width:100,sortable: true}
+{header:'Created by',dataIndex:'createdBy',width:100,sortable: true}
 ]); 
 var ds1 = new Ext.data.Store({ 
 proxy:new Ext.data.HttpProxy({
@@ -30,7 +30,7 @@ reader:new Ext.data.JsonReader({ },[
 {name:'curriculumName'},
 {name:'imgPath'},  
 {name:'parentCurriName'},
-{name:'creator'}
+{name:'createdBy'}
 ]) 
 }); 
 
