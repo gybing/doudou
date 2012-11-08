@@ -76,7 +76,7 @@ public abstract class Session {
     private long clientPacketCount = 0;
 
     private long serverPacketCount = 0;
-
+    
     private final Map<String, Object> sessionData = new HashMap<String, Object>();
 
     /**

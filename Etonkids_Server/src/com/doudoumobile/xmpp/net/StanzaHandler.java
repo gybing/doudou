@@ -195,20 +195,16 @@ public class StanzaHandler {
         router.route(packet);
         session.incrementClientPacketCount();
         
-        //用户上线，查询该用户的未发送信息，重新发送。
         if(session.getStatus() == Session.STATUS_AUTHENTICATED && packet.isAvailable()){
-        	//获取用户名
         	String userName = session.getAddress().getNode();
+        	System.out.println("Query username : -> " + userName);
         	if(null != userName && !"".equals(userName)){
-        		//查询该用户未发送的通知
         		NotificationMO mo = new NotificationMO();
         		mo.setUsername(userName);
         		mo.setStatus(NotificationMO.STATUS_NOT_SEND);
         		List<NotificationMO> list = notificationService.queryNotification(mo);
         		if(!list.isEmpty()){
-        			//循环发送该用户的所有离线消息
         			for (NotificationMO notificationMO : list) {
-        				//发送通知
         				notificationManager.sendOfflineNotification(notificationMO);
 					}
         		}else{

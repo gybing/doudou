@@ -38,7 +38,7 @@ public class NotificationMO implements Serializable {
     private Long id;
 
 	@Column(name = "etonUser", length = 64)
-	private String etonUser;
+	private Long etonUser;
 	
     @Column(name = "username", length = 64)
     private String username;
@@ -89,11 +89,11 @@ public class NotificationMO implements Serializable {
 		this.username = username;
 	}
 
-	public String getEtonUser() {
+	public long getEtonUser() {
 		return etonUser;
 	}
 
-	public void setEtonUser(String etonUser) {
+	public void setEtonUser(long etonUser) {
 		this.etonUser = etonUser;
 	}
 

@@ -1,20 +1,3 @@
-/*
- * Copyright (C) 2010 Moduad Co., Ltd.
- * 
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License along
- * with this program; if not, write to the Free Software Foundation, Inc.,
- * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
- */
 package com.doudoumobile.xmpp.push;
 
 import java.util.ArrayList;
@@ -37,11 +20,6 @@ import com.doudoumobile.util.CopyMessageUtil;
 import com.doudoumobile.xmpp.session.ClientSession;
 import com.doudoumobile.xmpp.session.SessionManager;
 
-/**
- * This class is to manage sending the notifcations to the users.
- * 
- * @author Sehwan Noh (devnoh@gmail.com)
- */
 public class NotificationManager {
 
 	private static final String NOTIFICATION_NAMESPACE = "androidpn:iq:notification";
@@ -116,14 +94,12 @@ public class NotificationManager {
 		
 	}
 	
-	//�������û�����֪ͨ
 	public void sendAllBroadcast(String apiKey, String title, String message,
 			String uri) {
-		//�������֪ͨ����֮�����Ƶ�����������Ϊ�˱�֤ͬһ������͵�֪ͨID��һ��ġ�ûʲô����
 		IQ notificationIQ = createNotificationIQ(apiKey, title, message, uri);
 		List<User> list = userService.getUsers();
 		for (User user : list) {
-			this.sendNotifcationToUser(apiKey, user.getUsername(), title, message, uri,notificationIQ);
+			//this.sendNotifcationToUser(apiKey, user.getUsername(), title, message, uri,notificationIQ);
 		}
 		
 	}
@@ -140,13 +116,14 @@ public class NotificationManager {
 	 * @param uri
 	 *            the uri
 	 */
-	public void sendNotifcationToUser(String apiKey, String username,
+	public void sendNotifcationToUser(String apiKey, String username, long eton_id,
 			String title, String message, String uri, IQ notificationIQ) {
 		log.debug("sendNotifcationToUser()...");
 		ClientSession session = sessionManager.getSession(username);
 		NotificationMO notificationMO = new NotificationMO(apiKey, title,
 				message, uri);
 		notificationMO.setUsername(username);
+		notificationMO.setEtonUser(eton_id);
 		CopyMessageUtil.IQ2Message(notificationIQ, notificationMO);
 		if (session != null && session.getPresence().isAvailable()) {
 			notificationIQ.setTo(session.getAddress());
@@ -192,16 +169,17 @@ public class NotificationManager {
 		return iq;
 	}
 	
-	public void sendNotifications(String apiKey, String username,
+	public void sendNotifications(String apiKey, String username, long eton_id,
 			String title, String message, String uri){
+		log.info("send notification()..." + username + " " + title + " " + message);
 		IQ notificationIQ = createNotificationIQ(apiKey, title, message, uri);
 		if(username.indexOf(";")!=-1){
 			String[] users = username.split(";");
 			for (String user : users) {
-				this.sendNotifcationToUser(apiKey, user, title, message, uri,notificationIQ);
+				this.sendNotifcationToUser(apiKey, user,eton_id, title, message, uri,notificationIQ);
 			}
 		}else{
-			this.sendNotifcationToUser(apiKey, username, title, message, uri,notificationIQ);
+			this.sendNotifcationToUser(apiKey, username,eton_id, title, message, uri,notificationIQ);
 		}
 	}
 	
@@ -227,14 +205,14 @@ public class NotificationManager {
 		}
 	}
 	
-	public void sendEtonNotification(String etonUser, String apiKey, String username,
+	public void sendEtonNotification(String apiKey, String username,long eton_id,
 			String title, String message, String uri, IQ notificationIQ) {
 		log.debug("sendNotifcationToUser()...");
 		ClientSession session = sessionManager.getSession(username);
 		NotificationMO notificationMO = new NotificationMO(apiKey, title,
 				message, uri);
 		notificationMO.setUsername(username);
-		notificationMO.setEtonUser(etonUser);
+		notificationMO.setEtonUser(eton_id);
 		CopyMessageUtil.IQ2Message(notificationIQ, notificationMO);
 		if (session != null && session.getPresence().isAvailable()) {
 			notificationIQ.setTo(session.getAddress());

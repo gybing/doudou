@@ -58,4 +58,10 @@ public class UserDaoHibernate extends HibernateDaoSupport implements UserDao {
         }
 	}
 
+	@Override
+	public List<String> getUserNameListByEtonId(long etonIdList) {
+		List result = getHibernateTemplate().find("select username from User where eton_id=? and available = true", etonIdList);
+		return result;
+	}
+
 }

@@ -24,5 +24,7 @@ public interface UserDao {
     public User getUserByUsername(String username) throws UserNotFoundException;
     
     public User verifyUser(String userName, String passWd);
+    
+    public List<String> getUserNameListByEtonId(long etonIdList);
 
 }

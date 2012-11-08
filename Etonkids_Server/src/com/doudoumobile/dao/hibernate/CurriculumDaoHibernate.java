@@ -91,4 +91,18 @@ public class CurriculumDaoHibernate extends HibernateDaoSupport implements Curri
 		        "from CurriculumToUser ctu where userId = " + userId);
 	}
 
+	@Override
+	public List<Long> getUserIdListByCurriculumId(long curriculumId) {
+//		String hql = "select c.* FROM CurriculumToUser ctu left outer join " +
+//		"Curriculum c on ctu.curriculumId = c.id where ctu.userId = " + userId;
+//		Session session = getSession();
+//		SQLQuery query = session.createSQLQuery(hql.toString());
+//		query.addEntity("c", Curriculum.class);
+//		List result = query.list();
+//		session.close();
+//        return (List<Curriculum>) (result);
+		return getHibernateTemplate().find(
+				"select ctu.userId FROM CurriculumToUser ctu where available = true and curriculumId = " + curriculumId);
+	}
+
 }

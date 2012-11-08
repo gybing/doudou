@@ -126,4 +126,30 @@ public class EtonUserController extends MultiActionController {
 			}
 		} 
     }
+    
+    public void curriculaTool(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	String path = ServletRequestUtils.getStringParameter(request, "path", "");
+    	System.out.println("path = " + path);
+    	boolean result;
+    	if (path.endsWith("EEE")) {
+    		System.out.println("Handle EEE");
+    		 result = etonService.curriculaToolForEEE(path);
+		} else {
+			System.out.println("Handle CD");
+			result = etonService.curriculaToolForCD(path);
+		}
+        PrintWriter writer = response.getWriter();
+        
+       	writer.print(result);
+    }
+    
+    public void notify(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    	long cid = ServletRequestUtils.getLongParameter(request, "cid", 0);
+    	String title = ServletRequestUtils.getStringParameter(request, "title","");
+    	System.out.println("" + cid + " title = " + title);
+    	boolean result = etonService.notify(cid);
+        PrintWriter writer = response.getWriter();
+        
+       	writer.print(result);
+    }
 }

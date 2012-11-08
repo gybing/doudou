@@ -79,8 +79,8 @@ public class IQRegisterHandler extends IQHandler {
                 } else {
                     String username = query.elementText("username");
                     String password = query.elementText("password");
-                    long etonUserId = Long.parseLong(query.elementText("ETON_USERID"));
-                    
+                    String[] ss = username.split("_");
+                    long etonUserId = Long.parseLong(ss[0]);
                     // Verify the username
                     if (username != null) {
                         Stringprep.nodeprep(username);

@@ -29,4 +29,6 @@ public interface CurriculumDao {
 	void deleteCurriculumToUserByUserId(long userId);
 	
 	List<CurriculumToUser> getCurriculumToUserByUserId(long userId);
+	
+	List<Long> getUserIdListByCurriculumId(long curriculumId);
 }

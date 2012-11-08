@@ -5,6 +5,7 @@ import java.util.List;
 import com.doudoumobile.model.Curriculum;
 import com.doudoumobile.model.CurriculumToUser;
 import com.doudoumobile.model.EtonUser;
+import com.doudoumobile.model.Lesson;
 import com.doudoumobile.model.Material;
 import com.doudoumobile.model.School;
 import com.doudoumobile.model.SchoolType;
@@ -63,5 +64,17 @@ public interface EtonService {
 	public void deleteCurriculumToUserByUserId(long userId);
 	
 	public void resetPwd(long id, String resetPwd);
+	
+	//For tool use
+	public boolean curriculaToolForEEE(String path);
+	
+	public boolean curriculaToolForCD(String path);
+	
+	//upload lesson
+	public boolean addLesson(Lesson lesson);
+	
+	public boolean notify(long curriculumId);
+	
+	public boolean remoteWipe(String apn_userName);
 	
 }

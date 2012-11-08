@@ -42,7 +42,7 @@ public class SessionManager {
 
     private static final Log log = LogFactory.getLog(SessionManager.class);
 
-    private static final String RESOURCE_NAME = "AndroidpnClient";
+    private static final String RESOURCE_NAME = "iTeach -- Client";
 
     private static SessionManager instance;
 
@@ -108,8 +108,12 @@ public class SessionManager {
      * @param session the session
      */
     public void addSession(ClientSession session) {
-        preAuthSessions.remove(session.getStreamID().toString());
+        System.out.println(preAuthSessions.keySet() + "\nAfter add session");
+    	
+    	preAuthSessions.remove(session.getStreamID().toString());
         clientSessions.put(session.getAddress().toString(), session);
+        
+        System.out.println(clientSessions.keySet());
     }
 
     /**
