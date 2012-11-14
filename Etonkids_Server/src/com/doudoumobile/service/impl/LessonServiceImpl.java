@@ -47,6 +47,24 @@ public class LessonServiceImpl implements LessonService{
 		List<Lesson> result = lessonDao.getRelatedLessonByCurrId(curriculumId);
 		return result;
 	}
+
+	@Override
+	public List<Lesson> getLessonsList() {
+
+		return lessonDao.getAllLessons();
+	}
+
+	@Override
+	public void updateLesson(Lesson l) {
+
+		lessonDao.updateLesson(l);
+	}
+
+	@Override
+	public void deleteUser(long id) {
+
+		lessonDao.delete(id);
+	}
     
 
 }

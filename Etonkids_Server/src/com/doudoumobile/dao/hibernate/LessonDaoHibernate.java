@@ -30,5 +30,27 @@ public class LessonDaoHibernate extends HibernateDaoSupport implements LessonDao
 	
         return (List<Lesson>)(lessons);
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Lesson> getAllLessons() {
+		
+		return getHibernateTemplate().find(
+		        "from Lesson l order by id desc");
+		
+	}
+
+	@Override
+	public void updateLesson(Lesson l) {
+		getHibernateTemplate().update(l);
+		getHibernateTemplate().flush();		
+	}
+
+	@Override
+	public void delete(long id) {
+
+		getHibernateTemplate().delete(getLesson(id));
+
+	}
 	
 }

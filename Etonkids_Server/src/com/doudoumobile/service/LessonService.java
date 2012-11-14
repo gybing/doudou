@@ -11,8 +11,14 @@ public interface LessonService {
 
 		public Lesson addLesson(Lesson lesson);
 		
+		public List<Lesson> getLessonsList();
+		
+		public void updateLesson(Lesson l);
+		
 		public List<Curriculum> getRelatedCurriculums(long userId);
 
-		public List<Lesson> getRelatedLessonByCurrId(long curriculumId); 
+		public List<Lesson> getRelatedLessonByCurrId(long curriculumId);
+
+		public void deleteUser(long id); 
 		
 }

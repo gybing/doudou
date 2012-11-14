@@ -10,5 +10,11 @@ public interface LessonDao {
 
     public Lesson addLesson(Lesson lesson);
     
+    public List<Lesson> getAllLessons();
+    
     public List<Lesson> getRelatedLessonByCurrId(long curriculumId);
+
+	public void updateLesson(Lesson l);
+
+	public void delete(long id);
 }

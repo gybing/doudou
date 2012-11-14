@@ -28,6 +28,8 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    private String realName;
+    
     @Column(name = "apn_username", nullable = false, length = 64, unique = true)
     private String username;
 
@@ -141,5 +143,13 @@ public class User implements Serializable {
         return ToStringBuilder.reflectionToString(this,
                 ToStringStyle.MULTI_LINE_STYLE);
     }
+
+	public String getRealName() {
+		return realName;
+	}
+
+	public void setRealName(String realName) {
+		this.realName = realName;
+	}
 
 }

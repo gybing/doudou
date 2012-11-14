@@ -44,6 +44,8 @@ public class Lesson implements Serializable {
     @Column(name = "available")
     private boolean available;
     
+    private String curriculumName;
+    
     @Transient
     private List<Material> materialList;
     
@@ -120,6 +122,14 @@ public class Lesson implements Serializable {
 
 	public void setMaterialList(List<Material> materialList) {
 		this.materialList = materialList;
+	}
+
+	public String getCurriculumName() {
+		return curriculumName;
+	}
+
+	public void setCurriculumName(String curriculumName) {
+		this.curriculumName = curriculumName;
 	}
 	
 }
