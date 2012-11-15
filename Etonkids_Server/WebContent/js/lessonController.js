@@ -19,7 +19,6 @@ return record_start + 1 + rowIndex;
 {header:'Begin Date',dataIndex:'beginDate',width:100,sortable: true},
 {header:'End Date',dataIndex:'endDate',width:100,sortable: true},
 {header:'Curriculum',dataIndex:'curriculumName',width:100,sortable: true},
-{header:'Available',dataIndex:'available',width:100,sortable: true},
 {header:'File',dataIndex:'pdfPath',width:100,sortable: true}
 ]); 
 var ds = new Ext.data.Store({ 
@@ -27,13 +26,14 @@ proxy:new Ext.data.HttpProxy({
 url:'../lesson.do?action=getLessonsList',
 method:'POST'
 }), 
-reader:new Ext.data.JsonReader({ },[
+reader:new Ext.data.JsonReader({  
+	totalProperty : 'totalProperty',   //page
+    root : 'lesson'},[
 {name:'id'}, 
 {name:'title'},
 {name:'beginDate'},
 {name:'endDate'},
 {name:'curriculumName'},
-{name:'available'},
 {name:'pdfPath'}
 ]) 
 }); 
@@ -121,7 +121,7 @@ id: 'title',
 name: 'title', 
 fieldLabel: 'Title', 
 emptyText: 'required', 
-blankText: 'Title cannot be blank', 
+blankText: 'Title is required', 
 allowBlank: false,  
 width:180
 }]},{ layout : "form",
@@ -132,7 +132,7 @@ width:180
     	format : 'Y-m-d',
     	fieldLabel: 'Begin date', 
     	emptyText: 'required', 
-    	blankText: 'Begin date cannot be blank', 
+    	blankText: 'Begin date is required', 
     	allowBlank: false,
     	editable:false,
     	width:180
@@ -145,11 +145,26 @@ width:180
     	    	format : 'Y-m-d',
     	    	fieldLabel: 'End date', 
     	    	emptyText: 'required', 
-    	    	blankText: 'End date cannot be blank', 
+    	    	blankText: 'End date is required', 
     	    	allowBlank: false,
     	    	editable:false,
-    	    	width:180
-    	    	}]},
+    	    	width:180,
+    	    	 listeners:{  
+                     change:function()  
+                     {  
+     
+                    	 var e = Ext.util.Format.date(Ext.getCmp('endDate').getValue(), 'Y-m-d');//格式化日期控件值 
+                    	 var s= Ext.util.Format.date(Ext.getCmp('beginDate').getValue(), 'Y-m-d');//格式化日期控件值 
+     
+                    	 var end = new Date(e); 
+                    	 var start = new Date(s); 
+                    	 var elapsed = Math.round((end.getTime() - start.getTime())/(1000*60*60*24)); // 计算间隔月数 
+     
+                    	 if(elapsed < 0){
+                        	 Ext.MessageBox.alert("Prompt","The end date must be after the begin date"); 
+                    	 }
+                      } 
+    	    	}}]},
     	    	{ layout : "form",
     	    	    items : [{
     	    	xtype: 'combo', 
@@ -169,17 +184,6 @@ width:180
     	    	       triggerAction : 'all',
     	    	       selectOnFocus : true 
     	    	}]},
-    	    	{ layout : "form",
-    	    	    items : [{
-    	    	    	xtype: 'radiogroup',
-    	    	    	id: 'availableCheck',
-    	    	    	fieldLabel: 'Available',
-    	    	    	items: [
-    	    	    	{boxLabel: 'YES', name: 'available', inputValue: 1, checked: true},
-    	    	    	{boxLabel: 'NO', name: 'available', inputValue: 0}
-    	    	    	] 
-    	    	    		
-    	    	}]},
 { layout : "form",
            items : [{
         	   xtype: 'fileuploadfield',
@@ -187,8 +191,17 @@ width:180
         	   emptyText: 'Select a zip file',
         	   fieldLabel: 'Attachment',
         	   name: 'pdfPath',
+        	   allowBlank : false,
+    	       blankText:'Please choose a lesson attachment',
         	   anchor: '95%', 
-        	   buttonText: 'Browse'
+        	   buttonText: 'Browse',
+        	   validator: function(v){
+        		    if(!/\.zip$/.test(v)){
+        		     return 'Only .zip files allowed';
+        		    }
+        		     return true;
+        		  }
+        	   
         	   }]}
 ]}]});
 
@@ -267,16 +280,11 @@ Ext.getCmp("addCurriculumWin").show();
 function deleteCurriculum(){
 //var grid = Ext.getCmp('myCustomers'); 
 if (grid.getSelectionModel().getSelections()[0] == undefined) { 
-Ext.Msg.alert("Prompt", "Please choose a curriculum-first level to delete"); 
+Ext.Msg.alert("Prompt", "Please choose a lesson to delete"); 
 } 
 else{
-	Ext.MessageBox.confirm('Confirm', 'Second level curriculum included will be deleted too, Continue?', sConfirm);
+	Ext.MessageBox.confirm('Confirm', 'Are you sure to delete this lesson?', deleteConfirm);
 }
-}
-
-function sConfirm(btn){
-	if(btn == 'yes')
-		Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this curriculum?', deleteConfirm);
 }
 
 function deleteConfirm(btn){
@@ -349,13 +357,7 @@ else{
 	Ext.getCmp("title").setValue(addJSON.title);
   	Ext.getCmp("beginDate").setValue(addJSON.beginDate);
   	Ext.getCmp("endDate").setValue(addJSON.endDate);
-  	Ext.getCmp("curriculumId").setValue(addJSON.curriculumId);
-  	
-  	if(addJSON.available == true)
-  	  	Ext.getCmp("availableCheck").setValue(1);
-  	else if(addJSON.available == false)
-  	  	Ext.getCmp("availableCheck").setValue(0);
-  		
+  	Ext.getCmp("curriculumId").setValue(addJSON.curriculumId);		
   	Ext.getCmp("form-file").setValue(addJSON.pdfPath);
   	
   	

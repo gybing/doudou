@@ -1,17 +1,21 @@
 package com.doudoumobile.controller;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.doudoumobile.model.Lesson;
 import com.doudoumobile.model.User;
 import com.doudoumobile.service.EtonService;
 import com.doudoumobile.service.ServiceLocator;
@@ -31,20 +35,39 @@ public class UserController extends MultiActionController{
     public void getUserList(HttpServletRequest request,
             HttpServletResponse response) throws Exception {
         
-    	List<User> userList = userService.getUsers();
-        
-    	for (User user : userList) {
+    	Integer start = Integer.parseInt(request.getParameter("start"));
+		Integer limit = Integer.parseInt(request.getParameter("limit"));
+		
+		List<User> pageUserList;
+    	
+		List<User> userList = userService.getUsers();
+
+		
+		// 分页,该页size未超过剩余size
+		if (userList.size() > start + limit)
+			pageUserList = userList.subList(start, limit + start);
+		else
+			pageUserList = userList.subList(start, userList.size());
+		
+		for (User user : pageUserList) {
             
     		logger.info(String.format("userId：%d", user.getEtonUserId()));
     		
     		user.setRealName(etonService.getUser(user.getEtonUserId()).getRealName());
             // logger.debug("user.online=" + user.isOnline());
         }
-        
-        response.setContentType("text/x-json;charset=UTF-8");           
+		
+		Map<String, Object> userMap = new HashMap<String, Object>();
+		userMap.put("totalProperty", userList.size());
+		userMap.put("user", pageUserList);
+		
+		 
+		    
+		JSONObject object = JsonHelper.getInstance().getJson(userMap);
+		
+		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
-        JSONArray object = JsonHelper.getInstance().getJsonArray(userList);
-        System.out.println(object.toString());
+       
     	writer.print(object);
     }
     

@@ -15,11 +15,12 @@ return record_start + 1 + rowIndex;
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'User',dataIndex:'realName',width:100,sortable: true},
-{header:'LastLogon',dataIndex:'lastLoginTime',width:100,sortable: true},
-{header:'Device Token',dataIndex:'username',width:100,sortable: true},
+{header:'User',dataIndex:'realName',width:100,align:'center',sortable: true},
+{header:'LastLogon',dataIndex:'lastLoginTime',width:100,align:'center',sortable: true},
+{header:'Device Token',dataIndex:'username',width:100,align:'center',sortable: true},
 {header:'Remote Wipe',  
 	xtype: 'actioncolumn',
+	align:'center',
 	items: [{icon   : '../img/undo.png',  
 	         tooltip: 'Remote wipe',
 	         handler: function(grid, rowIndex, colIndex) {
@@ -43,7 +44,9 @@ proxy:new Ext.data.HttpProxy({
 url:'../user.do?action=getUserList',
 method:'POST'
 }), 
-reader:new Ext.data.JsonReader({ },[
+reader:new Ext.data.JsonReader({
+	totalProperty : 'totalProperty',   //page
+    root : 'user' },[
 {name:'id'}, 
 {name:'realName'},
 {name:'lastLoginTime'},
@@ -58,7 +61,7 @@ var grid=new Ext.grid.GridPanel({
 	renderTo:"security_list", 
 	title:"User and Device List",
 	stripeRows:true,//斑马线效果
-	height:300, 
+	height:600, 
 	cm:cm,
 	store: ds,
 	loadMask: { msg: "Loading..." }, 
@@ -69,7 +72,7 @@ var grid=new Ext.grid.GridPanel({
 	                pageSize: 20,   
 	                store: ds, 
 	                displayInfo: true,   
-	                displayMsg: 'Displaying curriculums-first level {0}-{1} of {2}',   
+	                displayMsg: 'Displaying users {0}-{1} of {2}',   
 	                emptyMsg: "No data to display"   ,
 	                doLoad : function(start){ 
 	                	   record_start = start; 

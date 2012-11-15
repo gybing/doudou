@@ -38,7 +38,6 @@ public class UploadController extends MultiActionController {
 		java.sql.Date beginDate = null;
 		java.sql.Date endDate = null;
 		long curriculumId = 0;
-		boolean available = true;
 		
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		//logger.info(title);
@@ -77,13 +76,6 @@ public class UploadController extends MultiActionController {
 					else if(itemName.equals("curriculumId")){
 						curriculumId = Long.parseLong(itemValue);
 					}
-					else if(itemName.equals("available")){
-						if(itemValue.equals("0"))
-							available = false;
-						else if(itemValue.equals("1"))
-							available = true;
-						
-					}
 					
 				} else {
 					if (item.getName() != null && !item.getName().equals("")) {
@@ -116,7 +108,6 @@ public class UploadController extends MultiActionController {
 						newLesson.setPdfPath("/"+tempFile.getName());
 						newLesson.setCreatedTime(new Date());
 						//newLesson.setMaterialList(null);
-						newLesson.setAvailable(available);
 						
 						lessonService.addLesson(newLesson);
 						

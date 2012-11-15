@@ -10,12 +10,14 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
 
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -56,18 +58,38 @@ public class LessonController extends MultiActionController{
 	}
 	
 	public void getLessonsList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		Integer start = Integer.parseInt(request.getParameter("start"));
+		Integer limit = Integer.parseInt(request.getParameter("limit"));
+		
+		List<Lesson> pageLessonList;
+		
 		List<Lesson> lList = lessonService.getLessonsList();
 		
-		for(Lesson l: lList){
+		// 分页,该页size未超过剩余size
+		if (lList.size() > start + limit)
+			pageLessonList = lList.subList(start, limit + start);
+		else
+			pageLessonList = lList.subList(start, lList.size());
+		
+		for(Lesson l: pageLessonList){
 			l.setCurriculumName(etonService.getCurriculumById(l.getCurriculumId()).getCurriculumName());
 			
 		}
 		
+		Map<String, Object> myLessonMap = new HashMap<String, Object>();
+		myLessonMap.put("totalProperty", lList.size());
+		myLessonMap.put("lesson", pageLessonList);
+		
+		 
+		    
+		JSONObject myLessonJSON = JsonHelper.getInstance().getJson(myLessonMap);
+		
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
-        JSONArray object = JsonHelper.getInstance().getJsonArray(lList);
-        System.out.println(object.toString());
-    	writer.print(object);
+        //JSONArray object = JsonHelper.getInstance().getJsonArray(pageLessonList);
+        //System.out.println(object.toString());
+    	writer.print(myLessonJSON);
 	}
 	
 	public void getLessonById(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -89,7 +111,6 @@ public void updateLesson(HttpServletRequest request, HttpServletResponse respons
 		java.sql.Date endDate = null;
 		long curriculumId = 0;
 		long lessonId = 0;
-		boolean available = true;
 
 		//SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		//logger.info(title);
@@ -133,13 +154,6 @@ public void updateLesson(HttpServletRequest request, HttpServletResponse respons
 					else if(itemName.equals("lessonId")){
 						lessonId = Long.parseLong(itemValue);
 					}
-					else if(itemName.equals("available")){
-						if(itemValue.equals("0"))
-							available = false;
-						else if(itemValue.equals("1"))
-							available = true;
-						
-					}
 
 					
 				} else {
@@ -150,7 +164,6 @@ public void updateLesson(HttpServletRequest request, HttpServletResponse respons
 					newLesson.setBeginDate(beginDate);
 					newLesson.setEndDate(endDate);
 					newLesson.setCurriculumId(curriculumId);
-					newLesson.setAvailable(available);
 					
 					if (item.getName() != null && !item.getName().equals("")) {
 						Date now = new Date();
@@ -198,7 +211,7 @@ public void updateLesson(HttpServletRequest request, HttpServletResponse respons
 		
 		lessonService.updateLesson(newLesson);
 
-		response.getWriter().print("{success:true}");
+		//response.getWriter().print("{success:true}");
 		
 		System.out.println("here goes");
 		
