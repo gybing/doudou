@@ -25,14 +25,14 @@ import com.doudoumobile.service.ServiceLocator;
 
 public class UploadController extends MultiActionController {
 	
-	LessonService lessonService;
+	EtonService etonService;
 	
 	private UploadController() {
-		lessonService = (LessonService)ServiceLocator.getService("lessonService");
+		etonService = (EtonService)ServiceLocator.getService("etonService");
 	}
 
 	
-	public ModelAndView uploadFile(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, IOException {
+	public void uploadFile(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException, IOException {
 		
 		String title = "";
 		java.sql.Date beginDate = null;
@@ -105,21 +105,17 @@ public class UploadController extends MultiActionController {
 						newLesson.setBeginDate(beginDate);
 						newLesson.setEndDate(endDate);
 						newLesson.setCurriculumId(curriculumId);
-						newLesson.setPdfPath("/"+tempFile.getName());
+						newLesson.setPdfPath(file.toString());
 						newLesson.setCreatedTime(new Date());
 						//newLesson.setMaterialList(null);
 						
-						lessonService.addLesson(newLesson);
+						boolean result = etonService.addLesson(newLesson);
 						
-						System.out.println(newLesson.getId());
-						response.getWriter().print("{success:true}");
-//						request.setAttribute("upload.message",
-//                                "上传文件成功！" + item.getName() + item.getSize()
-//                                                + item.getContentType());
+						System.out.println("New lesson : " + newLesson.getId() + " upload result : " + result);
+						response.getWriter().print("{success:" + result + "}");
 
 					} else {
 						logger.info("没有选择文件！");
-                        //request.setAttribute("upload.message", "没有选择文件！");
 					}
 				}
 			}
@@ -127,15 +123,7 @@ public class UploadController extends MultiActionController {
 		} catch (Exception e) {
 			logger.error(e);
 			logger.error("上传文件失败！");
-			//response.getOutputStream().print(" 上传文件失败！");
 		}
-		
-		
-		
-		System.out.println("here goes");
-		ModelAndView mav = new ModelAndView();
-		
-		return mav;
 	}
 	
 }

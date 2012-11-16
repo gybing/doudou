@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.doudoumobile.dao.MaterialDao;
-import com.doudoumobile.model.Lesson;
 import com.doudoumobile.model.Material;
 
 public class MaterialDaoHibernate extends HibernateDaoSupport implements MaterialDao {

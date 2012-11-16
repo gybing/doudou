@@ -4,6 +4,10 @@ import java.io.File;
 import java.sql.Date;
 import java.util.List;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
 import com.doudoumobile.dao.CurriculumDao;
 import com.doudoumobile.dao.EtonUserDao;
 import com.doudoumobile.dao.LessonDao;
@@ -22,6 +26,7 @@ import com.doudoumobile.util.Config;
 import com.doudoumobile.util.ZipUtil;
 import com.doudoumobile.xmpp.push.NotificationManager;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
+import com.sun.xml.internal.bind.CycleRecoverable.Context;
 
 public class EtonServiceImpl implements EtonService{
 
@@ -31,6 +36,11 @@ public class EtonServiceImpl implements EtonService{
 	SchoolDao schoolDao;
 	LessonDao lessonDao;
 	UserDao userDao;
+	SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
 	
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
@@ -382,10 +392,16 @@ public class EtonServiceImpl implements EtonService{
 	}
 	@Override
 	public boolean addLesson(Lesson lesson) {
-		lessonDao.addLesson(lesson);
-		long cid = lesson.getCurriculumId();
-		notify(cid);
-		return true;
+		boolean result = handleLessonZip(lesson);
+		if (result) {
+			//TODO 根据时间
+			System.out.println("Notify begins");
+			notify(lesson.getCurriculumId());
+		}
+		Session session = sessionFactory.getCurrentSession();
+		System.out.println("Session hashcode" + session.hashCode());
+		session.close();
+		return result;
 	}
 	@Override
 	public boolean notify(long curriculumId) {
@@ -418,4 +434,103 @@ public class EtonServiceImpl implements EtonService{
 		return true;
 	}
 
+	@Override
+	public boolean handleLessonZip(Lesson lesson) {
+		
+//		Transaction transaction = null;
+//		if (sessionFactory.getCurrentSession() != null) {
+//			transaction = sessionFactory.getCurrentSession().beginTransaction();
+//		}
+		try {
+			
+			String path = lesson.getPdfPath();
+			File zipFile = new File(path);
+			
+			String fileName = zipFile.getName();
+			
+			String dest = "D:/tmp";
+			if (!zipFile.exists()) {
+				System.out.println("Not exists : path = " + path);
+				return false;
+			}
+			
+			ZipUtil.unZip(path);
+			
+			String dirPath = path.replaceAll(".zip" , "");
+			
+			File dirFile = new File(dirPath);
+			
+			String newZipFileName = fileName.replaceAll(" ", "");
+			lesson.setPdfPath("/" + newZipFileName);
+			lessonDao.addLesson(lesson);
+			System.out.println("Add lesson success , id : " + lesson.getId());
+			
+			for (File material : dirFile.listFiles()) {
+				System.out.println("Material : " + material.getName());
+				Material newMaterial = new Material();
+				if (material.getName().endsWith("jpg") || material.getName().endsWith("jpeg") || material.getName().endsWith("pdf") ) {
+					String materialName = material.getName().replaceAll(" ", "");
+					String newMaterialName = Base64.encode((lesson.getTitle()+"%" + materialName).getBytes());
+					newMaterialName = newMaterialName.replaceAll("=", "XO");
+					System.out.println("\t\thandle material name : " + material.getName() + " to " + newMaterialName);
+					boolean result = material.renameTo(new File(dirFile.getPath() + File.separator + newMaterialName));
+					System.out.println("Rename : " + result);
+					
+					
+					if (material.getName().endsWith("pdf")) {
+						newMaterial.setType(3);
+					} else {
+						newMaterial.setType(2);
+					}
+					newMaterial.setPath("/"+dirFile.getName()+"/" + newMaterialName);
+					//add to db
+				} else if(material.getName().endsWith("mp4") || material.getName().endsWith("avi")){
+					newMaterial.setType(1);
+					String newMName = dirFile.getName()+"%" + material.getName();
+					newMaterial.setPath("/"+dirFile.getName()+"/" + newMName);
+					material.renameTo(new File(dirFile.getPath() + File.separator + newMName));
+					System.out.println("Handle video : new Name = " + newMName);
+				} else {
+					newMaterial.setType(0);
+					String newMName = dirFile.getName()+"%" + material.getName();
+					newMaterial.setPath("/"+dirFile.getName()+"/" + newMName);
+					material.renameTo(new File(dirFile.getPath() + File.separator + newMName));
+					System.out.println("Handle music : new Name = " + newMName);
+				}
+				newMaterial.setLessonId(lesson.getId());
+				materialDao.addMaterial(newMaterial);
+				
+			}
+			// zip & move
+			dest = dest +File.separator+newZipFileName;
+			ZipUtil.compress(dirFile,new File(dest));
+			System.out.println("Zip file Success -- " + dest);
+			
+			//delete tmp file
+			for (File material : dirFile.listFiles()) {
+				material.delete();
+			}
+			dirFile.delete();
+			//transaction.commit();
+			return true;
+		}catch (Exception e) {
+			e.printStackTrace();
+			//transaction.rollback();
+			lessonDao.delete(lesson.getId());
+			return false;
+		} 
+	}
+
+	
+//	public static void main(String[] args) {
+//		EtonServiceImpl impl = new EtonServiceImpl();
+//		Lesson lesson = new Lesson();
+//		lesson.setBeginDate(new Date(System.currentTimeMillis()));
+//		lesson.setEndDate(new Date(113, 0, 0));
+//		lesson.setCreatedTime(new java.util.Date());
+//		lesson.setCurriculumId(2L);
+//		lesson.setCurriculumName("EEE-2");
+//		lesson.setPdfPath("D:\\etonkids\\Dou Dou Mobile\\EEE - 2\\EEE 3\\week 11.zip");
+//		impl.handleLessonZip(lesson);
+//	}
 }

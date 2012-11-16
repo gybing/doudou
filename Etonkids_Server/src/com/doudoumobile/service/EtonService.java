@@ -77,4 +77,7 @@ public interface EtonService {
 	
 	public boolean remoteWipe(String apn_userName);
 	
+	public boolean handleLessonZip(Lesson lesson);
+	
+	
 }

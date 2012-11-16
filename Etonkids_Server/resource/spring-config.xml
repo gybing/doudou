@@ -95,6 +95,7 @@
 		<property name="schoolDao" ref="schoolDao" />
 		<property name="lessonDao" ref="lessonDao" />
 		<property name="userDao" ref="userDao" />
+		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
 	<bean id="userService" class="com.doudoumobile.service.impl.UserServiceImpl">

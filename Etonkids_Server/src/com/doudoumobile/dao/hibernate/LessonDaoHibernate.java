@@ -2,6 +2,7 @@ package com.doudoumobile.dao.hibernate;
 
 import java.util.List;
 
+import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.doudoumobile.dao.LessonDao;
@@ -43,14 +44,13 @@ public class LessonDaoHibernate extends HibernateDaoSupport implements LessonDao
 	@Override
 	public void updateLesson(Lesson l) {
 		getHibernateTemplate().update(l);
-		getHibernateTemplate().flush();		
 	}
 
 	@Override
 	public void delete(long id) {
 
 		getHibernateTemplate().delete(getLesson(id));
-
+		
 	}
 	
 }

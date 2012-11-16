@@ -194,7 +194,7 @@ public class ZipUtil {
 //			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
-		ZipUtil.unZip("D:\\etonkids\\Etonkids Lesson 8.zip");
+		ZipUtil.unZip("D:/etonkids/Dou Dou Mobile/EEE - 2/EEE 1/week 9/week 9.zip");
 	}
 	
 	public static void unZip(String unZipfileName){//unZipfileName需要解压的zip文件名
@@ -213,7 +213,7 @@ public class ZipUtil {
 			while((zipEntry = zipIn.getNextEntry()) != null){
 
 				file = new File(zipFile.getParent(),zipEntry.getName());
-
+				
 				System.out.println(file);
 
 				if(zipEntry.isDirectory()){
@@ -267,36 +267,4 @@ public class ZipUtil {
 
 	}
 	
-	public static void unzip(String path, String dest) {
-		FileInputStream fis = null;
-		ZipInputStream zis = null;
-		FileOutputStream fos = null;
-		
-		try {
-			fis = new FileInputStream(new File(path));
-			zis = new ZipInputStream(fis);
-			ZipEntry entry = zis.getNextEntry();
-			fos = new FileOutputStream(new File(dest, entry.getName()));
-			byte[] buffer = new byte[10240];
-			int nNumber;
-			while ((nNumber = zis.read(buffer, 0, buffer.length)) != -1){
-				fos.write(buffer, 0, nNumber);
-			}
-			fos.flush();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				zis.close();
-				fos.close();
-				fis.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-		}
-	}
-
 }

@@ -44,6 +44,7 @@ public class Lesson implements Serializable {
     @Column(name = "available")
     private boolean available;
     
+    @Transient
     private String curriculumName;
     
     @Transient

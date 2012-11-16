@@ -24,7 +24,7 @@ public class Material implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "path", length = 128)
+    @Column(name = "path", length = 160)
     private String path;
 
     @Column(name = "type")
