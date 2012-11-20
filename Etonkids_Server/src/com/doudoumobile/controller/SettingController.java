@@ -2,7 +2,9 @@ package com.doudoumobile.controller;
 
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.doudoumobile.model.Curriculum;
 import com.doudoumobile.model.CurriculumToUser;
 import com.doudoumobile.model.EtonUser;
+import com.doudoumobile.model.Lesson;
 import com.doudoumobile.model.School;
 import com.doudoumobile.model.SchoolType;
 import com.doudoumobile.model.SessionData;
@@ -54,6 +57,40 @@ public class SettingController extends MultiActionController{
 	}
 	
 	public void getCurriculumList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+	
+    	Integer start = ServletRequestUtils.getIntParameter(request, "start", 0);
+		Integer limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
+		
+		List<Curriculum> pageCurriculumList;
+		
+		List<Curriculum> cList = etonService.getAllCurriculumList();
+
+		// 分页,该页size未超过剩余size
+		if (cList.size() > start + limit)
+			pageCurriculumList = cList.subList(start, limit + start);
+		else
+			pageCurriculumList = cList.subList(start, cList.size());
+		
+		
+		
+		Map<String, Object> myCurriculumMap = new HashMap<String, Object>();
+		myCurriculumMap.put("totalProperty", cList.size());
+		myCurriculumMap.put("curriculum", pageCurriculumList);
+		
+		 
+		    
+		JSONObject myCurriculumJSON = JsonHelper.getInstance().getJson(myCurriculumMap);
+		
+		response.setContentType("text/x-json;charset=UTF-8");           
+        PrintWriter writer = response.getWriter();
+        //JSONArray object = JsonHelper.getInstance().getJsonArray(pageLessonList);
+        //System.out.println(object.toString());
+    	writer.print(myCurriculumJSON);
+    	
+	}
+	
+	public void getCurriculumListForCascading(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
 		List<Curriculum> cList = etonService.getAllCurriculumList();
 		
 		response.setContentType("text/x-json;charset=UTF-8");           
@@ -61,6 +98,7 @@ public class SettingController extends MultiActionController{
         JSONArray object = JsonHelper.getInstance().getJsonArray(cList);
         System.out.println(object.toString());
     	writer.print(object);
+    	
 	}
 	
 	public void getFirstClassCurriList(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -133,8 +171,21 @@ public class SettingController extends MultiActionController{
 	}
 	
 	public void getEtonUserList(HttpServletRequest request, HttpServletResponse response) throws Exception{
+		
+		Integer start = ServletRequestUtils.getIntParameter(request, "start", 0);
+		Integer limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
+		
+		List<EtonUser> pageUserList;
+		
 		List<EtonUser> cList = etonService.getAllEtonUserList();
-		for (EtonUser etonUser : cList) {
+
+		// 分页,该页size未超过剩余size
+		if (cList.size() > start + limit)
+			pageUserList = cList.subList(start, limit + start);
+		else
+			pageUserList = cList.subList(start, cList.size());
+		
+		for (EtonUser etonUser : pageUserList) {
 			
 			if (etonUser.getRole() == EtonUser.Teacher) {
 				// Curri info
@@ -157,11 +208,17 @@ public class SettingController extends MultiActionController{
 			}
 		}
 		
+		
+		Map<String, Object> myUserMap = new HashMap<String, Object>();
+		myUserMap.put("totalProperty", cList.size());
+		myUserMap.put("users", pageUserList);
+	
+		JSONObject myUserJSON = JsonHelper.getInstance().getJson(myUserMap);
+		
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
-        JSONArray object = JsonHelper.getInstance().getJsonArray(cList);
-        System.out.println(object.toString());
-    	writer.print(object);
+    	writer.print(myUserJSON);
+    	
 	}
 	
 	public void updateEtonUser(HttpServletRequest request, HttpServletResponse response) throws Exception{
@@ -224,13 +281,30 @@ public class SettingController extends MultiActionController{
 	}
 	
 	public void getSchoolList(HttpServletRequest request, HttpServletResponse response) throws Exception{
-		List<School> cList = etonService.getAllSchool();
+		
+		Integer start = ServletRequestUtils.getIntParameter(request, "start", 0);
+		Integer limit = ServletRequestUtils.getIntParameter(request, "limit", 0);
+		
+		List<School> pageSchoolList;
+		
+		List<School> sList = etonService.getAllSchool();
+
+		// 分页,该页size未超过剩余size
+		if (sList.size() > start + limit)
+			pageSchoolList = sList.subList(start, limit + start);
+		else
+			pageSchoolList = sList.subList(start, sList.size());
+		
+		Map<String, Object> mySchoolMap = new HashMap<String, Object>();
+		mySchoolMap.put("totalProperty", sList.size());
+		mySchoolMap.put("campus", pageSchoolList);
+		    
+		JSONObject mySchoolJSON = JsonHelper.getInstance().getJson(mySchoolMap);
 		
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
-        JSONArray object = JsonHelper.getInstance().getJsonArray(cList);
-        System.out.println(object.toString());
-    	writer.print(object);
+        
+    	writer.print(mySchoolJSON);
 	}
 	
 	public void updateSchool(HttpServletRequest request, HttpServletResponse response) throws Exception{

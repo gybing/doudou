@@ -9,17 +9,17 @@ var sm = new Ext.grid.CheckboxSelectionModel();
 var cm=new Ext.grid.ColumnModel([ 
 sm,
 new Ext.grid.RowNumberer({header: "ID",
-width:40, 
+width:40,align:'center', 
 renderer:function(value,metadata,record,rowIndex){ 
 return record_start + 1 + rowIndex; 
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'Title',dataIndex:'title',width:100,sortable: true},
-{header:'Begin Date',dataIndex:'beginDate',width:100,sortable: true},
-{header:'End Date',dataIndex:'endDate',width:100,sortable: true},
-{header:'Curriculum',dataIndex:'curriculumName',width:100,sortable: true},
-{header:'File',dataIndex:'pdfPath',width:100,sortable: true}
+{header:'Title',dataIndex:'title',width:100,align:'center',sortable: true},
+{header:'Begin Date',dataIndex:'beginDate',width:100,align:'center',sortable: true},
+{header:'End Date',dataIndex:'endDate',width:100,align:'center',sortable: true},
+{header:'Curriculum',dataIndex:'curriculumName',width:100,align:'center',sortable: true},
+{header:'File',dataIndex:'pdfPath',width:100,align:'center',sortable: true}
 ]); 
 var ds = new Ext.data.Store({ 
 proxy:new Ext.data.HttpProxy({
@@ -78,7 +78,7 @@ var grid=new Ext.grid.GridPanel({
 //first level curriculum data
 var cStore=new Ext.data.Store({ 
 	proxy:new Ext.data.HttpProxy({
-	url:'../setting.do?action=getCurriculumList',
+	url:'../setting.do?action=getCurriculumListForCascading',
 	method:'POST'
 	}), 
 	reader:new Ext.data.JsonReader({ },[

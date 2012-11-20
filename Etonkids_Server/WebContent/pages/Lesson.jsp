@@ -20,7 +20,7 @@
 
 </head>
 <body>
-<div id="lesson_list"></div>
 
+<div id="lesson_list"></div>
 </body>
 </html>

@@ -15,7 +15,7 @@ return record_start4 + 1 + rowIndex;
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'Campus Address',dataIndex:'address',width:300,sortable: true},
+{header:'Campus Name',dataIndex:'address',width:300,sortable: true},
 {header:'School',dataIndex:'schoolType',width:200,sortable: true}, 
 {header:'Created by',dataIndex:'createdBy',width:100,sortable: true}
 ]); 
@@ -24,7 +24,10 @@ proxy:new Ext.data.HttpProxy({
 url:'../setting.do?action=getSchoolList',
 method:'POST'
 }), 
-reader:new Ext.data.JsonReader({ },[
+reader:new Ext.data.JsonReader({ 
+	totalProperty : 'totalProperty',   //page
+    root : 'campus'
+},[
 {name:'id'}, 
 {name:'address'},
 {name:'schoolType'},  
@@ -32,14 +35,14 @@ reader:new Ext.data.JsonReader({ },[
 ]) 
 }); 
 
-ds4.load({params:{start:0,limit:20}}); 
+ds4.load({params:{start:0,limit:15}}); 
 
 var grid4 = new Ext.grid.GridPanel({ 
 	id:'campuses',
 	renderTo:"campus_list", 
 	stripeRows:true,//斑马线效果
 	title:"", 
-	height:400, 
+	height:500, 
 	cm:cm4,
 	store: ds4,
 	loadMask: { msg: "Loading..." }, 
@@ -63,7 +66,7 @@ var c_toolBar = new Ext.Toolbar({
 
 var c_pageBar = new Ext.PagingToolbar({   
     renderTo:'c_pageBar',
-    pageSize: 20,   
+    pageSize: 15,   
     store: ds4, 
     displayInfo: true,   
     displayMsg: 'Displaying campuses {0}-{1} of {2}',   
@@ -148,9 +151,9 @@ anchor: '96%'
 xtype: 'textfield',
 id: 'address', 
 name: 'address', 
-fieldLabel: 'Campus Address', 
+fieldLabel: 'Campus Name', 
 emptyText: 'Required', 
-blankText: 'Please enter a campus address', 
+blankText: 'Please enter a campus name', 
 allowBlank: false,  
 anchor: '96%' 
 }]},

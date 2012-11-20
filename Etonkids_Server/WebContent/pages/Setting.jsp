@@ -53,7 +53,7 @@
 		
 		<div id="tabs" style="height:100%">
 			<ul>
-				<li><a href="#CurriculumsTab">Curriculums</a></li>
+				<li><a href="#CurriculumsTab">Curricula</a></li>
 				<li><a href="#AccountsTab">Accounts</a></li>
 				<li><a href="#SchoolsTab">Schools</a></li>
 			</ul>

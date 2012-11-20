@@ -25,7 +25,10 @@ proxy:new Ext.data.HttpProxy({
 url:'../setting.do?action=getCurriculumList',
 method:'POST'
 }), 
-reader:new Ext.data.JsonReader({ },[
+reader:new Ext.data.JsonReader({
+	totalProperty : 'totalProperty',   //page
+    root : 'curriculum'
+},[
 {name:'id'}, 
 {name:'curriculumName'},
 {name:'imgPath'},  
@@ -34,7 +37,7 @@ reader:new Ext.data.JsonReader({ },[
 ]) 
 }); 
 
-ds1.load({params:{start:0,limit:20}}); 
+ds1.load({params:{start:0,limit:15}}); 
 
 var grid1 = new Ext.grid.GridPanel({ 
 	id:'c_curriculums',
@@ -48,7 +51,7 @@ var grid1 = new Ext.grid.GridPanel({
 	                            forceFit:true   
 	            },   
 	            bbar: new Ext.PagingToolbar({   
-	                pageSize: 20,   
+	                pageSize: 15,   
 	                store: ds1, 
 	                displayInfo: true,   
 	                displayMsg: 'Displaying curriculums-second level {0}-{1} of {2}',   

@@ -9,7 +9,7 @@ var sm = new Ext.grid.CheckboxSelectionModel();
 var cm=new Ext.grid.ColumnModel([ 
 sm,
 new Ext.grid.RowNumberer({header: "ID",
-width:40, 
+width:40, align:'center',
 renderer:function(value,metadata,record,rowIndex){ 
 return record_start + 1 + rowIndex; 
 } 
@@ -21,8 +21,8 @@ return record_start + 1 + rowIndex;
 {header:'Remote Wipe',  
 	xtype: 'actioncolumn',
 	align:'center',
-	items: [{icon   : '../img/undo.png',  
-	         tooltip: 'Remote wipe',
+	items: [{icon   : '../img/wipe.png',  
+	         tooltip: 'Remote Wipe',
 	         handler: function(grid, rowIndex, colIndex) {
 	                        var user = ds.getAt(rowIndex);
 	                        var apn_userName = user.get('username');

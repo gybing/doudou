@@ -53,7 +53,9 @@ proxy:new Ext.data.HttpProxy({
 url:'../setting.do?action=getEtonUserList',
 method:'POST'
 }), 
-reader:new Ext.data.JsonReader({ },[
+reader:new Ext.data.JsonReader({
+	totalProperty : 'totalProperty',   //page
+    root : 'users' },[
 {name:'id'}, 
 {name:'realName'}, 
 {name:'roleName'},
@@ -153,7 +155,7 @@ var campusStore = new Ext.data.Store({
 //curriculum data
 var curriStore=new Ext.data.Store({ 
 	proxy:new Ext.data.HttpProxy({
-	url:'../setting.do?action=getCurriculumList',
+	url:'../setting.do?action=getCurriculumListForCascading',
 	method:'POST'
 	}), 
 	reader:new Ext.data.JsonReader({ },[
