@@ -26,5 +26,9 @@ public interface UserDao {
     public User verifyUser(String userName, String passWd);
     
     public List<String> getUserNameListByEtonId(long etonIdList);
+    
+    public void updateLoginTime(long userId, String deviceToken);
+    
+    public void updateUserUnavailable(String userName);
 
 }

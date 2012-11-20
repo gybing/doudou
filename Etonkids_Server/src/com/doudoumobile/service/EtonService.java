@@ -79,5 +79,7 @@ public interface EtonService {
 	
 	public boolean handleLessonZip(Lesson lesson);
 	
+	public void updateLoginTime(long userId , String deviceToken);
+	
 	
 }

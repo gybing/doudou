@@ -426,6 +426,7 @@ public class EtonServiceImpl implements EtonService{
 		String[] ss = apn_userName.split("_");
 		long userId = Long.parseLong(ss[0]);
 		System.out.println("To remoteWipe -> user name : " + apn_userName);
+		userDao.updateUserUnavailable(apn_userName);
 		NotificationManager nm = new NotificationManager();
 		String apiKey = Config.getString("apiKey", "");
 		String title = "remoteWipe";
@@ -519,6 +520,11 @@ public class EtonServiceImpl implements EtonService{
 			lessonDao.delete(lesson.getId());
 			return false;
 		} 
+	}
+
+	@Override
+	public void updateLoginTime(long userId , String deviceToken) {
+		userDao.updateLoginTime(userId, deviceToken);
 	}
 
 	

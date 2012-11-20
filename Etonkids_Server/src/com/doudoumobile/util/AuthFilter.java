@@ -73,7 +73,7 @@ public class AuthFilter implements Filter {
 				chain.doFilter(request, response);
 			} else {
 				//身份识别，从中获得用户信息
-				long userId = processTicket(ticket);
+				long userId = processAppTicket(ticket);
 				if (userId != -1) {
 					request.setAttribute("userId", userId);
 					chain.doFilter(request, response);
@@ -125,7 +125,7 @@ public class AuthFilter implements Filter {
 //	    //再判断1.判断内存map里是否有这个ticket,有那就直接通过获取用户id
 //	    //2.如果没有再到数据库里去查找，获得用户
 	    if (ticket != null) {
-	    	long userId = processTicket(ticket);
+	    	long userId = processWebTicket(ticket);
 	    	if (userId != -1) {
 	    		SessionData sessionData = new SessionData();
 	    		sessionData.setEtonUser(etonService.getUser(userId));
@@ -145,7 +145,39 @@ public class AuthFilter implements Filter {
 		}
 	}
 	
-	private long processTicket(String str) {
+	private long processAppTicket(String str) {
+		try {
+			String token = new String(Base64.decode(str));
+			
+			log.info("decoded result : " + token);
+			
+			String[] tokenArray = token.split("/");
+			if (tokenArray.length == 4 && tokenArray[2].equals("doudouTicket")) {
+				long userId = Long.parseLong(tokenArray[0]);
+				String loginName = tokenArray[1];
+				String deviceToken = tokenArray[3];
+				if (ticketMap.containsKey(str)) {
+					etonService.updateLoginTime(userId , deviceToken);
+					return userId;
+				} else {
+					if (etonService.getUser(userId).getUserName().equals(loginName)) {
+						etonService.updateLoginTime(userId , deviceToken);
+						addTicket(str, userId);
+						return userId;
+					}
+				}
+				
+			}
+		} catch (UnsupportedEncodingException e) {
+			// illegal
+			log.error("Illegal ticket");
+			e.printStackTrace();
+			return -1;
+		}
+		return -1;
+	}
+	
+	private long processWebTicket(String str) {
 		try {
 			String token = new String(Base64.decode(str));
 			
@@ -163,6 +195,7 @@ public class AuthFilter implements Filter {
 						return userId;
 					}
 				}
+				
 			}
 		} catch (UnsupportedEncodingException e) {
 			// illegal

@@ -36,6 +36,8 @@ public class EtonUserController extends MultiActionController {
 	public void login(HttpServletRequest request, HttpServletResponse response) throws Exception {
     	String userName = ServletRequestUtils.getStringParameter(request, "userName", "");
     	String passWd = ServletRequestUtils.getStringParameter(request, "passWd", "");
+    	String deviceToken = ServletRequestUtils.getStringParameter(request, "deviceToken", "");
+    	
     	EtonUser user = etonService.verifyEtonUser(userName, passWd);
     	response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
@@ -67,7 +69,7 @@ public class EtonUserController extends MultiActionController {
     		user.setSchoolInfo(etonService.getSchoolById(user.getSchoolId()));
 		}
     	JSONObject object = JsonHelper.getInstance().getJson(user);
-        String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "doudouTicket";
+        String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "doudouTicket" + "/" + deviceToken;
         String encodedS = Base64.encode(doudouTicket.getBytes());
         System.out.println("encoded : " + encodedS);
         object.put("ticket", encodedS);
