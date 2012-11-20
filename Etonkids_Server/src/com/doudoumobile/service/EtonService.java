@@ -81,5 +81,6 @@ public interface EtonService {
 	
 	public void updateLoginTime(long userId , String deviceToken);
 	
+	public boolean editLesson(Lesson lesson);
 	
 }

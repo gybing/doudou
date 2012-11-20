@@ -22,4 +22,9 @@ public class MaterialDaoHibernate extends HibernateDaoSupport implements Materia
 		getHibernateTemplate().flush();
 	}
 
+	@Override
+	public void removeByLessonId(long lessonId) {
+		getHibernateTemplate().deleteAll(getMaterialListByLessonId(lessonId));
+	}
+
 }

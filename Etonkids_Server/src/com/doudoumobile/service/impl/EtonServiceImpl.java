@@ -527,16 +527,97 @@ public class EtonServiceImpl implements EtonService{
 		userDao.updateLoginTime(userId, deviceToken);
 	}
 
-	
-//	public static void main(String[] args) {
-//		EtonServiceImpl impl = new EtonServiceImpl();
-//		Lesson lesson = new Lesson();
-//		lesson.setBeginDate(new Date(System.currentTimeMillis()));
-//		lesson.setEndDate(new Date(113, 0, 0));
-//		lesson.setCreatedTime(new java.util.Date());
-//		lesson.setCurriculumId(2L);
-//		lesson.setCurriculumName("EEE-2");
-//		lesson.setPdfPath("D:\\etonkids\\Dou Dou Mobile\\EEE - 2\\EEE 3\\week 11.zip");
-//		impl.handleLessonZip(lesson);
-//	}
+	@Override
+	public boolean editLesson(Lesson lesson) {
+		
+//		Transaction transaction = null;
+//		if (sessionFactory.getCurrentSession() != null) {
+//			transaction = sessionFactory.getCurrentSession().beginTransaction();
+//		}
+		try {
+			Lesson oldLesson = lessonDao.getLesson(lesson.getId());
+			
+			String path = lesson.getPdfPath();
+			boolean result = false;
+			if (path != null && !path.isEmpty()) {
+				materialDao.removeByLessonId(lesson.getId());
+				File zipFile = new File(path);
+				
+				String fileName = zipFile.getName();
+				
+				String dest = "D:/tmp";
+				if (!zipFile.exists()) {
+					System.out.println("Not exists : path = " + path);
+					return false;
+				}
+				
+				ZipUtil.unZip(path);
+				
+				String dirPath = path.replaceAll(".zip" , "");
+				
+				File dirFile = new File(dirPath);
+				
+				String newZipFileName = fileName.replaceAll(" ", "");
+				lesson.setPdfPath("/" + newZipFileName);
+				
+				for (File material : dirFile.listFiles()) {
+					System.out.println("Material : " + material.getName());
+					Material newMaterial = new Material();
+					if (material.getName().endsWith("jpg") || material.getName().endsWith("jpeg") || material.getName().endsWith("pdf") ) {
+						String materialName = material.getName().replaceAll(" ", "");
+						String newMaterialName = Base64.encode((lesson.getTitle()+"%" + materialName).getBytes());
+						newMaterialName = newMaterialName.replaceAll("=", "XO");
+						System.out.println("\t\thandle material name : " + material.getName() + " to " + newMaterialName);
+						result = material.renameTo(new File(dirFile.getPath() + File.separator + newMaterialName));
+						System.out.println("Rename : " + result);
+						
+						if (material.getName().endsWith("pdf")) {
+							newMaterial.setType(3);
+						} else {
+							newMaterial.setType(2);
+						}
+						newMaterial.setPath("/"+dirFile.getName()+"/" + newMaterialName);
+						//add to db
+					} else if(material.getName().endsWith("mp4") || material.getName().endsWith("avi")){
+						newMaterial.setType(1);
+						String newMName = dirFile.getName()+"%" + material.getName();
+						newMaterial.setPath("/"+dirFile.getName()+"/" + newMName);
+						material.renameTo(new File(dirFile.getPath() + File.separator + newMName));
+						System.out.println("Handle video : new Name = " + newMName);
+					} else {
+						newMaterial.setType(0);
+						String newMName = dirFile.getName()+"%" + material.getName();
+						newMaterial.setPath("/"+dirFile.getName()+"/" + newMName);
+						material.renameTo(new File(dirFile.getPath() + File.separator + newMName));
+						System.out.println("Handle music : new Name = " + newMName);
+					}
+					newMaterial.setLessonId(lesson.getId());
+					materialDao.addMaterial(newMaterial);
+					
+				}
+				// zip & move
+				dest = dest +File.separator+newZipFileName;
+				ZipUtil.compress(dirFile,new File(dest));
+				System.out.println("Zip file Success -- " + dest);
+				
+				//delete tmp file
+				for (File material : dirFile.listFiles()) {
+					material.delete();
+				}
+				dirFile.delete();
+			} else {
+				lesson.setPdfPath(oldLesson.getPdfPath());
+			}
+			
+			lessonDao.updateLesson(lesson);
+			System.out.println("Update lesson success , id : " + lesson.getId());
+			
+			return true;
+		}catch (Exception e) {
+			e.printStackTrace();
+			//transaction.rollback();
+			lessonDao.delete(lesson.getId());
+			return false;
+		} 
+	}
 }
