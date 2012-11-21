@@ -15,7 +15,7 @@ return record_start1 + 1 + rowIndex;
 } 
 }),
 {header:'ID',dataIndex:'id',hidden:true},
-{header:'Name',dataIndex:'curriculumName',width:160,sortable: true},
+{header:'Sub-curriculum',dataIndex:'curriculumName',width:160,sortable: true},
 {header:'Cover',dataIndex:'imgPath',width:160}, 
 {header:'Curriculum',dataIndex:'parentCurriName',width:160,sortable: true},
 {header:'Created by',dataIndex:'createdBy',width:100,sortable: true}
@@ -54,7 +54,7 @@ var grid1 = new Ext.grid.GridPanel({
 	                pageSize: 15,   
 	                store: ds1, 
 	                displayInfo: true,   
-	                displayMsg: 'Displaying curriculums-second level {0}-{1} of {2}',   
+	                displayMsg: 'Displaying sub-curricula {0}-{1} of {2}',   
 	                emptyMsg: "No data to display"   ,
 	                doLoad : function(start){ 
 	                	   record_start1 = start; 
@@ -95,7 +95,7 @@ height: 300,
 bodyStyle: 'margin:3px 3px 3px 3px', 
 frame: true, 
 xtype: 'filedset', 
-labelWidth: 60, 
+labelWidth: 80, 
 items: 
 [ { xtype: 'fieldset', 
 title: 'Curriculum Info', 
@@ -108,7 +108,7 @@ items:
 xtype: 'textfield',
 id: 'curriculumName', 
 name: 'curriculumName', 
-fieldLabel: 'Name', 
+fieldLabel: 'Sub-Curriculum', 
 emptyText: 'Required', 
 blankText: 'Please enter curriculum name', 
 allowBlank: false,  
@@ -130,9 +130,9 @@ id : "parentCurriculumId",
        fieldLabel: 'Curriculum',
        valueField : 'id',
        displayField : 'curriculumName',
-       emptyText : 'Choose a curriculum-first level...',
+       emptyText : 'Choose a curriculum...',
        allowBlank : false,
-       blankText:'Please choose a curriculum-first level',
+       blankText:'Please choose a curriculum',
        editable: false,
        typeAhead : true,
        width: 130,
@@ -170,7 +170,7 @@ xtype: 'hidden',
 //新增窗口 
 addCWin = new Ext.Window({ 
 id: 'addCWin', 
-title: 'Add/Edit a Curriculum-Second Level', 
+title: 'Add/Edit a Sub-Curriculum', 
 width: 500, 
 height: 350, 
 y:500,
@@ -239,10 +239,10 @@ Ext.getCmp("addCWin").show();
 function deleteCCurriculum(){
 //var grid = Ext.getCmp('myCustomers'); 
 if (grid1.getSelectionModel().getSelections()[0] == undefined) { 
-Ext.Msg.alert("Prompt", "Please choose a curriculum-second level to delete"); 
+Ext.Msg.alert("Prompt", "Please choose a sub-curriculum to delete"); 
 } 
 else{
-Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this curriculum?', deleteCConfirm);
+Ext.MessageBox.confirm('Confirm', 'Are you sure you want to delete this sub-curriculum?', deleteCConfirm);
 }
 }
 
@@ -294,7 +294,7 @@ if(addForm.form.isValid()){
 
 function checkCCurriculum(){
 if (grid1.getSelectionModel().getSelections()[0] == undefined) { 
-Ext.Msg.alert("Prompt", "Please choose a curriculum-second level to edit"); 
+Ext.Msg.alert("Prompt", "Please choose a sub-curriculum to edit"); 
 }
 else{
 	var cid = grid1.getSelectionModel().getSelections()[0].data.id;

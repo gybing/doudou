@@ -107,13 +107,16 @@ public class UploadController extends MultiActionController {
 						newLesson.setCurriculumId(curriculumId);
 						newLesson.setPdfPath(file.toString());
 						newLesson.setCreatedTime(new Date());
+						newLesson.setAvailable(true);
 						//newLesson.setMaterialList(null);
 						
 						boolean result = etonService.addLesson(newLesson);
 						
 						System.out.println("New lesson : " + newLesson.getId() + " upload result : " + result);
-						response.getWriter().print("{success:" + result + "}");
 
+						response.setContentType("text/html;charset=UTF-8");           
+						response.getWriter().print("{'failure':'"+!result+"','success':'"+result+"','msg':''}");
+						
 					} else {
 						logger.info("没有选择文件！");
 					}
@@ -124,6 +127,8 @@ public class UploadController extends MultiActionController {
 			logger.error(e);
 			logger.error("上传文件失败！");
 		}
+		
+
 	}
 	
 }

@@ -47,7 +47,7 @@ var grid=new Ext.grid.GridPanel({
 	                pageSize: 20,   
 	                store: ds, 
 	                displayInfo: true,   
-	                displayMsg: 'Displaying curriculums-first level {0}-{1} of {2}',   
+	                displayMsg: 'Displaying curricula {0}-{1} of {2}',   
 	                emptyMsg: "No data to display"   ,
 	                doLoad : function(start){ 
 	                	   record_start = start; 
@@ -75,7 +75,7 @@ height: 100,
 bodyStyle: 'margin:3px 3px 3px 3px', 
 frame: true, 
 xtype: 'filedset', 
-labelWidth: 60, 
+labelWidth: 80, 
 items: 
 [ { xtype: 'fieldset', 
 title: 'Curriculum Info', 
@@ -88,7 +88,7 @@ items:
 xtype: 'textfield',
 id: 'p_curriculumName', 
 name: 'curriculumName', 
-fieldLabel: 'Curriculum', 
+fieldLabel: 'Curriculum Name', 
 emptyText: 'required', 
 blankText: 'Curriculum cannot be blank', 
 allowBlank: false,  
@@ -114,7 +114,7 @@ allowBlank: true
 //新增课程窗口 
 addCurriculumWin = new Ext.Window({ 
 id: 'addCurriculumWin', 
-title: 'Add/Edit a Curriculum-First Level', 
+title: 'Add/Edit a Curriculum', 
 width: 500, 
 height: 170, 
 y:100,
@@ -185,10 +185,10 @@ Ext.getCmp("addCurriculumWin").show();
 function deleteCurriculum(){
 //var grid = Ext.getCmp('myCustomers'); 
 if (grid.getSelectionModel().getSelections()[0] == undefined) { 
-Ext.Msg.alert("Prompt", "Please choose a curriculum-first level to delete"); 
+Ext.Msg.alert("Prompt", "Please choose a curriculum to delete"); 
 } 
 else{
-	Ext.MessageBox.confirm('Confirm', 'Second level curriculum included will be deleted too, Continue?', sConfirm);
+	Ext.MessageBox.confirm('Confirm', 'Sub-curriculum included will be deleted too, Continue?', sConfirm);
 }
 }
 
@@ -245,7 +245,7 @@ if(addCurriculumForm.form.isValid()){
 
 function checkCurriculum(){
 if (grid.getSelectionModel().getSelections()[0] == undefined) { 
-Ext.Msg.alert("Prompt", "Please choose a curriculum-first level to edit"); 
+Ext.Msg.alert("Prompt", "Please choose a curriculum to edit"); 
 }
 else{
 	var id = grid.getSelectionModel().getSelections()[0].data.id;

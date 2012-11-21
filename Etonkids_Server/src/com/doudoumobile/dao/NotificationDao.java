@@ -59,5 +59,7 @@ public interface NotificationDao {
 	 * @return List<NotificationMO>
 	 */
 	public List<NotificationMO> queryNotification(NotificationMO mo);
+	
+	public NotificationMO getLastRemoteWipeNotification(String username);
 
 }

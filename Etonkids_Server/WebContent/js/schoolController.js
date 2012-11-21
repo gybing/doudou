@@ -37,7 +37,7 @@ var grid3 = new Ext.grid.GridPanel({
 	renderTo:"school_list", 
 	stripeRows:true,//斑马线效果
 	title:"", 
-	height:200, 
+	height:240, 
 	cm:cm3,
 	store: ds3,
 	loadMask: { msg: "Loading..." }, 

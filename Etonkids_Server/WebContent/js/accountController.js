@@ -22,13 +22,14 @@ return record_start2 + 1 + rowIndex;
 {header:'First Name',dataIndex:'realName',width:80,sortable: true},
 {header:'Role',dataIndex:'roleName',width:60,sortable: true},
 {header:'Login Name',dataIndex:'userName',width:100,sortable: true},
-{header:'School',dataIndex:'schoolType',width:100,sortable: true}, 
-{header:'Campus Address',dataIndex:'address',width:100,sortable: true}, 
-{header:'Curriculums',dataIndex:'curriList',width:100,sortable: true},
+{header:'School',dataIndex:'schoolType',width:80,sortable: true}, 
+{header:'Campus',dataIndex:'address',width:100,sortable: true}, 
+{header:'Curricula Access',dataIndex:'curriList',width:100,sortable: true},
 {header:'Notes',dataIndex:'notes',width:100},
 {header:'Created by',dataIndex:'createdBy',width:100,sortable: true},
 {header:'Password',  
 	xtype: 'actioncolumn',
+	align:'center',
 	items: [{icon   : '../img/undo.png',  
 	         tooltip: 'Reset password',
 	         handler: function(grid, rowIndex, colIndex) {
@@ -38,8 +39,14 @@ return record_start2 + 1 + rowIndex;
 	                        Ext.Ajax.request({
 								  url:'../etonUser.do?action=resetPwd&userId='+accountId,
 								  method:'GET',
-								  success:function(){
-									    Ext.MessageBox.alert("Status","Password has been reset");
+								  success:function(response, options){
+									  //alert(response.responseText);
+									  if(response.responseText == 'Success'){
+										  Ext.MessageBox.alert("Status","Password has been reset");
+									  }
+									  else{
+										  Ext.MessageBox.alert("Status","Operation failure. Try again.");
+									  }
 								  },failure:function(){
 								    Ext.MessageBox.alert("Error","Request exception");
 								  }}); 
@@ -88,7 +95,7 @@ var grid2 = new Ext.grid.GridPanel({
 	renderTo:"account_list", 
 	stripeRows:true,//斑马线效果
 	title:"", 
-	height: 500,
+	height: 800,
 	cm:cm2,
 	store: ds2,
 	loadMask: { msg: "Loading..." }, 
@@ -129,7 +136,7 @@ var pageBar = new Ext.PagingToolbar({
 //var teacherTypeData = [['0','Admin'],['1','R&D'],['2','ED'],['3','Teacher']];
 var teacherTypeStore = new Ext.data.SimpleStore({
     fields: ['teacherTypeId', 'teacherType'],
-    data : [['0','Admin'],['1','R&D'],['2','ED'],['3','Teacher']] 
+    data : [['1','R&D'],['2','ED'],['3','Teacher']] 
 });
 
 //school data
@@ -174,7 +181,7 @@ height: 360,
 bodyStyle: 'margin:3px 3px 3px 3px', 
 frame: true, 
 xtype: 'filedset', 
-labelWidth: 60, 
+labelWidth: 80, 
 items: 
 [ { xtype: 'fieldset', 
 title: 'Account Info', 
@@ -277,7 +284,7 @@ width:160
     items : [{
     	xtype: 'lovcombo',
     	id:'curriculumsId',
-    		fieldLabel: 'Curriculums',
+    		fieldLabel: 'Curricula Access',
     		name: 'curriculums',
     		hideOnSelect:false,
     		store: curriStore,
@@ -285,7 +292,7 @@ width:160
             displayField: 'curriculumName',
     		hiddenName: 'curriculumsId',
     		triggerAction: 'all',
-    		emptyText : 'Choose related curriculums...',
+    		emptyText : 'Choose curricula access...',
     		allowBlank : true,
     	    editable: false,
     	    typeAhead : true,

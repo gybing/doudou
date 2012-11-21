@@ -10,6 +10,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import com.doudoumobile.dao.NotificationDao;
 import com.doudoumobile.model.NotificationMO;
 import com.doudoumobile.model.ReportVO;
+import com.doudoumobile.model.User;
+import com.doudoumobile.service.UserNotFoundException;
 
 /**
  * @author chengqiang.liu
@@ -60,6 +62,16 @@ public class NotificationDaoHibernate extends HibernateDaoSupport implements
 	public List<ReportVO> queryReportVO(NotificationMO mo) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public NotificationMO getLastRemoteWipeNotification(String username) {
+		List result = getHibernateTemplate().find("from NotificationMO n where n.username='" + username + "' and title='remoteWipe' order by n.createTime desc limit 0 ,1");
+		if (result == null || result.isEmpty()) {
+            return null;
+        } else {
+            return (NotificationMO) result.get(0);
+        }
 	}
 
 }

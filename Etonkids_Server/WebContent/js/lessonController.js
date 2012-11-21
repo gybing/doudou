@@ -16,10 +16,11 @@ return record_start + 1 + rowIndex;
 }),
 {header:'ID',dataIndex:'id',hidden:true},
 {header:'Title',dataIndex:'title',width:100,align:'center',sortable: true},
-{header:'Begin Date',dataIndex:'beginDate',width:100,align:'center',sortable: true},
-{header:'End Date',dataIndex:'endDate',width:100,align:'center',sortable: true},
-{header:'Curriculum',dataIndex:'curriculumName',width:100,align:'center',sortable: true},
-{header:'File',dataIndex:'pdfPath',width:100,align:'center',sortable: true}
+{header:'Course Category',dataIndex:'curriculumName',width:100,align:'center',sortable: true},
+{header:'Available Date',dataIndex:'beginDate',width:100,align:'center',sortable: true},
+{header:'Expiry Date',dataIndex:'endDate',width:100,align:'center',sortable: true},
+{header:'File Name',dataIndex:'pdfPath',width:100,align:'center',sortable: true},
+{header:'Publish Time',dataIndex:'createdTime',width:100,align:'center',sortable: true}
 ]); 
 var ds = new Ext.data.Store({ 
 proxy:new Ext.data.HttpProxy({
@@ -31,10 +32,11 @@ reader:new Ext.data.JsonReader({
     root : 'lesson'},[
 {name:'id'}, 
 {name:'title'},
+{name:'curriculumName'},
 {name:'beginDate'},
 {name:'endDate'},
-{name:'curriculumName'},
-{name:'pdfPath'}
+{name:'pdfPath'},
+{name:'createdTime'}
 ]) 
 }); 
 
@@ -45,7 +47,7 @@ var grid=new Ext.grid.GridPanel({
 	title:'Lesson List',
 	renderTo:"lesson_list", 
 	stripeRows:true,//斑马线效果
-	height:600, 
+	height:950, 
 	cm:cm,
 	store: ds,
 	loadMask: { msg: "Loading..." }, 
@@ -91,14 +93,14 @@ var cStore=new Ext.data.Store({
 //新增一级课程表单
 addCurriculumForm = new Ext.form.FormPanel({ 
 id: 'addCurriculumForm', 
-width: 500, 
+width: 520, 
 height: 260, 
 fileUpload: true,
 //样式 
 bodyStyle: 'margin:3px 3px 3px 3px', 
 frame: true, 
 xtype: 'filedset', 
-labelWidth: 70, 
+labelWidth: 100, 
 items: 
 [ { xtype: 'fieldset', 
 title: 'Lesson Info', 
@@ -119,9 +121,9 @@ items:
 xtype: 'textfield',
 id: 'title', 
 name: 'title', 
-fieldLabel: 'Title', 
+fieldLabel: 'Course Name', 
 emptyText: 'required', 
-blankText: 'Title is required', 
+blankText: 'Course name is required', 
 allowBlank: false,  
 width:180
 }]},{ layout : "form",
@@ -130,9 +132,9 @@ width:180
     	id: 'beginDate', 
     	name: 'beginDate', 
     	format : 'Y-m-d',
-    	fieldLabel: 'Begin date', 
+    	fieldLabel: 'Available date', 
     	emptyText: 'required', 
-    	blankText: 'Begin date is required', 
+    	blankText: 'Available date is required', 
     	allowBlank: false,
     	editable:false,
     	width:180
@@ -143,9 +145,9 @@ width:180
     	    	id: 'endDate', 
     	    	name: 'endDate', 
     	    	format : 'Y-m-d',
-    	    	fieldLabel: 'End date', 
+    	    	fieldLabel: 'Expiry date', 
     	    	emptyText: 'required', 
-    	    	blankText: 'End date is required', 
+    	    	blankText: 'Expiry date is required', 
     	    	allowBlank: false,
     	    	editable:false,
     	    	width:180,
@@ -158,10 +160,10 @@ width:180
      
                     	 var end = new Date(e); 
                     	 var start = new Date(s); 
-                    	 var elapsed = Math.round((end.getTime() - start.getTime())/(1000*60*60*24)); // 计算间隔月数 
+                    	 var elapsed = Math.round((end.getTime() - start.getTime())/(1000*60*60*24)); // 计算间隔天数 
      
                     	 if(elapsed < 0){
-                        	 Ext.MessageBox.alert("Prompt","The end date must be after the begin date"); 
+                        	 Ext.MessageBox.alert("Prompt","The expiry date must be after the available date"); 
                     	 }
                       } 
     	    	}}]},
@@ -170,12 +172,12 @@ width:180
     	    	xtype: 'combo', 
     	    	id : "curriculumId",
     	    	       store :cStore,
-    	    	       fieldLabel: 'Curriculum',
+    	    	       fieldLabel: 'Course Category',
     	    	       valueField : 'id',
     	    	       displayField : 'curriculumName',
-    	    	       emptyText : 'Choose a curriculum...',
+    	    	       emptyText : 'Choose a category...',
     	    	       allowBlank : false,
-    	    	       blankText:'Please choose a curriculum',
+    	    	       blankText:'Please choose a sub-curriculum',
     	    	       editable: false,
     	    	       typeAhead : true,
     	    	       width: 180,
@@ -209,7 +211,7 @@ width:180
 addCurriculumWin = new Ext.Window({ 
 id: 'addCurriculumWin', 
 title: 'Add/Edit a Lesson', 
-width: 510, 
+width: 530, 
 height: 330, 
 y:100,
 //背景遮罩 
@@ -244,15 +246,22 @@ function addRoleFunction() {
                     waitMsg: 'Uploading your file...',
                        
                        success : function(form, action) { 
+                    	   
+                    	   if(action.result.success == 'true'){
+                    		   
+                    		   Ext.getCmp('addCurriculumWin').hide();
+                        	   Ext.getCmp('curriculums').store.reload();
+                        	   Ext.Msg.alert('Status', 'Upload Succeeded'); 
+                    	   }
+                    	   else{
+                        	   Ext.Msg.alert('Status', 'Upload Failed. Please check the file.'); 
 
-                       Ext.getCmp('addCurriculumWin').hide();
-                       Ext.getCmp('curriculums').store.reload();
-                       Ext.Msg.alert('Status', 'Upload Succeeded'); 
+                    	   }
  
                        }, 
                         failure : function(form, action) { 
 
-                           Ext.Msg.alert('Status', 'Save Failed'); 
+                           Ext.Msg.alert('Status', 'Upload Failed'); 
  
                         } 
                     });  
@@ -317,11 +326,20 @@ if(addCurriculumForm.form.isValid()){
                     method : 'post', 
  
                        
-                       success : function() { 
+                       success : function(form, action) { 
+                    	   
+                    	   if(action.result.success == 'true'){
+                    		   
+                    		   Ext.getCmp('addCurriculumWin').hide();
+                        	   Ext.getCmp('curriculums').store.reload();
+                        	   Ext.Msg.alert('Status', 'Edit Succeeded'); 
+                    	   }
+                    	   else{
+                        	   Ext.Msg.alert('Status', 'Edit Failed. Please check the file.'); 
 
-                    	   Ext.getCmp('addCurriculumWin').hide();
-                       Ext.getCmp('curriculums').store.reload();
-                       Ext.Msg.alert('Status', 'Save Succeeded'); 
+                    	   }
+
+                    	  
  
                        }, 
                         failure : function(form, action) { 
@@ -334,9 +352,30 @@ if(addCurriculumForm.form.isValid()){
 }
 
 function checkCurriculum(){
+
+	
 if (grid.getSelectionModel().getSelections()[0] == undefined) { 
  Ext.Msg.alert("Prompt", "Please choose a lesson to edit"); 
 }
+else {
+	
+	var e = Ext.util.Format.date(grid.getSelectionModel().getSelections()[0].data.endDate, 'Y-m-d');//格式化日期控件值 
+	var s= Ext.util.Format.date(grid.getSelectionModel().getSelections()[0].data.beginDate, 'Y-m-d');//格式化日期控件值 
+
+	var end = new Date(e); 
+	var start = new Date(s); 
+	var currentDate = new Date();
+	//alert(currentDate);
+
+	var elapsedE = Math.round((end.getTime() - currentDate.getTime())/(1000*60*60*24)); 
+	var elapsedS = Math.round((currentDate.getTime() - start.getTime())/(1000*60*60*24)); 
+	//alert(elapsedE+"+"+elapsedS);
+	
+	if(elapsedE>=0 && elapsedS>=0){
+		 Ext.Msg.alert("Prompt", "This lesson is available and cannot be edited"); 
+
+	}
+
 else{
 	var id = grid.getSelectionModel().getSelections()[0].data.id;
 	
@@ -358,7 +397,7 @@ else{
   	Ext.getCmp("beginDate").setValue(addJSON.beginDate);
   	Ext.getCmp("endDate").setValue(addJSON.endDate);
   	Ext.getCmp("curriculumId").setValue(addJSON.curriculumId);		
-  	Ext.getCmp("form-file").setValue(addJSON.pdfPath);
+  	Ext.getCmp("form-file").setValue(addJSON.pdfPath.substr(1));
   	
   	
 	Ext.getCmp("addCurriculumWin").show(); 
@@ -370,6 +409,7 @@ else{
 }); 
 
 
+}
 }
 }
  

@@ -53,7 +53,7 @@
 	            //target:        '#output2',   // target element(s) to be updated with server response 
 	            beforeSerialize: md5PWD,
 	            beforeSubmit:  showRequest,  // pre-submit callback 
-	            success:       showResponse,  // post-submit callback 
+	            success:       showResponse // post-submit callback 
 
 	            //url:       'WebLogin/login.do' ,        // override for form's 'action' attribute 
 	            //type:      'post'      // 'get' or 'post', override for form's 'method' attribute 
@@ -115,6 +115,10 @@
 	    	//login success jump
 	    	window.location.href = "pages/Index.html";
 	    }
+	    else if(responseText == 0){
+	    	$(".notice").html("You have no authorization to login.");
+		     $(".notice").show();
+	    }
 	    
 	} 
 	
@@ -129,7 +133,7 @@
 		<img src="img/etonkids-logo.png" />
 		<form id="formID" method="post" action="etonUser.do?action=loginForWeb">
 			<div id="login">
-				<div class="notice" id="noticeID"></div>
+				<div class="notice" id="noticeID" style="color:red;"></div>
 				<div>
 					<input type="text" class="box" id="usernameID" name="userName" placeholder="Email"></input>
 				</div>

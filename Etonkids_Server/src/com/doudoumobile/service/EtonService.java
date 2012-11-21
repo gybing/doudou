@@ -7,6 +7,7 @@ import com.doudoumobile.model.CurriculumToUser;
 import com.doudoumobile.model.EtonUser;
 import com.doudoumobile.model.Lesson;
 import com.doudoumobile.model.Material;
+import com.doudoumobile.model.NotificationMO;
 import com.doudoumobile.model.School;
 import com.doudoumobile.model.SchoolType;
 
@@ -72,6 +73,9 @@ public interface EtonService {
 	
 	//upload lesson
 	public boolean addLesson(Lesson lesson);
+	
+	public boolean updateLesson(Lesson lesson);
+
 	
 	public boolean notify(long curriculumId);
 	

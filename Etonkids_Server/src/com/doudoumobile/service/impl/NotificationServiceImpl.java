@@ -68,5 +68,10 @@ public class NotificationServiceImpl implements NotificationService {
 		}
 		return list;
 	}
+	
+	@Override
+	public NotificationMO getLastRemoteWipeNotification(String username) {
+		return notificationDao.getLastRemoteWipeNotification(username);
+	}
 
 }

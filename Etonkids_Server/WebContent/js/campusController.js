@@ -42,7 +42,7 @@ var grid4 = new Ext.grid.GridPanel({
 	renderTo:"campus_list", 
 	stripeRows:true,//斑马线效果
 	title:"", 
-	height:500, 
+	height:450, 
 	cm:cm4,
 	store: ds4,
 	loadMask: { msg: "Loading..." }, 
@@ -97,12 +97,12 @@ var sStore=new Ext.data.Store({
 addCampusForm = new Ext.form.FormPanel({ 
 id: 'addCampusForm', 
 width: 480, 
-height: 300, 
+height: 160, 
 //样式 
 bodyStyle: 'margin:3px 3px 3px 3px', 
 frame: true, 
 xtype: 'filedset', 
-labelWidth: 60, 
+labelWidth: 100, 
 items: 
 [ { xtype: 'fieldset', 
 title: 'Campus Info', 
@@ -172,7 +172,7 @@ addCampusWin = new Ext.Window({
 id: 'addCampusWin', 
 title: 'Add/Edit a Campus', 
 width: 500, 
-height: 350, 
+height: 210, 
 //背景遮罩 
 modal: true, 
 //重置大小 

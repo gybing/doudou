@@ -44,4 +44,6 @@ public interface NotificationService {
 	 * @return List<NotificationMO>
 	 */
 	public List<NotificationMO> queryNotification(NotificationMO mo);
+	
+	public NotificationMO getLastRemoteWipeNotification(String username);
 }

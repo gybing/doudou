@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import com.doudoumobile.dao.CurriculumDao;
 import com.doudoumobile.dao.EtonUserDao;
@@ -26,7 +25,6 @@ import com.doudoumobile.util.Config;
 import com.doudoumobile.util.ZipUtil;
 import com.doudoumobile.xmpp.push.NotificationManager;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
-import com.sun.xml.internal.bind.CycleRecoverable.Context;
 
 public class EtonServiceImpl implements EtonService{
 
@@ -395,6 +393,7 @@ public class EtonServiceImpl implements EtonService{
 			return -1;
 		}
 	}
+	
 	@Override
 	public boolean addLesson(Lesson lesson) {
 		boolean result = handleLessonZip(lesson);
@@ -407,6 +406,19 @@ public class EtonServiceImpl implements EtonService{
 		session.close();
 		return result;
 	}
+	
+	@Override
+	public boolean updateLesson(Lesson lesson) {
+		boolean result = editLesson(lesson);
+		
+		Session session = sessionFactory.getCurrentSession();
+		System.out.println("Session hashcode" + session.hashCode());
+		session.close();
+		return result;
+	}
+	
+	
+	
 	@Override
 	public boolean notify(long curriculumId) {
 		//curriculumDao.get
@@ -624,4 +636,5 @@ public class EtonServiceImpl implements EtonService{
 			return false;
 		} 
 	}
+
 }

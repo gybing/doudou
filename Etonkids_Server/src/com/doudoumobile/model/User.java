@@ -28,8 +28,6 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    private String realName;
-    
     @Column(name = "apn_username", nullable = false, length = 64, unique = true)
     private String username;
 
@@ -47,6 +45,15 @@ public class User implements Serializable {
     
 	@Transient
     private boolean online;
+	
+	@Transient
+    private String realName;
+	
+	@Transient
+	private String status;
+	
+	@Transient
+	private String updateTime;
 
     public User() {
     	available = true;
@@ -152,4 +159,20 @@ public class User implements Serializable {
 		this.realName = realName;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public String getUpdateTime() {
+		return updateTime;
+	}
+
+	public void setUpdateTime(String updateTime) {
+		this.updateTime = updateTime;
+	}
+	
 }

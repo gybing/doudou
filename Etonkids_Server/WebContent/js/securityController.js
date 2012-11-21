@@ -16,8 +16,8 @@ return record_start + 1 + rowIndex;
 }),
 {header:'ID',dataIndex:'id',hidden:true},
 {header:'User',dataIndex:'realName',width:100,align:'center',sortable: true},
-{header:'LastLogon',dataIndex:'lastLoginTime',width:100,align:'center',sortable: true},
-{header:'Device Token',dataIndex:'username',width:100,align:'center',sortable: true},
+{header:'Last Login Time',dataIndex:'lastLoginTime',width:100,align:'center',sortable: true},
+{header:'Device ID',dataIndex:'username',width:100,align:'center',sortable: true},
 {header:'Remote Wipe',  
 	xtype: 'actioncolumn',
 	align:'center',
@@ -31,7 +31,7 @@ return record_start + 1 + rowIndex;
 								  url:'../user.do?action=remoteWipe&apn_userName='+apn_userName,
 								  method:'GET',
 								  success:function(){
-									    Ext.MessageBox.alert("Status","Remote wiped");
+									    Ext.MessageBox.alert("Status","Remote Wipe has been triggered and data will be wiped when the tablet is connected to the Internet.");
 								  },failure:function(){
 								    Ext.MessageBox.alert("Error","Request exception");
 								  }}); 
@@ -61,7 +61,7 @@ var grid=new Ext.grid.GridPanel({
 	renderTo:"security_list", 
 	title:"User and Device List",
 	stripeRows:true,//斑马线效果
-	height:600, 
+	height:950, 
 	cm:cm,
 	store: ds,
 	loadMask: { msg: "Loading..." }, 

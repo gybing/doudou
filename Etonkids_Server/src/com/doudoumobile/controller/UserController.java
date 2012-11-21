@@ -16,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.doudoumobile.model.Lesson;
+import com.doudoumobile.model.NotificationMO;
 import com.doudoumobile.model.User;
 import com.doudoumobile.service.EtonService;
+import com.doudoumobile.service.NotificationService;
 import com.doudoumobile.service.ServiceLocator;
 import com.doudoumobile.service.UserService;
 import com.doudoumobile.util.JsonHelper;
@@ -26,10 +28,12 @@ public class UserController extends MultiActionController{
 
     private UserService userService;
     private EtonService etonService;
+    private NotificationService ns;
     
     public UserController() {
     	userService = ServiceLocator.getUserService();
     	etonService = (EtonService)ServiceLocator.getService("etonService");
+    	ns = (NotificationService)ServiceLocator.getService("notificationService");
     }
 
     public void getUserList(HttpServletRequest request,
@@ -54,6 +58,19 @@ public class UserController extends MultiActionController{
     		logger.info(String.format("userId：%d", user.getEtonUserId()));
     		
     		user.setRealName(etonService.getUser(user.getEtonUserId()).getRealName());
+    		NotificationMO mo = ns.getLastRemoteWipeNotification(user.getUsername());
+    		if (mo != null) {
+    			if (mo.getStatus().equals("0")) {
+    				user.setStatus("STATUS_NOT_SEND");
+    			} else if (mo.getStatus().equals("1")) {
+    				user.setStatus("STATUS_SEND");
+    			} else if (mo.getStatus().equals("2")) {
+    				user.setStatus("STATUS_RECEIVE");
+    			} else if (mo.getStatus().equals("3")) {
+    				user.setStatus("STATUS_READ");
+    			}
+    			user.setUpdateTime(mo.getUpdateTime().toString());
+			}
             // logger.debug("user.online=" + user.isOnline());
         }
 		

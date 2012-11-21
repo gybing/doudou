@@ -88,6 +88,21 @@ public class EtonUserController extends MultiActionController {
     	response.getWriter().print(result);
     }
     
+    public void modifyPwdForWeb(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    	SessionData sd = (SessionData)request.getSession().getAttribute("sessionData");
+    	long userId = (Long)sd.getEtonUser().getId();
+    	String oldPwd = ServletRequestUtils.getStringParameter(request, "oldPassword", "");
+    	String newPwd = ServletRequestUtils.getStringParameter(request, "newPassword", "");
+    	
+    	int result = etonService.modifyPwd(userId, oldPwd, newPwd);
+    	response.setContentType("text/x-json;charset=UTF-8"); 
+    	if(result == 1){
+
+    	}
+    	response.getWriter().print("{success:true, msg:'"+result+"'}");
+
+    }
+    
     public void resetPwd(HttpServletRequest request, HttpServletResponse response) throws Exception{
     	//admin only
     	long id = ServletRequestUtils.getLongParameter(request, "userId", 0);
@@ -109,7 +124,7 @@ public class EtonUserController extends MultiActionController {
         }
         
     	if (null != user) {
-    		if (user.getRole() == EtonUser.Admin) {
+    		if (user.getRole() != EtonUser.Teacher) {
     			String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "doudouTicket";
     			String encodedS = Base64.encode(doudouTicket.getBytes());
     			Cookie cookie = new Cookie("EtonKids_ITeach_Ticket",encodedS);
@@ -122,9 +137,9 @@ public class EtonUserController extends MultiActionController {
     			
     			request.getSession().setAttribute("SessionData", sessionData);		
     			writer.print(1);
-			} else {
-				writer.print("NotOpenYetForOtherRole");
-				return;
+			}
+    		else {
+				writer.print(0);
 			}
 		} 
     }

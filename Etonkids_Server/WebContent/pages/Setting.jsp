@@ -63,13 +63,13 @@
 				<table id="ccontainer" width="100%">
 				
 				<tr><td>
-				<div id="pTitle">>>Curriculum-First Level List</div>
+				<div id="pTitle">>>Curricula List</div>
 				<div id="pCurriculum_list" ></div>
 				</td></tr>
 				<tr><td style="height:20px">
 				</td></tr>
 				<tr><td>
-				<div id="cTitle">>>Curriculum-Second Level List</div>
+				<div id="cTitle">>>Sub-Curricula List</div>
 					<div id="cCurriculum_list"></div>
 				</td></tr>
 				</table>

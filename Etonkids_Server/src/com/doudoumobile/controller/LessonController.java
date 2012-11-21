@@ -74,7 +74,7 @@ public class LessonController extends MultiActionController{
 		
 		for(Lesson l: pageLessonList){
 			l.setCurriculumName(etonService.getCurriculumById(l.getCurriculumId()).getCurriculumName());
-			
+			l.setPdfPath(l.getPdfPath().substring(1));
 		}
 		
 		Map<String, Object> myLessonMap = new HashMap<String, Object>();
@@ -164,6 +164,7 @@ public void updateLesson(HttpServletRequest request, HttpServletResponse respons
 					newLesson.setBeginDate(beginDate);
 					newLesson.setEndDate(endDate);
 					newLesson.setCurriculumId(curriculumId);
+					newLesson.setAvailable(true);
 					
 					if (item.getName() != null && !item.getName().equals("")) {
 						Date now = new Date();
@@ -186,17 +187,24 @@ public void updateLesson(HttpServletRequest request, HttpServletResponse respons
 						logger.debug(String.format("文件地址：%s", file.toString()));
 						// 将文件上传至服务器
 						item.write(file);
+						newLesson.setPdfPath(file.toString());
 						
-						//newLesson.setPdfPath("/"+tempFile.getName());
-//						request.setAttribute("upload.message",
-//                                "上传文件成功！" + item.getName() + item.getSize()
-//                                                + item.getContentType());
 
 					} else {
 						logger.info("没有选择文件！");
-						newLesson.setPdfPath(lessonService.getLesson(lessonId).getPdfPath());
+						newLesson.setPdfPath(null);
+						
+						
                         //request.setAttribute("upload.message", "没有选择文件！");
 					}
+					
+					boolean result = etonService.updateLesson(newLesson);
+					
+					System.out.println("New lesson : " + newLesson.getId() + " upload result : " + result);
+
+
+					response.setContentType("text/html;charset=UTF-8");           
+					response.getWriter().print("{'failure':'"+!result+"','success':'"+result+"','msg':''}");
 					
 					//System.out.println(newLesson.getId());
 
@@ -209,7 +217,6 @@ public void updateLesson(HttpServletRequest request, HttpServletResponse respons
 			//response.getOutputStream().print(" 上传文件失败！");
 		}
 		
-		lessonService.updateLesson(newLesson);
 
 		//response.getWriter().print("{success:true}");
 		
