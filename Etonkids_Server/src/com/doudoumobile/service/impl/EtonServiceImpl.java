@@ -37,6 +37,11 @@ public class EtonServiceImpl implements EtonService{
 	LessonDao lessonDao;
 	UserDao userDao;
 	SessionFactory sessionFactory;
+	String zipDesPath = "";
+	
+	public void setZipDesPath(String zipDesPath) {
+		this.zipDesPath = zipDesPath;
+	}
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -399,7 +404,6 @@ public class EtonServiceImpl implements EtonService{
 			notify(lesson.getCurriculumId());
 		}
 		Session session = sessionFactory.getCurrentSession();
-		System.out.println("Session hashcode" + session.hashCode());
 		session.close();
 		return result;
 	}
@@ -449,7 +453,7 @@ public class EtonServiceImpl implements EtonService{
 			
 			String fileName = zipFile.getName();
 			
-			String dest = "D:/tmp";
+			String dest = zipDesPath;
 			if (!zipFile.exists()) {
 				System.out.println("Not exists : path = " + path);
 				return false;
@@ -545,7 +549,7 @@ public class EtonServiceImpl implements EtonService{
 				
 				String fileName = zipFile.getName();
 				
-				String dest = "D:/tmp";
+				String dest = zipDesPath;
 				if (!zipFile.exists()) {
 					System.out.println("Not exists : path = " + path);
 					return false;

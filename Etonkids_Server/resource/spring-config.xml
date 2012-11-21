@@ -96,6 +96,7 @@
 		<property name="lessonDao" ref="lessonDao" />
 		<property name="userDao" ref="userDao" />
 		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="zipDesPath" value="D:/etonkids"></property>
 	</bean>
 
 	<bean id="userService" class="com.doudoumobile.service.impl.UserServiceImpl">
