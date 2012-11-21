@@ -25,7 +25,7 @@
 					<li><a href="Security.jsp" target="mainbox">Security</a></li>
 <c:choose>
 
-<c:when test="${SessionData.etonUser.role==0}">
+<c:when test="${SessionData.etonUser.role==0 || SessionData.etonUser.role==1}">
 	<li><a href="Setting.jsp" target="mainbox">Settings</a></li>
 </c:when>
 

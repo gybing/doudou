@@ -133,8 +133,11 @@ id : "cSchool",
            select : function(combo, record,index)   
            {   
 			Ext.getCmp('schoolName').setValue(combo.getRawValue());
-         
-       }
+			},
+			expand:function(combo, record,index) {
+				sStore.reload();
+    		}
+    
      }
 }]},
 { layout : "form",

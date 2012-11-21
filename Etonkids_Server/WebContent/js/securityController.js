@@ -18,6 +18,7 @@ return record_start + 1 + rowIndex;
 {header:'User',dataIndex:'realName',width:100,align:'center',sortable: true},
 {header:'Last Login Time',dataIndex:'lastLoginTime',width:100,align:'center',sortable: true},
 {header:'Device ID',dataIndex:'username',width:100,align:'center',sortable: true},
+{header:'Last Operation',dataIndex:'username',width:100,align:'center',sortable: true},
 {header:'Remote Wipe',  
 	xtype: 'actioncolumn',
 	align:'center',

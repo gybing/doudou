@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ page import="com.doudoumobile.model.User"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -52,12 +54,41 @@
 	<body>
 		
 		<div id="tabs" style="height:100%">
-			<ul>
-				<li><a href="#CurriculumsTab">Curricula</a></li>
-				<li><a href="#AccountsTab">Accounts</a></li>
-				<li><a href="#SchoolsTab">Schools</a></li>
-			</ul>
-			<div id="CurriculumsTab">
+			
+			<c:choose>
+
+	<c:when test="${SessionData.etonUser.role==1}">
+	<ul>
+		<li><a href="#CurriculumsTab">Curricula</a></li>
+	</ul>
+	<div id="CurriculumsTab">
+					
+				<!--  <div id="curriculum_list" style="width:80%"></div>-->
+				<table id="ccontainer" width="100%">
+				
+				<tr><td>
+				<div id="pTitle">>>Curricula List</div>
+				<div id="pCurriculum_list" ></div>
+				</td></tr>
+				<tr><td style="height:20px">
+				</td></tr>
+				<tr><td>
+				<div id="cTitle">>>Sub-Curricula List</div>
+					<div id="cCurriculum_list"></div>
+				</td></tr>
+				</table>
+								
+				
+					
+			</div>
+	</c:when>
+	<c:otherwise>
+	<ul>
+		<li><a href="#CurriculumsTab">Curricula</a></li>
+		<li><a href="#AccountsTab">Accounts</a></li>
+		<li><a href="#SchoolsTab">Schools</a></li>
+	</ul>
+	<div id="CurriculumsTab">
 					
 				<!--  <div id="curriculum_list" style="width:80%"></div>-->
 				<table id="ccontainer" width="100%">
@@ -131,6 +162,11 @@
 				</table>
 				
 			</div>
+	</c:otherwise>
+
+</c:choose>
+				
+			
 		</div>
 	</body>
 </html>

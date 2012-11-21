@@ -136,7 +136,7 @@ var pageBar = new Ext.PagingToolbar({
 //var teacherTypeData = [['0','Admin'],['1','R&D'],['2','ED'],['3','Teacher']];
 var teacherTypeStore = new Ext.data.SimpleStore({
     fields: ['teacherTypeId', 'teacherType'],
-    data : [['1','R&D'],['2','ED'],['3','Teacher']] 
+    data : [['0','Administrator'],['1','R&D'],['2','ED'],['3','Teacher']] 
 });
 
 //school data
@@ -149,14 +149,22 @@ var schoolStore=new Ext.data.Store({
 	{name:'id'}, 
 	{name:'typeName'}
 	]) ,
-	autoLoad: true
+	autoLoad: true,
+	listeners:{
+	       load:function(){
+	           Ext.getCmp('school_Id').setValue(""); }}
 	}); 
+
+
+
 //campus data
 var campusStore = new Ext.data.Store({ 
 	reader:new Ext.data.JsonReader({ },[
 	{name:'id'}, 
 	{name:'address'}
-	]) 
+	]),listeners:{
+	       load:function(){
+	           Ext.getCmp('campus_Id').setValue(""); }} 
 	});
 
 //curriculum data
@@ -169,7 +177,10 @@ var curriStore=new Ext.data.Store({
 	{name:'id'}, 
 	{name:'curriculumName'}
 	]) ,
-	autoLoad: true
+	autoLoad: true,
+	listeners:{
+	       load:function(){
+	           Ext.getCmp('curriculumsId').setValue(""); }} 
 }); 
 
 //新增帐号表单
@@ -259,7 +270,10 @@ width:160
             	   				method:'GET'
             	   		});
             	   		campusStore.load(); //加载下拉框的store      
-            	   }      
+            	   },
+            	   expand:function(combo, record,index) {
+            		   schoolStore.reload();
+           		}
                }
     	}]},
     	{ layout : "form",
@@ -278,7 +292,12 @@ width:160
     	    	       mode:'remote', 
     	    	       hiddenName:'schoolId',
     	    	       triggerAction : 'all',
-    	    	       selectOnFocus : true 
+    	    	       selectOnFocus : true,
+    	    	       listeners:{
+    	    	    	   expand:function(combo, record,index) {
+    	    	    		   campusStore.reload();
+    	           		}
+    	    	       }
     	    	}]},
 {layout : "form",
     items : [{
@@ -299,7 +318,12 @@ width:160
     	    selectOnFocus : true,
     	    anchor: '96%',
     		height: 200,
-    		mode: 'remote'
+    		mode: 'remote',
+    		listeners:{
+ 	    	   expand:function(combo, record,index) {
+ 	    		  curriStore.reload();
+        		}
+ 	       }
    
  }]},{ layout : "form",
      items : [{

@@ -73,9 +73,74 @@ var grid=new Ext.grid.GridPanel({
 	 '-',
 	 {text:'Edit',handler:checkCurriculum},
 	 '-',
-	 {text:'Delete',handler:deleteCurriculum}
+	 {text:'Delete',handler:deleteCurriculum},
+	 '->',
+	 {xtype:'textfield',id:'keyword',title:'Course Category', width:180},
+	 {text:'查询',handler:findCustomer},
+	 '-',
+	 {text:'清空',handler: callBack}
 	 ]              
 });
+
+function findCustomer(){
+
+	var condition = Ext.getCmp('condition').getValue();
+	var keyword = Ext.getCmp('keyword').getValue();
+
+	if(condition == '' || condition == null){
+	Ext.Msg.alert('提示', '请选择查询条件！'); 
+	}
+	else{
+
+	ds.baseParams={condition:condition, keyword: keyword};
+	ds.proxy = new Ext.data.HttpProxy({
+					url:'customer/findCustomer.do',
+					method:'POST'
+				}); 
+	ds.reader = new Ext.data.JsonReader({ 
+						totalProperty:'total',  
+						root:'resultData'},[
+											{name:'custId', mapping: 'custId'}, 
+											{name:'custName', mapping: 'custName'},  
+											{name:'industryType', mapping: 'industryType'},
+											{name:'defaultStat', mapping: 'defaultStat'},
+											{name:'exposureType', mapping: 'exposureType'},
+											{name:'creditLevel',mapping:'creditLevel'},
+											{name:'balance',mapping:'balance'},
+											{name:'inputUserName', mapping:'inputUserName'},
+											{name:'inputOrgName', mapping:'inputOrgName'},
+					]);
+					   
+	ds.load({params:{start:0,limit:20}});
+	record_start = 0;  	
+	}
+	}
+
+	function callBack(){
+
+	Ext.getCmp('condition').clearValue();
+	Ext.getCmp('keyword').setValue('');
+	ds.proxy = new Ext.data.HttpProxy({
+					url:'customer/listCustomer.do',
+					method:'POST'
+				}); 
+	ds.reader = new Ext.data.JsonReader({ 
+						totalProperty:'total',  
+						root:'customer'},[
+											{name:'custId', mapping: 'custId'}, 
+											{name:'custName', mapping: 'custName'},  
+											{name:'industryType', mapping: 'industryType'},
+											{name:'defaultStat', mapping: 'defaultStat'},
+											{name:'exposureType', mapping: 'exposureType'},
+											{name:'creditLevel',mapping:'creditLevel'},
+											{name:'balance',mapping:'balance'},
+											{name:'inputUserName', mapping:'inputUserName'},
+											{name:'inputOrgName', mapping:'inputOrgName'},
+					]);   
+	ds.load({params:{start:0,limit:20}});
+	record_start = 0;
+
+	}
 
 //first level curriculum data
 var cStore=new Ext.data.Store({ 
@@ -290,9 +355,27 @@ function deleteCurriculum(){
 //var grid = Ext.getCmp('myCustomers'); 
 if (grid.getSelectionModel().getSelections()[0] == undefined) { 
 Ext.Msg.alert("Prompt", "Please choose a lesson to delete"); 
-} 
+} else {
+	
+	var e = Ext.util.Format.date(grid.getSelectionModel().getSelections()[0].data.endDate, 'Y-m-d');//格式化日期控件值 
+	var s= Ext.util.Format.date(grid.getSelectionModel().getSelections()[0].data.beginDate, 'Y-m-d');//格式化日期控件值 
+
+	var end = new Date(e); 
+	var start = new Date(s); 
+	var currentDate = new Date();
+	//alert(currentDate);
+
+	var elapsedE = Math.round((end.getTime() - currentDate.getTime())/(1000*60*60*24)); 
+	var elapsedS = Math.round((currentDate.getTime() - start.getTime())/(1000*60*60*24)); 
+	//alert(elapsedE+"+"+elapsedS);
+	
+	if(elapsedE>=0 && elapsedS>=0){
+		 Ext.Msg.alert("Prompt", "This lesson is available and cannot be deleted"); 
+
+	}
 else{
 	Ext.MessageBox.confirm('Confirm', 'Are you sure to delete this lesson?', deleteConfirm);
+}
 }
 }
 

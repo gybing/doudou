@@ -74,7 +74,7 @@ var grid1 = new Ext.grid.GridPanel({
 });
 
 //first level curriculum data
-var cStore=new Ext.data.Store({ 
+var curriculumStore=new Ext.data.Store({ 
 	proxy:new Ext.data.HttpProxy({
 	url:'../setting.do?action=getFirstClassCurriList',
 	method:'POST'
@@ -126,7 +126,7 @@ anchor: '96%'
     items : [{
 xtype: 'combo', 
 id : "parentCurriculumId",
-       store :cStore,
+       store :curriculumStore,
        fieldLabel: 'Curriculum',
        valueField : 'id',
        displayField : 'curriculumName',
@@ -142,10 +142,13 @@ id : "parentCurriculumId",
        selectOnFocus : true ,
        listeners:{        
            select : function(combo, record,index)   
-           {   
+           {  
+        	   
 			Ext.getCmp('parentCurriName').setValue(combo.getRawValue());
-         
-       }
+			},
+    		expand:function(combo, record,index) {
+    			curriculumStore.reload();
+    		}
      }
 }]},
 { layout : "form",

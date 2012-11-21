@@ -105,6 +105,7 @@
 	 
 	// post-submit callback 
 	function showResponse(responseText, statusText, xhr, $form)  {  
+
 		if(responseText == null){
 	    	 $(".notice").html("Wrong email or password");
 		     $(".notice").show();

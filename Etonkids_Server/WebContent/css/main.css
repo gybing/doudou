@@ -42,14 +42,20 @@ ul {
 	text-decoration:none;
 	}
 
-#menu a:active{
-	color:#ff6100;
-	}
-#menu a:hover{
-	text-decoration: underline;
+#menu a:link{
+	color:#66B3FF;
 	}
 #menu a:visited{
 	color:#FFFFFF;
+	}
+
+#menu a:hover{
+	text-decoration: underline;
+	}
+
+	
+	#menu a:active{
+	color:#ff6100;
 	}
 
 #list {
