@@ -5,7 +5,7 @@ import android.os.Environment;
 
 public class Constants {
 
-	public static final String SD_PATH = Environment.getExternalStorageDirectory().toString() + "/etonkids";
+	public static final String SD_PATH = Environment.getExternalStorageDirectory().toString() + "/.Etonkids";
 	
     public static final String SHARED_PREFERENCE_NAME = "doudou";
     

@@ -91,6 +91,24 @@
                 android:src="@drawable/logo"
                 android:layout_marginLeft="455dp" />
 
+            <ImageView
+                android:id="@+id/newInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="78dp"
+                android:layout_marginTop="210dp"
+                android:src="@drawable/red" />
+
+            <TextView
+                android:id="@+id/newCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="85dp"
+                android:layout_marginTop="216dp"
+                android:text="15"
+                android:textSize="16dp"
+                android:textColor="#FFFFFF" />
+
         </RelativeLayout>
     </LinearLayout>
 

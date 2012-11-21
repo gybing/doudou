@@ -26,6 +26,7 @@ import com.doudoumobile.etonkids_client.model.Curriculum.CurriculumType;
 import com.doudoumobile.etonkids_client.model.Lesson;
 import com.doudoumobile.etonkids_client.util.DoudouJsonHelper;
 import com.doudoumobile.etonkids_client.util.ErrorCodeHandler;
+import com.doudoumobile.etonkids_client.util.LocalFileEraser;
 import com.doudoumobile.etonkids_client.util.UrlConstants;
 import com.doudoumobile.etonkids_client.util.ZipUtil;
 import com.doudoumobile.etonkids_client.util.db.MyDbConnector;
@@ -47,7 +48,8 @@ public class DownloadtabActivity extends Activity{
     // 存放各个下载器
     private HashMap<String, Downloader> downloaders = new HashMap<String, Downloader>();
 	private HashMap<String, BookitemActivity> progresses = new HashMap<String, BookitemActivity>() ;
-	
+	private HashMap<Integer, BookgroupActivity> groupMap = new HashMap<Integer, BookgroupActivity>();
+			
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,8 +145,8 @@ public class DownloadtabActivity extends Activity{
                             if (item != null) {
                             	item.editTx2("Downloading..." + ((double)((int)(curruentSize*1000/fileSize)))/10 + "%");
                             	if (curruentSize >= fileSize) {
-                            		Toast.makeText(DownloadtabActivity.this, "下载完成！", Toast.LENGTH_LONG).show();
-                            		item.editTx2("下载完成");
+                            		Toast.makeText(DownloadtabActivity.this, "Download Completed!", Toast.LENGTH_LONG).show();
+                            		item.editTx2("Download Completed!");
                             		
                             		downloaders.get(url).delete(url);
                             		downloaders.get(url).reset();
@@ -164,21 +166,30 @@ public class DownloadtabActivity extends Activity{
     	ZipUtil.unZip(localFilePath);
     	Lesson lesson = progresses.get(url).getLesson();
     	MyDbConnector.getMyDbConnector(this).addLesson(lesson);
+    	LocalFileEraser.delete(localFilePath);
+    	System.out.println("Curri Id : " + lesson.getCurriculumId());
+    	groupMap.get(lesson.getCurriculumId()).remove(progresses.get(url));
     }
     
 	private void showLessonsToDownload(List<Curriculum> result) {
 		downloadCurriList.removeAllViews();
 		downloaders.clear();
 		progresses.clear();
+		groupMap.clear();
 		
 		int index = 0;
 		for (Curriculum curriculum : result) {
+			if (curriculum.getLessonList().isEmpty()) {
+				System.out.println("It is empty");
+				continue;
+			}
 			BookgroupActivity curriculumAc = new BookgroupActivity(aq.getContext(), null) {
 				@Override
 				public void processDlAll() {
-					// Download all
+					goDlAll(this);
 				}
 			};
+			groupMap.put(curriculum.getId(), curriculumAc);
 			if (index == 0) {
 				curriculumAc.hideSegline();
 				index++;
@@ -201,7 +212,6 @@ public class DownloadtabActivity extends Activity{
 
 					@Override
 					public void buttonClick() {
-						// TODO Auto-generated method stub
 						startDownload(this);
 					}
 
@@ -246,6 +256,12 @@ public class DownloadtabActivity extends Activity{
 				Log.i(TAG, "Add curriculum to db, id : " + id);
 			}
 		}
+    }
+
+    private void goDlAll(BookgroupActivity b) {
+    	for (int i = 0; i < b.getLessonCount(); i++) {
+			startDownload(b.getLessonAt(i));
+		};
     }
     
     @Override

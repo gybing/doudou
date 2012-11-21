@@ -5,12 +5,13 @@ import org.apache.http.NameValuePair;
 import android.util.Log;
 
 public class UrlConstants {
-	private static String host = "http://192.168.1.110:8080/Etonkids_Server/";
+	private static String host = "http://192.168.1.105:8080/Etonkids_Server/";
 	public static String downloadUrl = host + "download.do?action=download";
 	
 	private static String login = host + "etonUser.do?action=login";
 	private static String downloadLessonListUrl = host + "lesson.do?action=getLessonsToDownload";
 	private static String modifyPwdUrl = host + "etonUser.do?action=modifyPwd";
+	private static String nowTimeUrl = host + "lesson.do?action=getNowTime";
 	private static String doudouTicket = "";
 	
 	public static String getLoginUrl(NameValuePair... params) {
@@ -47,6 +48,12 @@ public class UrlConstants {
 		String url = downloadUrl + doudouTicket + "&filePath=" + filePath;
 		System.out.println("download url = " + url);
 		//String url = host + "upload/" + filePath;
+		return url;
+	}
+	
+	public static String getNowTimeUrl() {
+		String url = nowTimeUrl + doudouTicket;
+		System.out.println("nowTime url = " + url);
 		return url;
 	}
 }

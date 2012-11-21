@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.doudoumobile.etonkids_client"
     android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionName="1.0" android:installLocation="preferExternal">
 
     <application
         android:icon="@drawable/ic_launcher"
@@ -90,7 +90,9 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-
+		<activity android:name=".NotificationDetailsActivity"
+			android:label="Notification Details">
+		</activity>
         <service
             android:name="org.androidpn.client.NotificationService"
             android:enabled="true"
@@ -100,14 +102,6 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".DownloadTestActivity"
-            android:label="@string/title_activity_download_test" >
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
     </application>
 
     <uses-sdk

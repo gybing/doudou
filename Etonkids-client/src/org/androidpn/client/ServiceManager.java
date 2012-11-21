@@ -51,7 +51,7 @@ public final class ServiceManager {
         Log.i(LOGTAG, "xmppPort=" + xmppPort);
 
         sharedPrefs = context.getSharedPreferences(
-                Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+                Constants.Current_Preference_Name, Context.MODE_PRIVATE);
         Editor editor = sharedPrefs.edit();
         editor.putString(Constants.API_KEY, apiKey);
         editor.putString(Constants.VERSION, version);

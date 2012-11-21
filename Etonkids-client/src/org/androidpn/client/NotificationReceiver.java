@@ -10,14 +10,14 @@ public final class NotificationReceiver extends BroadcastReceiver {
     private static final String LOGTAG = LogUtil
             .makeLogTag(NotificationReceiver.class);
 
-    //    private NotificationService notificationService;
+        private NotificationService notificationService;
 
     public NotificationReceiver() {
     }
 
-    //    public NotificationReceiver(NotificationService notificationService) {
-    //        this.notificationService = notificationService;
-    //    }
+        public NotificationReceiver(NotificationService notificationService) {
+            this.notificationService = notificationService;
+        }
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -47,7 +47,7 @@ public final class NotificationReceiver extends BroadcastReceiver {
             Log.d(LOGTAG, "notificationMessage=" + notificationMessage);
             Log.d(LOGTAG, "notificationUri=" + notificationUri);
 
-            Notifier notifier = new Notifier(context);
+            Notifier notifier = new Notifier(notificationService);
             notifier.notify(notificationId, notificationApiKey,
                     notificationTitle, notificationMessage, notificationUri,notificationFrom,packetId);
         }

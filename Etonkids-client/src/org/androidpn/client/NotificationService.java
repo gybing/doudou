@@ -49,7 +49,7 @@ public class NotificationService extends Service {
     private String deviceId;
 
     public NotificationService() {
-        notificationReceiver = new NotificationReceiver();
+        notificationReceiver = new NotificationReceiver(this);
         connectivityReceiver = new ConnectivityReceiver(this);
         phoneStateListener = new PhoneStateChangeListener(this);
         executorService = Executors.newSingleThreadExecutor();

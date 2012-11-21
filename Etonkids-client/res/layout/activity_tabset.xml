@@ -97,87 +97,90 @@
          android:layout_marginRight="57dp"
          android:background="#00000000"
          android:src="@drawable/btn_cel_selector" />
-
-     <TextView
-         android:id="@+id/textView1"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/imageView2"
-         android:layout_alignTop="@+id/imageView2"
-         android:layout_marginLeft="42dp"
-         android:layout_marginTop="90dp"
-         android:text="NAME" 
-         android:textColor="#fcaf21"
-         android:textSize="12pt"/>
-
-     <TextView
-         android:id="@+id/nametx"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView1"
-         android:layout_below="@+id/textView1"
-         android:textSize="10pt"
-         android:textColor="#ffffff" />
      
-     <TextView
-         android:id="@+id/textView2"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView1"
-         android:layout_below="@+id/nametx"
-         android:layout_marginTop="7dp"
-         android:text="CURRICULUM" 
-         android:textColor="#fcaf21"
-         android:textSize="12pt"/>
-
-     <TextView
-         android:id="@+id/curriculumtx"
-         android:layout_width="300dp"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView2"
-         android:layout_below="@+id/textView2"
-         android:textSize="10pt"
-         android:textColor="#ffffff" />
      
-     <TextView
-         android:id="@+id/textView3"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView1"
-         android:layout_below="@+id/curriculumtx"
-         android:layout_marginTop="7dp"
-         android:text="SCHOOL" 
-         android:textColor="#fcaf21"
-         android:textSize="12pt"/>
+     <ScrollView
+            android:id="@+id/settingScroll"
+            android:layout_width="wrap_content"
+            android:layout_height="310dp"
+            android:layout_alignLeft="@+id/imageView2"
+         	android:layout_alignTop="@+id/imageView2"
+         	android:layout_marginLeft="42dp"
+         	android:layout_marginTop="90dp"
+             >
 
-     <TextView
-         android:id="@+id/schooltx"
-         android:layout_width="300dp"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView3"
-         android:layout_below="@+id/textView3"
-         android:textSize="10pt"
-         android:textColor="#ffffff" />
-     
-     <TextView
-         android:id="@+id/textView4"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView1"
-         android:layout_below="@+id/schooltx"
-         android:layout_marginTop="7dp"
-         android:text="DEVICE ID" 
-         android:textColor="#fcaf21"
-         android:textSize="12pt"/>
+            <LinearLayout
+                android:id="@+id/settingLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                 >
+				<TextView
+         			android:id="@+id/textView1"
+         			android:layout_width="wrap_content"
+         			android:layout_height="wrap_content"
+         			android:text="NAME" 
+         			android:textColor="#fcaf21"
+         			android:textSize="12pt"/>
 
-     <TextView
-         android:id="@+id/idtx"
-         android:layout_width="300dp"
-         android:layout_height="wrap_content"
-         android:layout_alignLeft="@+id/textView4"
-         android:layout_below="@+id/textView4"
-         android:textSize="10pt"
-         android:textColor="#ffffff" />
+			     <TextView
+			         android:id="@+id/nametx"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:textSize="10pt"
+			         android:textColor="#ffffff" />
+			     
+			     <TextView
+			         android:id="@+id/textView2"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:layout_marginTop="7dp"
+			         android:text="CURRICULUM" 
+			         android:textColor="#fcaf21"
+			         android:textSize="12pt"/>
+			
+			     <TextView
+			         android:id="@+id/curriculumtx"
+			         android:layout_width="300dp"
+			         android:layout_height="wrap_content"
+			         android:textSize="10pt"
+			         android:textColor="#ffffff" />
+			     
+			     <TextView
+			         android:id="@+id/textView3"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:layout_marginTop="7dp"
+			         android:text="SCHOOL" 
+			         android:textColor="#fcaf21"
+			         android:textSize="12pt"/>
+			
+			     <TextView
+			         android:id="@+id/schooltx"
+			         android:layout_width="300dp"
+			         android:layout_height="wrap_content"
+			         android:textSize="10pt"
+			         android:textColor="#ffffff" />
+			     
+			     <TextView
+			         android:id="@+id/textView4"
+			         android:layout_width="wrap_content"
+			         android:layout_height="wrap_content"
+			         android:layout_marginTop="7dp"
+			         android:text="DEVICE ID" 
+			         android:textColor="#fcaf21"
+			         android:textSize="12pt"/>
+			
+			     <TextView
+			         android:id="@+id/idtx"
+			         android:layout_width="300dp"
+			         android:layout_height="wrap_content"
+			         android:textSize="10pt"
+			         android:textColor="#ffffff" />
+                
+            </LinearLayout>
+
+        </ScrollView>
 
 </RelativeLayout>
 

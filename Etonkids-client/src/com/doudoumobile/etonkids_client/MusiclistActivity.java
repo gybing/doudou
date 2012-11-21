@@ -12,7 +12,27 @@ public class MusiclistActivity extends LinearLayout{
 
 	private ImageView bg_selected, listico;
 	private TextView mname, mlength;
+	public int index = -1;
+	public int type = 0;
 	
+	private String musicPath = "";
+	private String duration = "";
+	
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
+	
+	public String getDuration() {
+		return duration;
+	}
+	
+	public void setMusicPath(String musicPath) {
+		this.musicPath = musicPath;
+	}
+	
+	public String getMusicPath() {
+		return musicPath;
+	}
 	public MusiclistActivity(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -43,6 +63,9 @@ public class MusiclistActivity extends LinearLayout{
 		mname.setText(str);
 	}
 	public void editLength(String str) {
+		if (!"".equals(str)) {
+			str += "/" + duration;
+		}
 		mlength.setText(str);
 	}
 	public void setListico(int id) {  //有4个标志，play和pause是选中播放时的状态，music和movie是没选中播放时的状态

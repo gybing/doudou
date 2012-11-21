@@ -7,7 +7,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent" >
 
         <ImageView
             android:id="@+id/imageView1"
@@ -39,7 +39,6 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/listico"
-            android:text="Hello Song1" 
             android:textSize="11pt"
             android:textColor="#514851"/>
 
@@ -50,7 +49,6 @@
             android:layout_alignRight="@+id/imageView1"
             android:layout_centerVertical="true"
             android:layout_marginRight="45dp"
-            android:text="02:34 / 04:23" 
             android:textSize="10pt"
             android:textColor="#514851"/>
 

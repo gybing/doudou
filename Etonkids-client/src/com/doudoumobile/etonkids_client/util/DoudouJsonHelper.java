@@ -19,7 +19,6 @@ import com.google.gson.reflect.TypeToken;
 public class DoudouJsonHelper {
 	private static GsonBuilder gsonb = new GsonBuilder();
 	private DateDeserializer ds = new DateDeserializer();
-	
 	private Gson gson;
 	
 	private static DoudouJsonHelper instance = new DoudouJsonHelper();
@@ -38,6 +37,7 @@ public class DoudouJsonHelper {
 			return null;
 		}
 		return gson.fromJson(jsonString, User.class);
+		
 	}
 	
 	public <T> T getObject(String jsonString, Class<T> className) {
@@ -65,6 +65,7 @@ public class DoudouJsonHelper {
 			}
 	    }
 	}
+	
 	
 	public static void main(String[] args) {
 		User user = DoudouJsonHelper.getInstance().getUser("{\"available\":true,\"email\":\"admin@etonkids.com\",\"id\":1,\"lastLoginTime\":{\"date\":16,\"day\":4,\"hours\":23,\"minutes\":41,\"month\":7,\"nanos\":0,\"seconds\":4,\"time\":1345131664000,\"timezoneOffset\":-480,\"year\":112},\"online\":false,\"password\":\"888\",\"realName\":\"我是管理员\",\"role\":0,\"teacherTypeId\":0,\"username\":\"admin@etonkids.com\"}");

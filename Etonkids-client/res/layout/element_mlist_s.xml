@@ -44,7 +44,6 @@
             android:layout_height="20dp"
             android:layout_alignBottom="@+id/mname"
             android:layout_alignParentRight="true"
-            android:text="00:00/00:00"
             android:textColor="#514851"
             android:textSize="6pt" />
 

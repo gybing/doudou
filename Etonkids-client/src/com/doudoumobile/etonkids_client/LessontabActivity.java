@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,6 +23,7 @@ public class LessontabActivity extends Activity{
 
 	ImageButton refreshBtn;
 	LinearLayout curriculumList;
+	boolean minisize = true;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -107,7 +109,7 @@ public class LessontabActivity extends Activity{
         Bundle bundle = new Bundle();
         bundle.putSerializable("lesson", lesson);
         intent.putExtras(bundle);
-        
+        minisize = false;
         startActivity(intent);
 	}
     @Override
@@ -120,5 +122,16 @@ public class LessontabActivity extends Activity{
         startActivity(intent);
     	
     	finish();
+    }
+    
+    @Override
+    public void onPause() {
+    	System.out.println("OnPause");
+    	super.onPause();
+    }
+    @Override
+    public void onDestroy() {
+    	System.out.println("OnDestroy");
+    	super.onDestroy();
     }
 }

@@ -26,7 +26,7 @@ public class User {
 
 	private String curriList;
 	
-	private String schoolInfo;
+	private School schoolInfo;
 	
 	public String getTicket() {
 		return ticket;
@@ -116,11 +116,11 @@ public class User {
 		this.curriList = curriList;
 	}
 
-	public String getSchoolInfo() {
+	public School getSchoolInfo() {
 		return schoolInfo;
 	}
 
-	public void setSchoolInfo(String schoolInfo) {
+	public void setSchoolInfo(School schoolInfo) {
 		this.schoolInfo = schoolInfo;
 	}
 	

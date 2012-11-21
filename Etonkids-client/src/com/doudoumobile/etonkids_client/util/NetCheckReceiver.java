@@ -16,7 +16,7 @@ public class NetCheckReceiver extends BroadcastReceiver{
        ConnectivityManager connectionManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
        NetworkInfo wifiNetInfo = connectionManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
        if (!wifiNetInfo.isConnected()) {
-    	   Toast.makeText(context, "网络连接不可用", Toast.LENGTH_LONG).show();
+    	   Toast.makeText(context, "Please check the internet connection", Toast.LENGTH_LONG).show();
        }
     }
 }

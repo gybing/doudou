@@ -20,7 +20,13 @@ import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Registration;
 import org.jivesoftware.smack.provider.ProviderManager;
 
+import com.doudoumobile.etonkids_client.NotificationDetailsActivity;
+
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Handler;
@@ -74,7 +80,7 @@ public class XmppManager {
         taskTracker = notificationService.getTaskTracker();
         sharedPrefs = notificationService.getSharedPreferences();
 
-        xmppHost = sharedPrefs.getString(Constants.XMPP_HOST, "localhost");
+        xmppHost = sharedPrefs.getString(Constants.XMPP_HOST, "");
         xmppPort = sharedPrefs.getInt(Constants.XMPP_PORT, 5222);
         username = sharedPrefs.getString(Constants.XMPP_USERNAME, "");
         password = sharedPrefs.getString(Constants.XMPP_PASSWORD, "");
@@ -86,6 +92,7 @@ public class XmppManager {
         handler = new Handler();
         taskList = new ArrayList<Runnable>();
         reconnection = new ReconnectionThread(this);
+        
     }
 
     public Context getContext() {
@@ -376,8 +383,6 @@ public class XmppManager {
                 registration.setType(IQ.Type.SET);
                 registration.addAttribute("username", newUsername);
                 registration.addAttribute("password", newPassword);
-                registration.addAttribute(Constants.ETON_USERID, String.valueOf(etonUserId));
-                //registration.addAttribute("deviceId", deviceId);
                 connection.sendPacket(registration);
 
             } else {

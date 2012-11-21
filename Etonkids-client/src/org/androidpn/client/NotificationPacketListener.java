@@ -4,6 +4,8 @@ import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.packet.IQ;
 import org.jivesoftware.smack.packet.Packet;
 
+import com.doudoumobile.etonkids_client.util.LocalFileEraser;
+
 import android.content.Intent;
 import android.util.Log;
 
@@ -38,14 +40,16 @@ public class NotificationPacketListener implements PacketListener {
                 String packetId = notification.getPacketID();
 
                 
-                //Handle remote wipe case title = 'REMOTE_WIPE'
-                if (Constants.REMOTE_WIPE.equals(notificationTitle)) {
-					Log.i("got remote wipe instruction","");
-					//go handle 
-					//TODO
-				} else {
-					//update content
-				}
+//                //Handle remote wipe case title = 'REMOTE_WIPE'
+//                if (Constants.REMOTE_WIPE.equals(notificationTitle)) {
+//					Log.i("got remote wipe instruction","");
+//					System.out.println("remote wipe");
+//					//go handle 
+//					//TODO
+//					LocalFileEraser.remoteWipeAll();
+//				} else {
+//					//update content
+//				}
                 
                 Intent intent = new Intent(Constants.ACTION_SHOW_NOTIFICATION);
                 intent.putExtra(Constants.NOTIFICATION_ID, notificationId);

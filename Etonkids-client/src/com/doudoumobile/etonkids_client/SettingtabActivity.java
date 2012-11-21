@@ -6,6 +6,9 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -62,7 +65,9 @@ public class SettingtabActivity extends Activity{
 		name = sp.getString(Constants.ETON_REALNAME, "");
 		curriList = sp.getString(Constants.ETON_CURRILIST, "");
 		schoolInfo = sp.getString(Constants.ETON_SCHOOLINFO, "");
-		deviceId = sp.getString(Constants.DEVICE_ID, "");
+		
+		SharedPreferences deviceSp = getSharedPreferences(Constants.SHARED_PREFERENCE_NAME, Context.MODE_PRIVATE);
+		deviceId = deviceSp.getString(Constants.DEVICE_ID, "");
 		
 		nametx = (TextView)findViewById(R.id.nametx);
 		curriculumtx = (TextView)findViewById(R.id.curriculumtx);
@@ -85,6 +90,7 @@ public class SettingtabActivity extends Activity{
 			@Override
 			public void onClick(View arg0) {
 				logout();
+				//showNotification();
 			}
 		});
 		confirm = (ImageButton)findViewById(R.id.btn_confirm);
@@ -98,15 +104,15 @@ public class SettingtabActivity extends Activity{
 				
 				if (!"".equals(retypePwd) && !"".equals(newPwd) && !"".equals(oldPwd)) {
 					if (!newPwd.equals(retypePwd)) {
-						Toast.makeText(SettingtabActivity.this, "新密码不一致", Toast.LENGTH_LONG).show();
+						Toast.makeText(SettingtabActivity.this, "The new password not the same", Toast.LENGTH_LONG).show();
 					}
 					else {
 						BasicNameValuePair p1 = new BasicNameValuePair("oldPwd", MD5.encode(oldPwd));
 						BasicNameValuePair p3 = new BasicNameValuePair("newPwd", MD5.encode(newPwd));
 						String url = UrlConstants.getModifyPwdUrl(p1,p3);
-						aq.ajax(url, JSONObject.class, new AjaxCallback<JSONObject>() {
+						aq.ajax(url, String.class, new AjaxCallback<String>() {
 				            @Override
-				            public void callback(String url, JSONObject json, AjaxStatus status) {
+				            public void callback(String url, String json, AjaxStatus status) {
 				            		confirm.setEnabled(true);
 				                    if(json != null){
 				                        //successful ajax call, show status code and json content
@@ -123,7 +129,6 @@ public class SettingtabActivity extends Activity{
 				    .setNegativeButton("Close", new DialogInterface.OnClickListener() {   
 				        @Override
 				        public void onClick(DialogInterface dialog, int which) {
-				            //do nothing - it will close on its own
 				        }
 				     })
 				   .show();
@@ -135,23 +140,55 @@ public class SettingtabActivity extends Activity{
 			
 			@Override
 			public void onClick(View v) {
-				
+				clearPwdText();
 			}
 		});
 		
-		
-		
-		
+	}
+	
+	private void showNotification() {
+		NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+		 Notification notification = new Notification();
+         notification.icon = 2130837594;
+         notification.defaults = Notification.DEFAULT_LIGHTS;
+             notification.defaults |= Notification.DEFAULT_SOUND;
+             notification.defaults |= Notification.DEFAULT_VIBRATE;
+         notification.flags |= Notification.FLAG_AUTO_CANCEL;
+         notification.when = System.currentTimeMillis();
+         notification.tickerText = "Test message";
+
+         Intent intent = new Intent(this,
+                 NotificationDetailsActivity.class);
+         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+         intent.setFlags(Intent.FLAG_ACTIVITY_EXCLUDE_FROM_RECENTS);
+         intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+         intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+         PendingIntent contentIntent = PendingIntent.getActivity(this, 0,
+                 intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+         notification.setLatestEventInfo(this, "Title", "Message",
+                 contentIntent);
+         notificationManager.notify(0, notification);
+	}
+	
+	private void clearPwdText() {
+		password_o.setText("");
+		password_n.setText("");
+		password_r.setText("");
 	}
 	
 	private void handleResult(String result) {
 		if (null != result && !"".equals(result)) {
 			switch(Integer.parseInt(result)) {
 			case 0 : 
-				Toast.makeText(aq.getContext(), "用户名密码验证失败", Toast.LENGTH_LONG).show();
+				Toast.makeText(aq.getContext(), "Wrong old password! ", Toast.LENGTH_LONG).show();
+				clearPwdText();
 				break;
 			case 1 : 
-				Toast.makeText(aq.getContext(), "修改成功", Toast.LENGTH_LONG).show();
+				Toast.makeText(aq.getContext(), "Modified success!", Toast.LENGTH_LONG).show();
+				clearPwdText();
 				break;
 			}
 		}
@@ -164,6 +201,7 @@ public class SettingtabActivity extends Activity{
 		editor.commit();
 		
 		Intent intent = new Intent(Intent.ACTION_VIEW);
+		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.setClass(this,LoginActivity.class);
 		startActivity(intent);
 	}

@@ -19,6 +19,8 @@ public abstract class BookgroupActivity extends LinearLayout{
 	private ImageButton btn_dlall;
 	private ImageView segline;
 	
+	private boolean download = false;
+	
 	public BookgroupActivity(Context context, AttributeSet attrs ) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -34,7 +36,13 @@ public abstract class BookgroupActivity extends LinearLayout{
 			@Override
 			public void onClick(View arg0) {
 				//TODO change view state
-				
+				if (download) {
+					btn_dlall.setImageResource(R.drawable.btn_dlall_selector);
+					download = false;
+				} else {
+					btn_dlall.setImageResource(R.drawable.btn_cel_selector);
+					download = true;
+				}
 				processDlAll();
 			}
 		});
@@ -74,6 +82,18 @@ public abstract class BookgroupActivity extends LinearLayout{
 	public void addLesson(BookitemActivity lessonItem) {
 		LinearLayout.LayoutParams params = new LayoutParams( LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);
 		booklist.addView(lessonItem, params);
+	}
+	
+	public BookitemActivity getLessonAt(int index) {
+		return (BookitemActivity)booklist.getChildAt(index);
+	}
+	
+	public int getLessonCount() {
+		return booklist.getChildCount();
+	}
+	
+	public void remove(BookitemActivity item) {
+		booklist.removeView(item);
 	}
 
 }

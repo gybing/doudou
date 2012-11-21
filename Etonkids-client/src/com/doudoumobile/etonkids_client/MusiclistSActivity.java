@@ -12,11 +12,11 @@ public class MusiclistSActivity extends LinearLayout{  //这个版本是小版�
 
 	private ImageView bg_selected, listico;
 	private TextView mname, mlength;
-	
-	public static boolean PLAYING_STATE = false;
+	public int index = -1;
 	
 	private String musicPath = "";
 	private String duration = "";
+	public int type = 0; //1 -> video ; 0 -> music 
 	
 	public void setDuration(String duration) {
 		this.duration = duration;
@@ -36,11 +36,9 @@ public class MusiclistSActivity extends LinearLayout{  //这个版本是小版�
 	
 	public MusiclistSActivity(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
 	}
 	public MusiclistSActivity(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		// TODO Auto-generated constructor stub
 		LayoutInflater.from(context).inflate(R.layout.element_mlist_s, this, true);
 		bg_selected = (ImageView)findViewById(R.id.bg_selected);
 		listico = (ImageView)findViewById(R.id.listico);
