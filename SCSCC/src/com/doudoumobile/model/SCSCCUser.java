@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "EtonUser")
+@Table(name = "SCSCCUser")
 public class SCSCCUser implements Serializable {
 	
 	private static final long serialVersionUID = 8224641622310493478L;

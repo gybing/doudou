@@ -37,15 +37,10 @@
 
 		<!-- Mapping Files -->
 		<mapping class="com.doudoumobile.model.User" />
-		<mapping class="com.doudoumobile.model.Curriculum" />
 		<mapping class="com.doudoumobile.model.Lesson" />
-		<mapping class="com.doudoumobile.model.TeacherType" />
 		<mapping class="com.doudoumobile.model.NotificationMO" />
-		<mapping class="com.doudoumobile.model.CurriculumToUser" />
 		<mapping class="com.doudoumobile.model.Material" />
-		<mapping class="com.doudoumobile.model.EtonUser" />
-		<mapping class="com.doudoumobile.model.School" />
-		<mapping class="com.doudoumobile.model.SchoolType" />
+		<mapping class="com.doudoumobile.model.SCSCCUser" />
 	</session-factory>
 </hibernate-configuration>
 

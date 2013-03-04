@@ -32,7 +32,7 @@
 		<property name="methodNameResolver" ref="paramResolver" />
 		<property name="downloadRootPath" value="C:/curricula" />
 	</bean>
-	<bean id="etonUserController" class="com.doudoumobile.controller.EtonUserController">
+	<bean id="scsccUserController" class="com.doudoumobile.controller.SCSCCUserController">
 		<property name="methodNameResolver" ref="paramResolver" />
 	</bean>
 	<bean id="userController" class="com.doudoumobile.controller.UserController">
