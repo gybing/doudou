@@ -2,25 +2,25 @@ package com.doudoumobile.service;
 
 import java.util.List;
 
-import com.doudoumobile.model.User;
+import com.doudoumobile.model.OfUser;
 
 public interface UserService {
 
-    public User getUser(String userId);
+    public OfUser getUser(String userId);
 
-    public List<User> getUsers();
+    public List<OfUser> getUsers();
 
-    public User saveUser(User user) throws UserExistsException;
+    public OfUser saveUser(OfUser user) throws UserExistsException;
 
-    public User getUserByUsername(String username) throws UserNotFoundException;
+    public OfUser getUserByUsername(String username) throws UserNotFoundException;
 
     public void removeUser(Long userId);
     
-    public User verifyUser(String userName, String passWd);
+    public OfUser verifyUser(String userName, String passWd);
     
-    public User getUser2ByName(String username);
+    public OfUser getUser2ByName(String username);
     
     public void updateUserAvailable(String username , boolean available);
     
-    public void updateUser(User user);
+    public void updateUser(OfUser user);
 }

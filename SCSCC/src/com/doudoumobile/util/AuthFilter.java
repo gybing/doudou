@@ -21,8 +21,6 @@ import org.springframework.web.bind.ServletRequestUtils;
 
 import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.EtonService;
-import com.doudoumobile.service.ServiceLocator;
-import com.doudoumobile.service.UserService;
 
 public class AuthFilter implements Filter {
 	FilterConfig fConfig;
@@ -41,7 +39,6 @@ public class AuthFilter implements Filter {
      */
     public AuthFilter() {
     	log = LogFactory.getLog(getClass());
-    	etonService = (EtonService)ServiceLocator.getService("etonService");
     }
 
 	/**

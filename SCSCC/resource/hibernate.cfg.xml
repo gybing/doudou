@@ -36,10 +36,7 @@
 		<property name="hibernate.hbm2ddl.auto">update</property>
 
 		<!-- Mapping Files -->
-		<mapping class="com.doudoumobile.model.User" />
-		<mapping class="com.doudoumobile.model.Lesson" />
-		<mapping class="com.doudoumobile.model.NotificationMO" />
-		<mapping class="com.doudoumobile.model.Material" />
+		<mapping class="com.doudoumobile.model.OfUser" />
 		<mapping class="com.doudoumobile.model.SCSCCUser" />
 	</session-factory>
 </hibernate-configuration>

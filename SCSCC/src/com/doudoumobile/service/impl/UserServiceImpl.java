@@ -8,8 +8,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import com.doudoumobile.dao.UserDao;
-import com.doudoumobile.model.User;
+import com.doudoumobile.dao.OfUserDao;
+import com.doudoumobile.model.OfUser;
 import com.doudoumobile.service.UserExistsException;
 import com.doudoumobile.service.UserNotFoundException;
 import com.doudoumobile.service.UserService;
@@ -18,21 +18,21 @@ public class UserServiceImpl implements UserService {
 
     protected final Log log = LogFactory.getLog(getClass());
 
-    private UserDao userDao;
+    private OfUserDao userDao;
 
-    public void setUserDao(UserDao userDao) {
+    public void setUserDao(OfUserDao userDao) {
         this.userDao = userDao;
     }
 
-    public User getUser(String userId) {
+    public OfUser getUser(String userId) {
         return userDao.getUser(new Long(userId));
     }
 
-    public List<User> getUsers() {
+    public List<OfUser> getUsers() {
         return userDao.getUsers();
     }
 
-    public User saveUser(User user) throws UserExistsException {
+    public OfUser saveUser(OfUser user) throws UserExistsException {
         try {
             return userDao.saveUser(user);
         } catch (DataIntegrityViolationException e) {
@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    public User getUserByUsername(String username) throws UserNotFoundException {
-        return (User) userDao.getUserByUsername(username);
+    public OfUser getUserByUsername(String username) throws UserNotFoundException {
+        return (OfUser) userDao.getUserByUsername(username);
     }
 
     public void removeUser(Long userId) {
@@ -57,12 +57,12 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public User verifyUser(String userName, String passWd) {
-		return (User) userDao.verifyUser(userName, passWd);
+	public OfUser verifyUser(String userName, String passWd) {
+		return (OfUser) userDao.verifyUser(userName, passWd);
 	}
 
 	@Override
-	public User getUser2ByName(String username) {
+	public OfUser getUser2ByName(String username) {
 		return userDao.getUser2ByName(username);
 	}
 	
@@ -72,8 +72,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void updateUser(User user) {
-		userDao.updateUser(user);
+	public void updateUser(OfUser user) {
+		//userDao.updateUser(user);
 	}
 
 }

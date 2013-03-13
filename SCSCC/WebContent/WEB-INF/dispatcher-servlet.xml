@@ -9,12 +9,8 @@
 			<value>
 				/index.do=filenameController
 				/user.do=userController
-				/session.do=sessionController
-				/notification.do=notificationController	
-				/upload.do=uploadController	
-				/lesson.do=lessonController	
 				/download.do=downloadController	
-				/etonUser.do=etonUserController
+				/scsccUser.do=scsccUserController
 				/setting.do=settingController
 			</value>
 		</property>
@@ -26,6 +22,7 @@
 		
 	<bean id="settingController" class="com.doudoumobile.controller.SettingController">
 		<property name="methodNameResolver" ref="paramResolver" />
+		<property name="etonService" ref="etonService"></property>
 	</bean>
 	
 	<bean id="downloadController" class="com.doudoumobile.controller.DownloadController">
@@ -34,26 +31,11 @@
 	</bean>
 	<bean id="scsccUserController" class="com.doudoumobile.controller.SCSCCUserController">
 		<property name="methodNameResolver" ref="paramResolver" />
+		<property name="etonService" ref="etonService"></property>
 	</bean>
 	<bean id="userController" class="com.doudoumobile.controller.UserController">
 		<property name="methodNameResolver" ref="paramResolver" />
-	</bean>
-	<bean id="lessonController" class="com.doudoumobile.controller.LessonController">
-		<property name="methodNameResolver" ref="paramResolver" />
-	</bean>
-	<bean id="sessionController"
-		class="com.doudoumobile.controller.SessionController">
-		<property name="methodNameResolver" ref="paramResolver" />
-	</bean>
-
-	<bean id="notificationController"
-		class="com.doudoumobile.controller.NotificationController">
-		<property name="methodNameResolver" ref="paramResolver" />
-	</bean>
-	
-	<bean id="uploadController"
-		class="com.doudoumobile.controller.UploadController">
-		<property name="methodNameResolver" ref="paramResolver" />
+		<property name="etonService" ref="etonService"></property>
 	</bean>
 
 	<bean id="paramResolver"

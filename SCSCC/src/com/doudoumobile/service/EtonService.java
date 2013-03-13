@@ -30,14 +30,6 @@ public interface EtonService {
 	
 	public void resetPwd(long id, String resetPwd);
 	
-	
-	//upload lesson
-	public boolean addLesson(Lesson lesson);
-	
-	
-	public boolean notify(long curriculumId);
-	
-	
 	public void updateLoginTime(long userId , String deviceToken);
 	
 	

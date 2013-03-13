@@ -16,7 +16,6 @@ import com.doudoumobile.model.Curriculum;
 import com.doudoumobile.model.SCSCCUser;
 import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.EtonService;
-import com.doudoumobile.service.ServiceLocator;
 import com.doudoumobile.util.JsonHelper;
 import com.doudoumobile.util.MD5;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
@@ -25,8 +24,11 @@ public class SCSCCUserController extends MultiActionController {
 	
 	EtonService etonService;
 	
+	public void setEtonService(EtonService etonService) {
+		this.etonService = etonService;
+	}
+	
 	public SCSCCUserController() {
-		etonService = (EtonService)ServiceLocator.getService("etonService");
 	}
 	
 	public void login(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -59,7 +61,6 @@ public class SCSCCUserController extends MultiActionController {
     				curriculumString.deleteCharAt(curriculumString.length()-1);
 				}
     		}
-    		user.setCurriList(curriculumString.toString());
     		
     		// school info
     		//user.setSchoolInfo(etonService.getSchoolById(user.getSchoolId()));
@@ -140,14 +141,4 @@ public class SCSCCUserController extends MultiActionController {
 		} 
     }
     
-    
-    public void notify(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	long cid = ServletRequestUtils.getLongParameter(request, "cid", 0);
-    	String title = ServletRequestUtils.getStringParameter(request, "title","");
-    	System.out.println("" + cid + " title = " + title);
-    	boolean result = etonService.notify(cid);
-        PrintWriter writer = response.getWriter();
-        
-       	writer.print(result);
-    }
 }

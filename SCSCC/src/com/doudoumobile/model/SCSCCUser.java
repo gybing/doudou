@@ -1,7 +1,6 @@
 package com.doudoumobile.model;
 
 import java.io.Serializable;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name = "SCSCCUser")
@@ -52,15 +50,6 @@ public class SCSCCUser implements Serializable {
     
     @Column(name = "createdBy", length = 64)
     private String createdBy;
-    
-    @Column(name = "schoolId")
-    private long schoolId;
-    
-    @Transient
-    private String curriList;
-    
-    @Transient
-    private String curriIdList;
     
     public SCSCCUser () {
     	available = true;
@@ -105,14 +94,6 @@ public class SCSCCUser implements Serializable {
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-
-//	public Long getTeacherTypeId() {
-//		return teacherTypeId;
-//	}
-//
-//	public void setTeacherTypeId(Long teacherTypeId) {
-//		this.teacherTypeId = teacherTypeId;
-//	}
 
 	public boolean isAvailable() {
 		return available;
@@ -161,28 +142,4 @@ public class SCSCCUser implements Serializable {
 		this.createdBy = createdBy;
 	}
 
-	public long getSchoolId() {
-		return schoolId;
-	}
-
-	public void setSchoolId(long schoolId) {
-		this.schoolId = schoolId;
-	}
-
-	public String getCurriList() {
-		return curriList;
-	}
-
-	public void setCurriList(String curriList) {
-		this.curriList = curriList;
-	}
-
-	public String getCurriIdList() {
-		return curriIdList;
-	}
-
-	public void setCurriIdList(String curriIdList) {
-		this.curriIdList = curriIdList;
-	}
-	
 }

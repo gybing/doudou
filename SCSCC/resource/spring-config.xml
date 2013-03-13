@@ -60,19 +60,11 @@
 	<!-- Data Access Objects                                             -->
 	<!-- =============================================================== -->
 
-	<bean id="userDao" class="com.doudoumobile.dao.hibernate.UserDaoHibernate">
+	<bean id="userDao" class="com.doudoumobile.dao.hibernate.OfUserDaoHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
 	<bean id="scsccUserDao" class="com.doudoumobile.dao.hibernate.SCSCCUserDaoHibernate">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="notificationDao" class="com.doudoumobile.dao.hibernate.NotificationDaoHibernate">
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
-	
-	<bean id="lessonDao" class="com.doudoumobile.dao.hibernate.LessonDaoHibernate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
@@ -82,7 +74,6 @@
 
 	<bean id="etonService" class="com.doudoumobile.service.impl.EtonServiceImpl">
 		<property name="scsccUserDao" ref="scsccUserDao" />
-		<property name="lessonDao" ref="lessonDao" />
 		<property name="userDao" ref="userDao" />
 		<property name="sessionFactory" ref="sessionFactory" />
 		<property name="zipDesPath" value="C:/curricula"></property>
@@ -92,70 +83,4 @@
 		<property name="userDao" ref="userDao" />
 	</bean>
 	
-	<bean id="notificationService" class="com.doudoumobile.service.impl.NotificationServiceImpl">
-		<property name="notificationDao" ref="notificationDao" />
-	</bean>
-	
-	<!-- =============================================================== -->
-	<!-- SSL                                                             -->
-	<!-- =============================================================== -->
-
-	<!--
-	<bean id="tlsContextFactory"
-		class="org.androidpn.server.ssl2.ResourceBasedTLSContextFactory">
-		<constructor-arg value="classpath:bogus_mina_tls.cert" />
-		<property name="password" value="boguspw" />
-		<property name="trustManagerFactory">
-			<bean class="org.androidpn.server.ssl2.BogusTrustManagerFactory" />
-		</property>
-	</bean>
-	-->
-
-	<!-- =============================================================== -->
-	<!-- MINA                                                            -->
-	<!-- =============================================================== -->
-
-	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-		<property name="customEditors">
-			<map>
-				<entry key="java.net.SocketAddress">
-					<bean class="org.apache.mina.integration.beans.InetSocketAddressEditor" />
-				</entry>
-			</map>
-		</property>
-	</bean>
-
-	<bean id="xmppHandler" class="com.doudoumobile.xmpp.net.XmppIoHandler" />
-
-	<bean id="filterChainBuilder"
-		class="org.apache.mina.core.filterchain.DefaultIoFilterChainBuilder">
-		<property name="filters">
-			<map>
-				<entry key="executor">
-					<bean class="org.apache.mina.filter.executor.ExecutorFilter" />
-				</entry>
-				<entry key="codec">
-					<bean class="org.apache.mina.filter.codec.ProtocolCodecFilter">
-						<constructor-arg>
-							<bean class="com.doudoumobile.xmpp.codec.XmppCodecFactory" />
-						</constructor-arg>
-					</bean>
-				</entry>
-				<!--
-				<entry key="logging">
-					<bean class="org.apache.mina.filter.logging.LoggingFilter" />
-				</entry>
-				-->
-			</map>
-		</property>
-	</bean>
-
- 	<bean id="ioAcceptor" class="org.apache.mina.transport.socket.nio.NioSocketAcceptor" 
- 		init-method="bind" destroy-method="unbind"> 
- 		<property name="defaultLocalAddress" value=":5222" /> 
- 		<property name="handler" ref="xmppHandler" /> 
- 		<property name="filterChainBuilder" ref="filterChainBuilder" /> 
- 		<property name="reuseAddress" value="true" /> 
- 	</bean> 
-
 </beans>
