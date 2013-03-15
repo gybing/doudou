@@ -7,7 +7,6 @@ import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.doudoumobile.dao.OfUserDao;
-import com.doudoumobile.model.Curriculum;
 import com.doudoumobile.model.OfUser;
 import com.doudoumobile.service.UserNotFoundException;
 

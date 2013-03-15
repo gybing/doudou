@@ -12,7 +12,6 @@ import net.sf.json.JSONObject;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
-import com.doudoumobile.model.Curriculum;
 import com.doudoumobile.model.SCSCCUser;
 import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.EtonService;
@@ -50,17 +49,6 @@ public class SCSCCUserController extends MultiActionController {
     	if (user.getRole() == SCSCCUser.Teacher) {
     		// Curri info
     		StringBuffer curriculumString = new StringBuffer();
-    		List<Curriculum> currList = null;
-    		if(null != currList && currList.size() > 0) {
-    			for (Curriculum curriculum : currList) {
-    				if (null != curriculum) {
-    					curriculumString.append(curriculum.getCurriculumName() + ",");
-					}
-    			}	
-    			if (curriculumString.length() > 0) {
-    				curriculumString.deleteCharAt(curriculumString.length()-1);
-				}
-    		}
     		
     		// school info
     		//user.setSchoolInfo(etonService.getSchoolById(user.getSchoolId()));

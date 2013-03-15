@@ -2,12 +2,7 @@ package com.doudoumobile.service;
 
 import java.util.List;
 
-import com.doudoumobile.model.Curriculum;
-import com.doudoumobile.model.CurriculumToUser;
 import com.doudoumobile.model.SCSCCUser;
-import com.doudoumobile.model.Lesson;
-import com.doudoumobile.model.Material;
-import com.doudoumobile.model.NotificationMO;
 
 public interface EtonService {
 	public SCSCCUser verifyEtonUser(String userName, String passWd);

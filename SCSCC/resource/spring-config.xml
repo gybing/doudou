@@ -68,6 +68,14 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="deviceTokenDao" class="com.doudoumobile.dao.hibernate.DeviceTokenDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="scsccUserDao" class="com.doudoumobile.dao.hibernate.SCSCCUserDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<!-- =============================================================== -->
 	<!-- Services                                                        -->
 	<!-- =============================================================== -->

@@ -3,7 +3,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-	<display-name>Etonkids-server</display-name>
+	<display-name>SCSCC-Server</display-name>
 
 	<filter>
 		<filter-name>encodingFilter</filter-name>
@@ -59,7 +59,9 @@
   	<listener>
    	 	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
  	</listener>
-
+	<listener>
+    	<listener-class>com.doudoumobile.system.SystemInitialize</listener-class>
+  	</listener>
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>

@@ -38,6 +38,8 @@
 		<!-- Mapping Files -->
 		<mapping class="com.doudoumobile.model.OfUser" />
 		<mapping class="com.doudoumobile.model.SCSCCUser" />
+		<mapping class="com.doudoumobile.model.DeviceToken" />
+		<mapping class="com.doudoumobile.model.OfOffline" />
 	</session-factory>
 </hibernate-configuration>
 
