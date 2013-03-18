@@ -19,4 +19,6 @@ public interface SCSCCUserDao {
 	void delete(long id);
 	
 	public void resetPwd(long id, String resetPwd) ;
+	
+	boolean checkExists(String userName);
 }

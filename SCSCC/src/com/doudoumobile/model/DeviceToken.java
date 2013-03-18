@@ -10,17 +10,17 @@ import javax.persistence.Id;
 public class DeviceToken implements Serializable{
 	
     @Id
-    @Column(name = "userId", nullable = false)
-	private int userId;
+    @Column(name = "userName", nullable = false)
+	private String userName;
 	
     @Column(name = "deviceTokenId", nullable = false, length = 255)
     private String deviceTokenId;
     
-	public int getUserId() {
-		return userId;
+	public String getUserName() {
+		return userName;
 	}
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	public String getDeviceTokenId() {
 		return deviceTokenId;

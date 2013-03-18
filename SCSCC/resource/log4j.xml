@@ -16,7 +16,7 @@
 		<param name="MaxFileSize" value="1024KB" />
 		<param name="MaxBackupIndex" value="5" />
 		<param name="ImmediateFlush" value="true" />
-		<param name="File" value="../logs/etonkids.log" />
+		<param name="File" value="../logs/scscc.log" />
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="{%-5p} [%d] &lt;%c&gt; : %m%n" />
 		</layout>

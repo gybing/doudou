@@ -13,7 +13,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 
 	@Override
 	public SCSCCUser verifyEtonUser(String userName, String passWd) {
-		List users = getHibernateTemplate().find("from EtonUser where username=? " +
+		List users = getHibernateTemplate().find("from SCSCCUser where username=? " +
 				"and password=? and available = true",new String[]{userName,passWd});			
 	
 		if (users == null || users.isEmpty()) {
@@ -27,7 +27,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 	public void modifyPwd(long userId, String passWd) {
 		Session session = getSessionFactory().getCurrentSession();  
 		session.beginTransaction();  
-		Query query = session.createQuery("update EtonUser set password = '"+ passWd + "' where id = " + userId);  
+		Query query = session.createQuery("update SCSCCUser set password = '"+ passWd + "' where id = " + userId);  
 		query.executeUpdate();  
 		session.getTransaction().commit();  
 	}
@@ -48,7 +48,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 	@Override
 	public List<SCSCCUser> getAllUser() {
 		return getHibernateTemplate().find(
-        "from EtonUser eu order by id desc");
+        "from SCSCCUser eu order by id desc");
 	}
 
 	@Override
@@ -69,6 +69,16 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 		SCSCCUser user = getUserById(id);
 		user.setPassWd(resetPwd);
 		updateUser(user);
+	}
+
+	@Override
+	public boolean checkExists(String userName) {
+		List users = getHibernateTemplate().find("from SCSCCUser where username = " + userName);
+		if (users == null || users.isEmpty()) {
+	        return false;
+	    } else {
+	        return true;
+	    }
 	}
 	
 	

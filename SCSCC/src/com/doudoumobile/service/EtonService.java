@@ -15,7 +15,7 @@ public interface EtonService {
 	 * */
 	public int modifyPwd(long userId, String oldPwd, String newPwd);
 	
-	public SCSCCUser addEtonUser(SCSCCUser eu);
+	public int addSCSCCUser(SCSCCUser eu);
 	
 	public List<SCSCCUser> getAllEtonUserList();
 	

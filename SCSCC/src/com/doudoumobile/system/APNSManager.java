@@ -1,60 +1,37 @@
 package com.doudoumobile.system;
 
+import org.directwebremoting.util.Logger;
 
-public class APNSManager implements Runnable{
+import com.notnoop.apns.APNS;
+import com.notnoop.apns.ApnsService;
+
+
+public class APNSManager{
 	
-//	private ApnsService service;
-//	private LinkedBlockingQueue<PushVO> pushQueue;
-//	private Logger logger = Logger.getLogger(getClass());
-//	private DeviceTokenDao deviceTokenDao;
-//	private TodoDao todoDao;
-//	
-//	private DatabaseDao myDatabaseDao;
-//	private MayayaConfig mayayaConfig = MayayaConfig.getConfig();
-//	
-//	public APNSManager(LinkedBlockingQueue<PushVO> pushQueue) {
-//		String cerPath = mayayaConfig.getAPNSCertificatePath();
-//		service = APNS.newService().withCert(cerPath, "mayaya@mayaya").withProductionDestination().build();
-//		this.pushQueue = pushQueue;
-//		
-//		myDatabaseDao = DaoFactory.getInstance().getMyDatabaseDao();
-//		deviceTokenDao = myDatabaseDao.getEntityDao(DeviceTokenDao.class);
-//		todoDao = myDatabaseDao.getEntityDao(TodoDao.class);
-//	}
-//	
-//	
-////	public void pushFriend(String token, ) {
-////		String payload = APNS.newPayload().alertBody("Can't be simpler than this!").build();
-////        String token = "e8547d92 4a953878 9f9c64fe 2dd53dbd 33c14e74 db08a150 cdc7f73c e5eb3ecb";
-////        service.push(token, payload);
-////	}
-//	
-////	// 自己评论过的内容有了新的评论
-////	public void pushCommentOfComment(List<String> tokenList) {
-////		if (null != tokenList && tokenList.size() > 0) {
-////			for (String token : tokenList) {
-////				String content = "You have a new comment.";
-////				String payload = APNS.newPayload().alertBody(content).build();
-////				service.push(token, payload);
-////			}
-////		}
-////	}
-//	
-//	// 评论
-//	public void pushComment(int commentId, List<String> tokenList, String fromUser) {
-//		if (null != tokenList && tokenList.size() > 0) {
-//			for (String token : tokenList) {
-//				if (null != token && !"".equals(token) && !"(null)".equals(token) && !"null".equals(token)) {
-//					PayloadBuilder pb = APNS.newPayload();
-//					pb.alertBody(fromUser + " sent you a new comment");
-//					pb.customField("ContentId", commentId);
-//					pb.customField("NotificationType", "Comment");
-//					String payload = pb.build();
-//					service.push(token, payload);
-//				}
-//			}
-//		}
-//	}
+	private static APNSManager instance = new APNSManager();
+	
+	private ApnsService service;
+	private Logger log = Logger.getLogger(getClass());
+	
+	private APNSManager() {
+		String cerPath = "XXX.p12";
+		service = APNS.newService().withCert(cerPath, "XXXXXX").withProductionDestination().build();
+	}
+	
+	public static APNSManager getInstance() {
+		return instance;
+	}
+	
+	public void pushOffline(String token, String content) {
+		if (null != token && !"".equals(token) && !"(null)".equals(token) && !"null".equals(token)) {
+			log.info("Going to push " + content + " to token :" + token);
+			String payload = APNS.newPayload().alertBody(content).build();
+			service.push(token, payload);
+		}
+		else {
+			log.warn("token = " + token);
+		}
+	}
 //	
 //	// 图片Tag
 //	public void pushPicTaged(int picId, List<String> tokenList, String fromUser) {
@@ -119,29 +96,6 @@ public class APNSManager implements Runnable{
 //		}
 //	}
 //
-	@Override
-	public void run() {
-//		System.out.println("APNSManager start succeed!");
-//		PushVO pushVO = null;			
-//		while(true){
-//			try {
-//				pushVO = pushQueue.take();
-//				for (int userId : pushVO.getUserIdList()) {
-//					List<String> deviceTokenList = deviceTokenDao.getDeviceTokenByUserId(userId);
-//					push(pushVO, deviceTokenList);
-//					Todo todo = new Todo();
-//					todo.setContentId(pushVO.getContentId());
-//					todo.setTodoType(pushVO.getTodoType());
-//					todo.setUserID(userId);
-//					todoDao.create(todo);
-//					logger.info(String.format("APNS Manager...push : %s to Parent id %d.", pushVO.getTodoType(),userId));							
-//				}
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//				logger.error(e);
-//			}
-//		}	
-	}
 //	
 //	public static void main(String[] args) {
 //		ApnsService service = APNS.newService().withCert("d:/mayayaCerficate.p12", "mayaya@mayaya").withSandboxDestination().build();

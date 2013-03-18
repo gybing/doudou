@@ -14,5 +14,11 @@ public class OfOfflineDaoHibernate extends HibernateDaoSupport implements OfOffl
 		return getHibernateTemplate().find("from OfOffline oo where sended = false");
 	}
 
+	@Override
+	public void saveOffline(OfOffline ofOffline) {
+		getHibernateTemplate().saveOrUpdate(ofOffline);
+		getHibernateTemplate().flush();
+	}
+
 
 }

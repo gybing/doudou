@@ -45,7 +45,8 @@ public class SCSCCUserController extends MultiActionController {
         	return;
         }
         
-    	
+    	// 登陆成功
+        // deviceToken加入数据库
     	if (user.getRole() == SCSCCUser.Teacher) {
     		// Curri info
     		StringBuffer curriculumString = new StringBuffer();

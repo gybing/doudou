@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 
 import com.doudoumobile.dao.OfUserDao;
 import com.doudoumobile.dao.SCSCCUserDao;
+import com.doudoumobile.model.OfUser;
 import com.doudoumobile.model.SCSCCUser;
 import com.doudoumobile.service.EtonService;
 
@@ -54,9 +55,29 @@ public class EtonServiceImpl implements EtonService{
 		return user;
 	}
 
+	/**
+	 * @return 返回结果：
+	 * 1 -> 添加成功
+	 * 0 -> 用户名已存在
+	 * -1 -> 程序错误
+	 * */
 	@Override
-	public SCSCCUser addEtonUser(SCSCCUser eu) {
-		return scsccUserDao.addUser(eu);
+	public int addSCSCCUser(SCSCCUser eu) {
+		//TODO transation
+		if (scsccUserDao.checkExists(eu.getUserName())) {
+			return 0;
+		} else {
+			if (null != scsccUserDao.addUser(eu)) {
+				OfUser user = new OfUser();
+				user.setUsername(eu.getUserName());
+				user.setEncryptedPassword(eu.getPassWd());
+				userDao.saveUser(user);
+				return 1;
+			} else {
+				return -1;
+			}
+			
+		}
 	}
 
 	@Override

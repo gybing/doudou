@@ -8,8 +8,8 @@ import com.doudoumobile.model.DeviceToken;
 public class DeviceTokenDaoHibernate extends HibernateDaoSupport implements DeviceTokenDao {
 
 	@Override
-	public DeviceToken getDeviceTokenByUserId(int userId) {
-		return (DeviceToken) getHibernateTemplate().get(DeviceToken.class, userId);
+	public DeviceToken getDeviceTokenByUsername(String userName) {
+		return (DeviceToken) getHibernateTemplate().get(DeviceToken.class, userName);
 	}
 	
 	@Override
