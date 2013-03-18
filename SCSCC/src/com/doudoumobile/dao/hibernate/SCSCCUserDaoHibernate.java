@@ -13,7 +13,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 
 	@Override
 	public SCSCCUser verifyEtonUser(String userName, String passWd) {
-		List users = getHibernateTemplate().find("from SCSCCUser where username=? " +
+		List users = getHibernateTemplate().find("from SCSCCUser where userid=? " +
 				"and password=? and available = true",new String[]{userName,passWd});			
 	
 		if (users == null || users.isEmpty()) {
@@ -48,7 +48,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 	@Override
 	public List<SCSCCUser> getAllUser() {
 		return getHibernateTemplate().find(
-        "from SCSCCUser eu order by id desc");
+        "from SCSCCUser su order by id desc");
 	}
 
 	@Override
@@ -72,13 +72,23 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 	}
 
 	@Override
+	public List<SCSCCUser> getContactList(String userid) {
+		
+		/**
+		Session session = getSessionFactory().getCurrentSession();  
+		Query q = session.createQuery("select * from SCSCCUser where userid not in(:ids)");
+		q.setParameter("ids", userid);
+		return q.list();
+		*/
+		
+		return getHibernateTemplate().find(
+		        "from SCSCCUser su where userid not in (?)", userid);
+	}
+
+	@Override
 	public boolean checkExists(String userName) {
-		List users = getHibernateTemplate().find("from SCSCCUser where username = " + userName);
-		if (users == null || users.isEmpty()) {
-	        return false;
-	    } else {
-	        return true;
-	    }
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

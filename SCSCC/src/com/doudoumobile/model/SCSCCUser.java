@@ -10,19 +10,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "SCSCCUser")
+@Table(name = "scsccuser")
 public class SCSCCUser implements Serializable {
 	
 	private static final long serialVersionUID = 8224641622310493478L;
 	
-	public static final int Admin = 0;
-	public static final int RD = 1;
-	public static final int ED = 2;
-	public static final int Teacher = 3;
+	public static final int EMember = 0;
+	public static final int VMember = 1;
+	public static final int GMemeber= 2;
+	public static final int Staff = 3;
+	public static final int Secretary = 4;
+
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @Column(name = "available")
+    private boolean available;
+    
     
     @Column(name = "username", nullable = false, length = 64, unique = true)
     private String userName;
@@ -30,26 +36,23 @@ public class SCSCCUser implements Serializable {
     @Column(name = "password", length = 64)
     private String passWd;
 
-    @Column(name = "email", length = 64)
-    private String email;
-
-    @Column(name = "realName", length = 64)
+    @Column(name = "realname", length = 64)
     private String realName;
-        
-//    @Column(name = "teacherTypeId")
-//    private Long teacherTypeId;
 
-    @Column(name = "available")
-    private boolean available;
+    @Column(name = "photo", length = 64)
+    private String photo;
     
-    @Column(name = "role")
-    private int role;
-
-    @Column(name = "notes", length = 128)
-    private String notes;
+    @Column(name = "company", length = 128)
+    private String company;
     
-    @Column(name = "createdBy", length = 64)
-    private String createdBy;
+    @Column(name = "position", length = 128)
+    private String position;
+    
+    @Column(name = "gender")
+    private int gender;
+    
+    @Column(name = "usertype")
+    private int userType;
     
     public SCSCCUser () {
     	available = true;
@@ -62,6 +65,7 @@ public class SCSCCUser implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 
 	public String getUserName() {
 		return userName;
@@ -79,20 +83,78 @@ public class SCSCCUser implements Serializable {
 		this.passWd = passWd;
 	}
 
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 	public String getRealName() {
 		return realName;
 	}
 
 	public void setRealName(String realName) {
 		this.realName = realName;
+	}
+
+	public String getPhoto() {
+		return photo;
+	}
+
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+
+	public String getCompany() {
+		return company;
+	}
+
+	public void setCompany(String company) {
+		this.company = company;
+	}
+
+	public String getPosition() {
+		return position;
+	}
+
+	public void setPosition(String position) {
+		this.position = position;
+	}
+
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+	
+	public String getGenderName() {
+		switch(gender) {
+		case 0:
+			return "女";
+		case 1:
+			return "男";
+		default:
+			return "";
+		}
+	}
+
+	public int getUserType() {
+		return userType;
+	}
+
+	public void setUserType(int userType) {
+		this.userType = userType;
+	}
+	
+	public String getUserTypeName() {
+		switch(userType) {
+		case 0:
+			return "EMember";
+		case 1:
+			return "VMember";
+		case 2:
+			return "GMember";
+		case 3:
+			return "Staff";
+		default:
+			return "";
+		}
 	}
 
 	public boolean isAvailable() {
@@ -103,43 +165,5 @@ public class SCSCCUser implements Serializable {
 		this.available = available;
 	}
 
-	public int getRole() {
-		return role;
-	}
-
-	public void setRole(int role) {
-		this.role = role;
-	}
-	
-	public String getRoleName() {
-		switch(role) {
-		case 0:
-			return "Admin";
-		case 1:
-			return "RD";
-		case 2:
-			return "ED";
-		case 3:
-			return "Teacher";
-		default:
-			return "";
-		}
-	}
-
-	public String getNotes() {
-		return notes;
-	}
-
-	public void setNotes(String notes) {
-		this.notes = notes;
-	}
-
-	public String getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
 
 }
