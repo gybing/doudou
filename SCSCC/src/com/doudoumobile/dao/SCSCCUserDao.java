@@ -16,7 +16,7 @@ public interface SCSCCUserDao {
 	
 	List<SCSCCUser> getAllUser();
 	
-	List<SCSCCUser> getContactList(String userid);
+	List<SCSCCUser> getContactList(String username);
 
 	void updateUser(SCSCCUser user);
 	

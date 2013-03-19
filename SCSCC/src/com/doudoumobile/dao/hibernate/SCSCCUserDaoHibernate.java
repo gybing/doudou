@@ -13,7 +13,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 
 	@Override
 	public SCSCCUser verifyEtonUser(String userName, String passWd) {
-		List users = getHibernateTemplate().find("from SCSCCUser where userid=? " +
+		List users = getHibernateTemplate().find("from SCSCCUser where username=? " +
 				"and password=? and available = true",new String[]{userName,passWd});			
 	
 		if (users == null || users.isEmpty()) {
@@ -72,7 +72,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 	}
 
 	@Override
-	public List<SCSCCUser> getContactList(String userid) {
+	public List<SCSCCUser> getContactList(String username) {
 		
 		/**
 		Session session = getSessionFactory().getCurrentSession();  
@@ -82,7 +82,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 		*/
 		
 		return getHibernateTemplate().find(
-		        "from SCSCCUser su where userid not in (?)", userid);
+		        "from SCSCCUser su where username not in (?)", username);
 	}
 
 	@Override

@@ -21,6 +21,7 @@ import org.springframework.web.bind.ServletRequestUtils;
 
 import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.EtonService;
+import com.doudoumobile.service.SCSCCService;
 
 public class AuthFilter implements Filter {
 	FilterConfig fConfig;
@@ -30,7 +31,7 @@ public class AuthFilter implements Filter {
 
 	private static HashMap<String , Long> ticketMap = new HashMap<String , Long>();
 	
-	private EtonService etonService;
+	private SCSCCService scsccService;
 	
 	private Log log;
 	
@@ -61,15 +62,15 @@ public class AuthFilter implements Filter {
 			chain.doFilter(request, response);
 			return;
 		}
-		String ticket = ServletRequestUtils.getStringParameter(req, "doudouTicket","");
-		// ticket的可能情况：1.app端的身份识别 2.登陆Action的标示 
+		String ticket = ServletRequestUtils.getStringParameter(req, "scsccTicket","");
+		// ticketÁöÑÂèØËÉΩÊÉÖÂÜµÔºö1.appÁ´ØÁöÑË∫´‰ªΩËØÜÂà´ 2.ÁôªÈôÜActionÁöÑÊ†áÁ§∫ 
 		if (!ticket.isEmpty()) {
-			log.debug("App端登陆");
+			log.debug("App登陆");
 			if ("login".equalsIgnoreCase(ticket)) {
 				// go to login
 				chain.doFilter(request, response);
 			} else {
-				//身份识别，从中获得用户信息
+				//Ë∫´‰ªΩËØÜÂà´Ôºå‰ªé‰∏≠Ëé∑ÂæóÁî®Êà∑‰ø°ÊÅØ
 				long userId = processAppTicket(ticket);
 				if (userId != -1) {
 					request.setAttribute("userId", userId);
@@ -80,8 +81,8 @@ public class AuthFilter implements Filter {
 				resp.sendRedirect(NOT_AUTHED_PAGE);
 			}
 		} else {
-			//意味着从web端登陆
-			log.debug("Web端登陆");
+			//ÊÑèÂë≥ÁùÄ‰ªéwebÁ´ØÁôªÈôÜ
+			log.debug("WebÁ´ØÁôªÈôÜ");
 			HttpSession session = req.getSession(false);	
 			if (null != session) {
 				Object sessionData = session.getAttribute("sessionData");
@@ -106,7 +107,7 @@ public class AuthFilter implements Filter {
 		this.fConfig = fConfig;
 	}
 	
-	//如果没有cookie那么查找url是否有相应的Doudou_ticket参数
+	//Â¶ÇÊûúÊ≤°ÊúâcookieÈÇ£‰πàÊü•ÊâæurlÊòØÂê¶ÊúâÁõ∏Â∫îÁöÑDoudou_ticketÂèÇÊï∞
 	private void setSessionData(HttpServletRequest req, HttpServletResponse resp, FilterChain chain) throws IOException, ServletException {
 		String ticket = null;
 		Cookie[] cookies = req.getCookies();
@@ -118,14 +119,14 @@ public class AuthFilter implements Filter {
 	            }
 	        }
 	    }
-//	    //查找url
-//	    //再判断1.判断内存map里是否有这个ticket,有那就直接通过获取用户id
-//	    //2.如果没有再到数据库里去查找，获得用户
+//	    //Êü•Êâæurl
+//	    //ÂÜçÂà§Êñ≠1.Âà§Êñ≠ÂÜÖÂ≠òmapÈáåÊòØÂê¶ÊúâËøô‰∏™ticket,ÊúâÈÇ£Â∞±Áõ¥Êé•ÈÄöËøáËé∑ÂèñÁî®Êà∑id
+//	    //2.Â¶ÇÊûúÊ≤°ÊúâÂÜçÂà∞Êï∞ÊçÆÂ∫ìÈáåÂéªÊü•ÊâæÔºåËé∑ÂæóÁî®Êà∑
 	    if (ticket != null) {
 	    	long userId = processWebTicket(ticket);
 	    	if (userId != -1) {
 	    		SessionData sessionData = new SessionData();
-	    		sessionData.setEtonUser(etonService.getUser(userId));
+	    		sessionData.setEtonUser(scsccService.getUser(userId));
 	    		
 	        	req.getSession(true).setAttribute("sessionData", sessionData);
 				log.info("Filter cookie verified Success! userId = " + userId);
@@ -154,11 +155,11 @@ public class AuthFilter implements Filter {
 				String loginName = tokenArray[1];
 				String deviceToken = tokenArray[3];
 				if (ticketMap.containsKey(str)) {
-					etonService.updateLoginTime(userId , deviceToken);
+					scsccService.updateLoginTime(userId , deviceToken);
 					return userId;
 				} else {
-					if (etonService.getUser(userId).getUserName().equals(loginName)) {
-						etonService.updateLoginTime(userId , deviceToken);
+					if (scsccService.getUser(userId).getUserName().equals(loginName)) {
+						scsccService.updateLoginTime(userId , deviceToken);
 						addTicket(str, userId);
 						return userId;
 					}
@@ -187,7 +188,7 @@ public class AuthFilter implements Filter {
 				if (ticketMap.containsKey(str)) {
 					return userId;
 				} else {
-					if (etonService.getUser(userId).getUserName().equals(loginName)) {
+					if (scsccService.getUser(userId).getUserName().equals(loginName)) {
 						addTicket(str, userId);
 						return userId;
 					}

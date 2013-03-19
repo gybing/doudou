@@ -12,7 +12,9 @@ public interface SCSCCService {
 	
 	public List<SCSCCUser> getAllSCSCCUserList();
 	
-	public List<SCSCCUser> getContactList(String userid);
+	public List<SCSCCUser> getContactList(String username);
 	
+	public void updateLoginTime(long userId , String deviceToken);
+
 	
 }

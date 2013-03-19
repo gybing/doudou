@@ -49,9 +49,13 @@ public class SCSCCServiceImpl implements SCSCCService{
 
 
 	@Override
-	public List<SCSCCUser> getContactList(String userid) {
-		return scsccUserDao.getContactList(userid);
+	public List<SCSCCUser> getContactList(String username) {
+		return scsccUserDao.getContactList(username);
 	}
 
+	@Override
+	public void updateLoginTime(long userId , String deviceToken) {
+		userDao.updateLoginTime(userId, deviceToken);
+	}
 
 }

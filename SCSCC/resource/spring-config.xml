@@ -76,11 +76,16 @@
 	<!-- Services                                                        -->
 	<!-- =============================================================== -->
 
+	<bean id="scsccService" class="com.doudoumobile.service.impl.SCSCCServiceImpl">
+		<property name="scsccUserDao" ref="scsccUserDao" />
+		<property name="userDao" ref="userDao" />
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<bean id="etonService" class="com.doudoumobile.service.impl.EtonServiceImpl">
 		<property name="scsccUserDao" ref="scsccUserDao" />
 		<property name="userDao" ref="userDao" />
 		<property name="sessionFactory" ref="sessionFactory" />
-		<property name="zipDesPath" value="C:/curricula"></property>
 	</bean>
 
 	<bean id="userService" class="com.doudoumobile.service.impl.UserServiceImpl">

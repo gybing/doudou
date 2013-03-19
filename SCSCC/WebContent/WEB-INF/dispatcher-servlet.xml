@@ -7,11 +7,9 @@
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<value>
-				/index.do=filenameController
-				/user.do=userController
-				/download.do=downloadController	
+				
 				/scsccUser.do=scsccUserController
-				/setting.do=settingController
+				
 			</value>
 		</property>
 		<property name="order" value="1" />
@@ -19,24 +17,22 @@
 
 	<bean id="filenameController"
 		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
-		
+	<!--  	
 	<bean id="settingController" class="com.doudoumobile.controller.SettingController">
 		<property name="methodNameResolver" ref="paramResolver" />
-		<property name="etonService" ref="etonService"></property>
+		<property name="scsccService" ref="scsccService"></property>
 	</bean>
-	
-	<bean id="downloadController" class="com.doudoumobile.controller.DownloadController">
-		<property name="methodNameResolver" ref="paramResolver" />
-		<property name="downloadRootPath" value="C:/curricula" />
-	</bean>
+	-->
 	<bean id="scsccUserController" class="com.doudoumobile.controller.SCSCCUserController">
 		<property name="methodNameResolver" ref="paramResolver" />
-		<property name="etonService" ref="etonService"></property>
+		<property name="scsccService" ref="scsccService"></property>
 	</bean>
+	<!--  
 	<bean id="userController" class="com.doudoumobile.controller.UserController">
 		<property name="methodNameResolver" ref="paramResolver" />
-		<property name="etonService" ref="etonService"></property>
+		<property name="scsccService" ref="scsccService"></property>
 	</bean>
+	-->
 
 	<bean id="paramResolver"
 		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">

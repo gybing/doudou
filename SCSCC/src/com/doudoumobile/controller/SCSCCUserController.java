@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.doudoumobile.model.SCSCCUser;
 import com.doudoumobile.model.SessionData;
-import com.doudoumobile.service.EtonService;
 import com.doudoumobile.service.SCSCCService;
 import com.doudoumobile.util.Cn2Char;
 import com.doudoumobile.util.JsonHelper;
@@ -30,7 +29,7 @@ public class SCSCCUserController extends MultiActionController {
 	
 	SCSCCService scsccService;
 	
-	public void setEtonService(EtonService etonService) {
+	public void setScsccService(SCSCCService scsccService) {
 		this.scsccService = scsccService;
 	}
 	
@@ -56,18 +55,20 @@ public class SCSCCUserController extends MultiActionController {
         
 		List<SCSCCUser> contactList = scsccService.getContactList(userName);
 
+		String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "scsccTicket" + "/" + deviceToken;
+        String encodedS = Base64.encode(doudouTicket.getBytes());
+        System.out.println("encoded : " + encodedS);
+        //object.put("ticket", encodedS);
 
 		HashMap<String, Object> responseMap = new HashMap<String, Object>();
 		responseMap.put("user", user);
 		responseMap.put("contact", contactList);
+		responseMap.put("ticket", encodedS);
 
 		request.getSession().setAttribute("currentUser", user);		
 
     	JSONObject object = JsonHelper.getInstance().getJson(responseMap);
-        //String doudouTicket = user.getId() + "/" + user.getUserName() + "/" + "doudouTicket" + "/" + deviceToken;
-        //String encodedS = Base64.encode(doudouTicket.getBytes());
-        //System.out.println("encoded : " + encodedS);
-        //object.put("ticket", encodedS);
+        
     	
     	writer.print(object);
 

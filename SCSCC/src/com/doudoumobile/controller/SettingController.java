@@ -3,13 +3,14 @@ package com.doudoumobile.controller;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.doudoumobile.service.EtonService;
+import com.doudoumobile.service.SCSCCService;
 
 public class SettingController extends MultiActionController{
 	
-	EtonService etonService;
-
-	public void setEtonService(EtonService etonService) {
-		this.etonService = etonService;
+	SCSCCService scsccService;
+	
+	public void setSCSCCService(SCSCCService scsccService) {
+		this.scsccService = scsccService;
 	}
 
 	private SettingController() {
