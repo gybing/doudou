@@ -86,5 +86,14 @@
 		<error-code>500</error-code>
 		<location>/error.jsp</location>
 	</error-page>
+
+	<servlet>
+		<servlet-name>ContactServlet</servlet-name>
+		<servlet-class>com.doudoumobile.controller.ContactServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ContactServlet</servlet-name>
+		<url-pattern>/ContactServlet</url-pattern>
+	</servlet-mapping>
 	
 </web-app>

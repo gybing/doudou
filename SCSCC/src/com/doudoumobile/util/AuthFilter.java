@@ -63,7 +63,7 @@ public class AuthFilter implements Filter {
 			return;
 		}
 		String ticket = ServletRequestUtils.getStringParameter(req, "scsccTicket","");
-		// ticketÁöÑÂèØËÉΩÊÉÖÂÜµÔºö1.appÁ´ØÁöÑË∫´‰ªΩËØÜÂà´ 2.ÁôªÈôÜActionÁöÑÊ†áÁ§∫ 
+		// ticket的可能情况：1.app端的身份识别 2.登陆Action的标示 
 		if (!ticket.isEmpty()) {
 			log.debug("App登陆");
 			if ("login".equalsIgnoreCase(ticket)) {

@@ -7,6 +7,8 @@ public class ScsccBackend {
 	
 	private static ScsccBackend instance = new ScsccBackend();
 	
+	public static long CONTACT_LAST_MODIFIED = System.currentTimeMillis();
+	
 	private ExecutorService exec = null;
 	
 	private ScsccBackend() {

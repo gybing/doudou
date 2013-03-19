@@ -36,7 +36,7 @@ public class OfOffline implements Serializable {
 	@Column(columnDefinition = "TEXT",name = "stanza")
     private String stanza;
 
-    @Column(name = "sended")
+    @Column(name = "sended", columnDefinition="boolean NOT NULL DEFAULT FALSE")
     private boolean sended;
     
 	public String getUsername() {

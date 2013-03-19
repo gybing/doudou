@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.hibernate.SessionFactory;
 
+import com.doudoumobile.dao.DeviceTokenDao;
 import com.doudoumobile.dao.OfUserDao;
 import com.doudoumobile.dao.SCSCCUserDao;
+import com.doudoumobile.model.DeviceToken;
 import com.doudoumobile.model.SCSCCUser;
 import com.doudoumobile.service.SCSCCService;
 
@@ -14,7 +16,7 @@ public class SCSCCServiceImpl implements SCSCCService{
 	SCSCCUserDao scsccUserDao;
 	OfUserDao userDao;
 	SessionFactory sessionFactory;
-	
+	DeviceTokenDao deviceTokenDao;
 	
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
@@ -56,6 +58,11 @@ public class SCSCCServiceImpl implements SCSCCService{
 	@Override
 	public void updateLoginTime(long userId , String deviceToken) {
 		userDao.updateLoginTime(userId, deviceToken);
+	}
+
+	@Override
+	public void addDeviceToken(DeviceToken dt) {
+		deviceTokenDao.saveDeviceToken(dt);
 	}
 
 }

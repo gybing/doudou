@@ -27,13 +27,7 @@
 		<property name="methodNameResolver" ref="paramResolver" />
 		<property name="scsccService" ref="scsccService"></property>
 	</bean>
-	<!--  
-	<bean id="userController" class="com.doudoumobile.controller.UserController">
-		<property name="methodNameResolver" ref="paramResolver" />
-		<property name="scsccService" ref="scsccService"></property>
-	</bean>
-	-->
-
+	  
 	<bean id="paramResolver"
 		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
 		<property name="paramName" value="action" />

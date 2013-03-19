@@ -4,6 +4,7 @@ import org.directwebremoting.util.Logger;
 
 import com.notnoop.apns.APNS;
 import com.notnoop.apns.ApnsService;
+import com.notnoop.apns.PayloadBuilder;
 
 
 public class APNSManager{
@@ -14,8 +15,8 @@ public class APNSManager{
 	private Logger log = Logger.getLogger(getClass());
 	
 	private APNSManager() {
-		String cerPath = "XXX.p12";
-		service = APNS.newService().withCert(cerPath, "XXXXXX").withProductionDestination().build();
+		String cerPath = "D:/Certificates.p12";
+		service = APNS.newService().withCert(cerPath, "scscc").withSandboxDestination().build();
 	}
 	
 	public static APNSManager getInstance() {
@@ -97,21 +98,21 @@ public class APNSManager{
 //	}
 //
 //	
-//	public static void main(String[] args) {
-//		ApnsService service = APNS.newService().withCert("d:/mayayaCerficate.p12", "mayaya@mayaya").withSandboxDestination().build();
-//		PayloadBuilder pb = APNS.newPayload();
-//		pb.alertBody("You have a new Tagged");
-//		pb.customField("secret", "what do you think?");
-//		pb.customField("secret2", "what do you think2?");
-//		String payload = pb.build();
-//		
-////		String payload = APNS.newPayload().badge(3).customField("secret", "what do you think?")
-////        .localizedKey("GAME_PLAY_REQUEST_FORMAT")
-////        .localizedArguments("Jenna", "Frank")
-////        .actionKey("Play").build();
-//		System.out.println(payload);
-//        String token = "af71e26c 93f60a25 f4cc3f49 0ecf72fa c3f55585 b180ecfe 48e3bd3c 6386f39f";
-//        service.push(token, payload);
+////	public static void main(String[] args) {
+////		ApnsService service = APNS.newService().withCert("d:/Certificates.p12", "scscc").withSandboxDestination().build();
+////		PayloadBuilder pb = APNS.newPayload();
+////		pb.alertBody("You have a new Tagged");
+////		pb.customField("secret", "what do you think?");
+////		pb.customField("secret2", "what do you think2?");
+////		String payload = pb.build();
+////		
+//////		String payload = APNS.newPayload().badge(3).customField("secret", "what do you think?")
+//////        .localizedKey("GAME_PLAY_REQUEST_FORMAT")
+//////        .localizedArguments("Jenna", "Frank")
+//////        .actionKey("Play").build();
+////		System.out.println(payload);
+////        String token = "af71e26c 93f60a25 f4cc3f49 0ecf72fa c3f55585 b180ecfe 48e3bd3c 6386f39f";
+////        service.push(token, payload);
 //	}
 	
 }

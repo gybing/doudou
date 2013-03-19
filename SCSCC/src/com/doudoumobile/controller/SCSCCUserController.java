@@ -1,28 +1,21 @@
 package com.doudoumobile.controller;
 
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import com.doudoumobile.model.DeviceToken;
 import com.doudoumobile.model.SCSCCUser;
-import com.doudoumobile.model.SessionData;
 import com.doudoumobile.service.SCSCCService;
-import com.doudoumobile.util.Cn2Char;
 import com.doudoumobile.util.JsonHelper;
-import com.doudoumobile.util.MD5;
-import com.doudoumobile.util.MapKeySorter;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
 public class SCSCCUserController extends MultiActionController {
@@ -52,6 +45,11 @@ public class SCSCCUserController extends MultiActionController {
         	return;
         	
         }
+        DeviceToken dt = new DeviceToken();
+        dt.setDeviceTokenId(deviceToken);
+        dt.setUserName(userName);
+        
+        scsccService.addDeviceToken(dt);
         
 		List<SCSCCUser> contactList = scsccService.getContactList(userName);
 
@@ -75,47 +73,6 @@ public class SCSCCUserController extends MultiActionController {
     }
     
 	
-	public void contactList(HttpServletRequest request, HttpServletResponse response) throws Exception {
-	
-    	String userId = ServletRequestUtils.getStringParameter(request, "userId", "");
-	
-		List<SCSCCUser> contactList = scsccService.getContactList(userId);
-		
-		HashMap<String, List> contactMap = new HashMap<String, List>();
-		
-		for(SCSCCUser user: contactList){
-			
-			String realname = user.getRealName();
-			
-			String firstAlpha = Cn2Char.getFirstCharacter(realname);
-			
-			if (!contactMap.containsKey(firstAlpha)){
-				
-				List<SCSCCUser> newList = new ArrayList<SCSCCUser>();
-				newList.add(user);
-				contactMap.put(firstAlpha, newList);
-				
-			}
-			else {
-				@SuppressWarnings("unchecked")
-				ArrayList<SCSCCUser> theList = (ArrayList<SCSCCUser>) contactMap.get(firstAlpha);
-				theList.add(user);
-			}
-			
-		}
-        Map<String, List> sortedContactMap = MapKeySorter.sort(contactMap);
-
-		
-		response.setContentType("text/x-json;charset=UTF-8");           
-        PrintWriter writer = response.getWriter();
-        
-        JSONArray array = JsonHelper.getInstance().getJsonArray(contactList);
-    	JSONObject object = JsonHelper.getInstance().getJson(sortedContactMap);
-
-        
-    	writer.print(object);
-		
-	}
     /**
     public void modifyPwd(HttpServletRequest request, HttpServletResponse response) throws Exception{
     	long userId = (Long)request.getAttribute("userId");

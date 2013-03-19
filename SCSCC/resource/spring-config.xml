@@ -72,6 +72,10 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 	
+	<bean id="ofOfflineDao" class="com.doudoumobile.dao.hibernate.OfOfflineDaoHibernate">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
 	<!-- =============================================================== -->
 	<!-- Services                                                        -->
 	<!-- =============================================================== -->
@@ -80,6 +84,7 @@
 		<property name="scsccUserDao" ref="scsccUserDao" />
 		<property name="userDao" ref="userDao" />
 		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="deviceTokenDao" ref="deviceTokenDao"></property>
 	</bean>
 	
 	<bean id="etonService" class="com.doudoumobile.service.impl.EtonServiceImpl">
