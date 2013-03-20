@@ -2,6 +2,8 @@ package com.doudoumobile.dao.hibernate;
 
 import java.util.List;
 
+import org.hibernate.SQLQuery;
+import org.hibernate.Session;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.doudoumobile.dao.OfOfflineDao;
@@ -11,7 +13,13 @@ public class OfOfflineDaoHibernate extends HibernateDaoSupport implements OfOffl
 
 	@Override
 	public List<OfOffline> getNotSendedOfflines() {
-		return getHibernateTemplate().find("from OfOffline oo where sended = false");
+		String hql = "select oo.username,oo.messageID,oo.creationDate,oo.stanza,oo.sended from ofOffline oo where oo.sended = false";
+		Session session = getSession();
+		SQLQuery query = session.createSQLQuery(hql.toString());
+		query.addEntity("oo", OfOffline.class);
+		List result = query.list();
+		session.close();
+        return (List<OfOffline>) (result);
 	}
 
 	@Override

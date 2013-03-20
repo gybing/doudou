@@ -7,6 +7,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.doudoumobile.dao.DeviceTokenDao;
 import com.doudoumobile.dao.OfOfflineDao;
+import com.doudoumobile.model.DeviceToken;
 import com.doudoumobile.model.OfOffline;
 import com.doudoumobile.util.SCSCCConstants;
 
@@ -36,13 +37,17 @@ public class MessagePusher implements Runnable{
 			List<OfOffline> offlines = ooDao.getNotSendedOfflines();
 			for (OfOffline oo : offlines) {
 				String username = oo.getUsername();
-				String token = dtDao.getDeviceTokenByUsername(username).getDeviceTokenId();
-				String content = SCSCCConstants.YOU_HAVE_A_NEW_OFFLINE_MESSAGE;
-				APNSManager.getInstance().pushOffline(token, content);
-				
-				//update status
-				oo.setSended(true);
-				ooDao.saveOffline(oo);
+				DeviceToken dt = dtDao.getDeviceTokenByUsername(username);
+				if (null != dt) {
+					String token = dt.getDeviceTokenId();
+					String content = SCSCCConstants.YOU_HAVE_A_NEW_OFFLINE_MESSAGE;
+					APNSManager.getInstance().pushOffline(token, content);
+					
+					//update status
+					oo.setSended(true);
+					ooDao.saveOffline(oo);
+				}
+				 
 			}
 			
 		}

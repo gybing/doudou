@@ -18,6 +18,10 @@ public class SCSCCServiceImpl implements SCSCCService{
 	SessionFactory sessionFactory;
 	DeviceTokenDao deviceTokenDao;
 	
+	public void setDeviceTokenDao(DeviceTokenDao deviceTokenDao) {
+		this.deviceTokenDao = deviceTokenDao;
+	}
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}

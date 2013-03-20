@@ -20,7 +20,7 @@ public class OfOffline implements Serializable {
 	 */
 	private static final long serialVersionUID = -6737346597068027334L;
 
-	@Id
+	
     @Column(name = "username", nullable = false, length = 64)
     private String username;
 

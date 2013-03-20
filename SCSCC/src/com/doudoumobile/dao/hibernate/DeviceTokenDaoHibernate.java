@@ -1,5 +1,7 @@
 package com.doudoumobile.dao.hibernate;
 
+import java.util.List;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import com.doudoumobile.dao.DeviceTokenDao;
@@ -9,7 +11,11 @@ public class DeviceTokenDaoHibernate extends HibernateDaoSupport implements Devi
 
 	@Override
 	public DeviceToken getDeviceTokenByUsername(String userName) {
-		return (DeviceToken) getHibernateTemplate().get(DeviceToken.class, userName);
+		List<DeviceToken> ll = getHibernateTemplate().find("from DeviceToken where username = '" + userName + "'");
+		if (null != ll && !ll.isEmpty()) {
+			return ll.get(0);
+		}
+		return null;
 	}
 	
 	@Override
