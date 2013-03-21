@@ -10,7 +10,7 @@ public interface SCSCCUserDao {
 	
 	void modifyPwd(long userId , String passWd);
 	
-	SCSCCUser getUserById(long userId);
+	SCSCCUser getUserById(String userName);
 	
 	SCSCCUser addUser(SCSCCUser user);
 	
@@ -20,9 +20,9 @@ public interface SCSCCUserDao {
 
 	void updateUser(SCSCCUser user);
 	
-	void delete(long id);
+	//void delete(long id);
 	
-	public void resetPwd(long id, String resetPwd) ;
+	//public void resetPwd(long id, String resetPwd) ;
 	
 	boolean checkExists(String userName);
 }

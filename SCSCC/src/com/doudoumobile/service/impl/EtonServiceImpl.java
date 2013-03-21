@@ -38,6 +38,7 @@ public class EtonServiceImpl implements EtonService{
 		return (SCSCCUser) scsccUserDao.verifyEtonUser(userName, passWd);
 	}
 
+	/**
 	@Override
 	public int modifyPwd(long userId, String oldPwd, String newPwd) {
 		SCSCCUser user = scsccUserDao.getUserById(userId);
@@ -54,6 +55,7 @@ public class EtonServiceImpl implements EtonService{
 		SCSCCUser user = scsccUserDao.getUserById(userId);
 		return user;
 	}
+	*/
 
 	/**
 	 * @return 返回结果：
@@ -90,6 +92,7 @@ public class EtonServiceImpl implements EtonService{
 		scsccUserDao.updateUser(eu);
 	}
 
+	/**
 	@Override
 	public void deleteUser(long id) {
 		scsccUserDao.delete(id);
@@ -100,6 +103,7 @@ public class EtonServiceImpl implements EtonService{
 	public void resetPwd(long id, String resetPwd) {
 		scsccUserDao.resetPwd(id, resetPwd);
 	}
+	*/
 
 	@Override
 	public void updateLoginTime(long userId , String deviceToken) {

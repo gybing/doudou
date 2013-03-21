@@ -33,8 +33,14 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 	}
 
 	@Override
-	public SCSCCUser getUserById(long userId) {
-	    return (SCSCCUser) getHibernateTemplate().get(SCSCCUser.class, userId);
+	public SCSCCUser getUserById(String userName) {
+		List users = getHibernateTemplate().find("from SCSCCUser where username=?",userName);			
+	
+		if (users == null || users.isEmpty()) {
+	        return null;
+	    } else {
+	        return (SCSCCUser) users.get(0);
+	    }
 	}
 
 	@Override
@@ -58,6 +64,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 		
 	}
 
+	/**
 	@Override
 	public void delete(long id) {
 		getHibernateTemplate().delete(getUserById(id));
@@ -70,6 +77,7 @@ public class SCSCCUserDaoHibernate extends HibernateDaoSupport implements SCSCCU
 		user.setPassWd(resetPwd);
 		updateUser(user);
 	}
+	*/
 
 	@Override
 	public List<SCSCCUser> getContactList(String username) {

@@ -15,7 +15,7 @@ public class APNSManager{
 	private Logger log = Logger.getLogger(getClass());
 	
 	private APNSManager() {
-		String cerPath = "D:/Certificates.p12";
+		String cerPath = "/Users/Vernon/mayaya/SCSCC/idp/Certificates.p12";
 		service = APNS.newService().withCert(cerPath, "scscc").withSandboxDestination().build();
 	}
 	
@@ -23,10 +23,16 @@ public class APNSManager{
 		return instance;
 	}
 	
-	public void pushOffline(String token, String content) {
+	public void pushOffline(String token, String content, String sender) {
 		if (null != token && !"".equals(token) && !"(null)".equals(token) && !"null".equals(token)) {
 			log.info("Going to push " + content + " to token :" + token);
-			String payload = APNS.newPayload().alertBody(content).build();
+			//String payload = APNS.newPayload().alertBody(content).build();
+			
+			PayloadBuilder pb = APNS.newPayload();
+			pb.alertBody(sender + ": " + content);
+			//pb.customField("ContentId", picId);
+			pb.customField("NotificationType", "MsgTag");
+			String payload = pb.build();
 			service.push(token, payload);
 		}
 		else {

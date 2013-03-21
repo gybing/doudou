@@ -9,7 +9,7 @@ public interface SCSCCService {
 	
 	public SCSCCUser verifySCSCCUser(String userName, String passWd);
 	
-	public SCSCCUser getUser(long userId);
+	//public SCSCCUser getUser(long userId);
 	
 	public List<SCSCCUser> getAllSCSCCUserList();
 	

@@ -41,12 +41,13 @@ public class SCSCCServiceImpl implements SCSCCService{
 
 	
 
+	/**
 	@Override
 	public SCSCCUser getUser(long userId) {
 		SCSCCUser user = scsccUserDao.getUserById(userId);
 		return user;
 	}
-
+	 */
 	
 	@Override
 	public List<SCSCCUser> getAllSCSCCUserList() {
