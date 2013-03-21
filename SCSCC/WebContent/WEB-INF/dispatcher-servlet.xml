@@ -17,12 +17,6 @@
 
 	<bean id="filenameController"
 		class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
-	<!--  	
-	<bean id="settingController" class="com.doudoumobile.controller.SettingController">
-		<property name="methodNameResolver" ref="paramResolver" />
-		<property name="scsccService" ref="scsccService"></property>
-	</bean>
-	-->
 	<bean id="scsccUserController" class="com.doudoumobile.controller.SCSCCUserController">
 		<property name="methodNameResolver" ref="paramResolver" />
 		<property name="scsccService" ref="scsccService"></property>

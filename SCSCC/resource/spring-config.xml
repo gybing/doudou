@@ -86,12 +86,6 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 		<property name="deviceTokenDao" ref="deviceTokenDao"></property>
 	</bean>
-	
-	<bean id="etonService" class="com.doudoumobile.service.impl.EtonServiceImpl">
-		<property name="scsccUserDao" ref="scsccUserDao" />
-		<property name="userDao" ref="userDao" />
-		<property name="sessionFactory" ref="sessionFactory" />
-	</bean>
 
 	<bean id="userService" class="com.doudoumobile.service.impl.UserServiceImpl">
 		<property name="userDao" ref="userDao" />
