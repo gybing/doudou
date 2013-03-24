@@ -28,14 +28,14 @@ public class MessagePusher implements Runnable{
 	@Override
 	public void run() {
 		while (true) {
-			System.out.println("offline message push thread sleep");
+			//System.out.println("offline message push thread sleep");
 			try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			System.out.println("offline message push thread awake");
+			//System.out.println("offline message push thread awake");
 			WebApplicationContext context = ContextLoader.getCurrentWebApplicationContext();
 			if (null == ooDao) {
 				ooDao = (OfOfflineDao)context.getBean("ofOfflineDao");
@@ -47,10 +47,13 @@ public class MessagePusher implements Runnable{
 				suDao = (SCSCCUserDao)context.getBean("scsccUserDao");
 
 			}
+			
+			int badgeNum=0;
 			List<OfOffline> offlines = ooDao.getNotSendedOfflines();
 			for (OfOffline oo : offlines) {
 				String username = oo.getUsername();
 
+				badgeNum++;
 				DeviceToken dt = dtDao.getDeviceTokenByUsername(username);
 				if (null != dt) {
 					String token = dt.getDeviceTokenId();
@@ -76,7 +79,7 @@ public class MessagePusher implements Runnable{
 					} 
 
 					String senderName = ((SCSCCUser)suDao.getUserById(senderUserName)).getRealName();
-					APNSManager.getInstance().pushOffline(token, content, senderName);
+					APNSManager.getInstance().pushOffline(token, content, senderName, badgeNum);
 					
 					
 					//update status

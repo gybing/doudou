@@ -23,16 +23,19 @@ public class APNSManager{
 		return instance;
 	}
 	
-	public void pushOffline(String token, String content, String sender) {
+	public void pushOffline(String token, String content, String sender, int badgeNum) {
 		if (null != token && !"".equals(token) && !"(null)".equals(token) && !"null".equals(token)) {
 			log.info("Going to push " + content + " to token :" + token);
 			//String payload = APNS.newPayload().alertBody(content).build();
 			
 			PayloadBuilder pb = APNS.newPayload();
 			pb.alertBody(sender + ": " + content);
+			pb.badge(badgeNum);
+			pb.sound("default");
 			//pb.customField("ContentId", picId);
 			pb.customField("NotificationType", "MsgTag");
 			String payload = pb.build();
+			log.info("apns: "+ payload);
 			service.push(token, payload);
 		}
 		else {
