@@ -15,7 +15,8 @@ public class APNSManager{
 	private Logger log = Logger.getLogger(getClass());
 	
 	private APNSManager() {
-		String cerPath = "/Users/Vernon/mayaya/SCSCC/idp/Certificates.p12";
+		//String cerPath = "/Users/Vernon/mayaya/SCSCC/idp/Certificates.p12";
+		String cerPath = "/usr/local/apns_scscc/Certificates.p12";
 		service = APNS.newService().withCert(cerPath, "scscc").withSandboxDestination().build();
 	}
 	

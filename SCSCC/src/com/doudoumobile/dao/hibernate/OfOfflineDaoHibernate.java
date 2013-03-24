@@ -28,5 +28,12 @@ public class OfOfflineDaoHibernate extends HibernateDaoSupport implements OfOffl
 		getHibernateTemplate().flush();
 	}
 
+	@SuppressWarnings("unchecked")
+	@Override
+	public int getOOCountByUsername(String username) {
+		List<OfOffline> oos = getHibernateTemplate().find("from OfOffline oo where oo.username =?",username);
+		return oos.size();
+	}
+
 
 }

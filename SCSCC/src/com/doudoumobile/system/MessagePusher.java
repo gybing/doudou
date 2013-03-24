@@ -1,13 +1,11 @@
 package com.doudoumobile.system;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.dom4j.io.SAXReader;
 import org.springframework.web.context.ContextLoader;
 import org.springframework.web.context.WebApplicationContext;
 
@@ -17,7 +15,6 @@ import com.doudoumobile.dao.SCSCCUserDao;
 import com.doudoumobile.model.DeviceToken;
 import com.doudoumobile.model.OfOffline;
 import com.doudoumobile.model.SCSCCUser;
-import com.doudoumobile.util.SCSCCConstants;
 
 public class MessagePusher implements Runnable{
 
@@ -53,7 +50,7 @@ public class MessagePusher implements Runnable{
 			for (OfOffline oo : offlines) {
 				String username = oo.getUsername();
 
-				badgeNum++;
+				badgeNum = ooDao.getOOCountByUsername(username);
 				DeviceToken dt = dtDao.getDeviceTokenByUsername(username);
 				if (null != dt) {
 					String token = dt.getDeviceTokenId();

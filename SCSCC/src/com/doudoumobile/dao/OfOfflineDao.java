@@ -8,4 +8,6 @@ public interface OfOfflineDao {
 	List<OfOffline> getNotSendedOfflines();
 	
 	void saveOffline(OfOffline ofOffline);
+	
+	int getOOCountByUsername(String username);
 }
