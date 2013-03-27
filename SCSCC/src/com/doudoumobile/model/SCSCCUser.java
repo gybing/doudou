@@ -1,6 +1,8 @@
 package com.doudoumobile.model;
 
 import java.io.Serializable;
+import java.text.Collator;
+import java.util.Comparator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,10 +10,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "SCSCCUser")
-public class SCSCCUser implements Serializable {
+public class SCSCCUser implements Serializable,Comparable {
 	
 	private static final long serialVersionUID = 8224641622310493478L;
 	
@@ -54,7 +57,18 @@ public class SCSCCUser implements Serializable {
     @Column(name = "usertype")
     private int userType;
     
-    public SCSCCUser () {
+    @Transient
+    private String pinyinName;
+    
+    public String getPinyinName() {
+		return pinyinName;
+	}
+
+	public void setPinyinName(String pinyinName) {
+		this.pinyinName = pinyinName;
+	}
+
+	public SCSCCUser () {
     	available = true;
     }
     
@@ -165,5 +179,11 @@ public class SCSCCUser implements Serializable {
 		this.available = available;
 	}
 
+	@Override
+	public int compareTo(Object o) {
+		return this.pinyinName.compareToIgnoreCase(((SCSCCUser)o).getPinyinName());
+	}
+
+	
 
 }

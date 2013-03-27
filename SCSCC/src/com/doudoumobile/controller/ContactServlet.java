@@ -3,6 +3,7 @@ package com.doudoumobile.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import org.springframework.web.context.WebApplicationContext;
 import com.doudoumobile.model.SCSCCUser;
 import com.doudoumobile.service.SCSCCService;
 import com.doudoumobile.system.ScsccBackend;
+import com.doudoumobile.util.ChineseToPinyin;
 import com.doudoumobile.util.Cn2Char;
 import com.doudoumobile.util.JsonHelper;
 import com.doudoumobile.util.MapKeySorter;
@@ -48,39 +50,23 @@ public class ContactServlet extends HttpServlet {
 		
 		List<SCSCCUser> contactList = scsccService.getContactList(userId);
 		
-		HashMap<String, List> contactMap = new HashMap<String, List>();
-		
 		for(SCSCCUser user: contactList){
 			
 			String realname = user.getRealName();
 			
-			String firstAlpha = Cn2Char.getFirstCharacter(realname);
+			String pinyin = ChineseToPinyin.getInstance().ZhongWenToPinyin(realname).get(0);
 			
-			if (!contactMap.containsKey(firstAlpha)){
-				
-				List<SCSCCUser> newList = new ArrayList<SCSCCUser>();
-				newList.add(user);
-				contactMap.put(firstAlpha, newList);
-				
-			}
-			else {
-				@SuppressWarnings("unchecked")
-				ArrayList<SCSCCUser> theList = (ArrayList<SCSCCUser>) contactMap.get(firstAlpha);
-				theList.add(user);
-			}
-			
+			user.setPinyinName(pinyin);
 		}
-        Map<String, List> sortedContactMap = MapKeySorter.sort(contactMap);
-
+		
+		Collections.sort(contactList);
 		
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
         
         JSONArray array = JsonHelper.getInstance().getJsonArray(contactList);
-    	JSONObject object = JsonHelper.getInstance().getJson(sortedContactMap);
-
         
-    	writer.print(object);
+    	writer.print(array);
 	}
 	
 	@Override

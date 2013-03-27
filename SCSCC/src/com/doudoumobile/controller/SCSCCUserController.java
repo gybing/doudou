@@ -1,6 +1,7 @@
 package com.doudoumobile.controller;
 
 import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 import com.doudoumobile.model.DeviceToken;
 import com.doudoumobile.model.SCSCCUser;
 import com.doudoumobile.service.SCSCCService;
+import com.doudoumobile.util.ChineseToPinyin;
 import com.doudoumobile.util.JsonHelper;
 import com.sun.org.apache.xml.internal.security.utils.Base64;
 
@@ -58,6 +60,19 @@ public class SCSCCUserController extends MultiActionController {
         System.out.println("encoded : " + encodedS);
         //object.put("ticket", encodedS);
 
+        
+        for(SCSCCUser user2: contactList){
+			
+			String realname = user2.getRealName();
+			
+			String pinyin = ChineseToPinyin.getInstance().ZhongWenToPinyin(realname).get(0);
+			
+			user2.setPinyinName(pinyin);
+		}
+		
+		Collections.sort(contactList);
+		
+        
 		HashMap<String, Object> responseMap = new HashMap<String, Object>();
 		responseMap.put("user", user);
 		responseMap.put("contact", contactList);
