@@ -49,6 +49,8 @@ public class ContactServlet extends HttpServlet {
 		String userId = ServletRequestUtils.getStringParameter(request, "userId", "");
 		
 		List<SCSCCUser> contactList = scsccService.getContactList(userId);
+		List<SCSCCUser> subContactList = contactList.subList(3, contactList.size());
+		
 		
 		for(SCSCCUser user: contactList){
 			
@@ -59,8 +61,39 @@ public class ContactServlet extends HttpServlet {
 			user.setPinyinName(pinyin);
 		}
 		
-		Collections.sort(contactList);
+		Collections.sort(subContactList);
 		
+		/**
+		HashMap<String, List> contactMap = new HashMap<String, List>();
+		
+		for(SCSCCUser user: contactList){
+			
+			String realname = user.getRealName();
+			
+			String firstAlpha = Cn2Char.getFirstCharacter(realname);
+			
+			String pinyin = ChineseToPinyin.getInstance().ZhongWenToPinyin(realname).get(0);
+			
+			user.setPinyinName(pinyin);
+			
+			if (!contactMap.containsKey(firstAlpha)){
+				
+				List<SCSCCUser> newList = new ArrayList<SCSCCUser>();
+				newList.add(user);
+				contactMap.put(firstAlpha, newList);
+				
+			}
+			else {
+				@SuppressWarnings("unchecked")
+				ArrayList<SCSCCUser> theList = (ArrayList<SCSCCUser>) contactMap.get(firstAlpha);
+				theList.add(user);
+				Collections.sort(theList);
+
+			}
+			
+		}
+        Map<String, List> sortedContactMap = MapKeySorter.sort(contactMap);
+		*/
 		response.setContentType("text/x-json;charset=UTF-8");           
         PrintWriter writer = response.getWriter();
         
